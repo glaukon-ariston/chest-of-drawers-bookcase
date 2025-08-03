@@ -40,7 +40,7 @@ Overhang = 3;
 Fw = W;
 Fh0 = Dh + Doffset - Gap;
 F1h = T1 + Fh0;
-Fh = Overhang + Fh0;
+Fh = Fh0;
 F6h = Fh + Overhang;
 
 // Colors
@@ -175,13 +175,13 @@ module draw_fronts() {
             z = i * (Dh + Doffset2) + Doffset + T1;
             // Drawer front
             if (i == 0) {
-                translate([0, 0, 0])
+                translate([0, D, 0])
                 drawer_front(F1h);
             } else if (i == 5) {
-                translate([0, 0, z - Overhang])
+                translate([0, D, z - Overhang])
                 drawer_front(F6h);
             } else {
-                translate([0, 0, z - Overhang])
+                translate([0, D, z - Overhang])
                 drawer_front(Fh);
             }
         }

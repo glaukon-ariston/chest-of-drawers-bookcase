@@ -35,7 +35,7 @@ Overhang = 3 mm
 Fw = W
 Fh0 = Dh + Doffset - Gap
 F1h = T1 + Fh0
-Fh = Overhang + Fh0
+Fh = Fh0
 F6h = Fh + Overhang
 
 
