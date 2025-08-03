@@ -4,10 +4,12 @@ show_drawers = true;
 show_fronts = true;
 show_slides = true;
 show_shelves = true;
+show_glass_doors = true;
 
 // Parameters
 
 // Corpus
+N = 6;      // number of drawers
 H = 2300;
 W = 800;
 D = 230;
@@ -31,17 +33,44 @@ DBh = Dh - T2;
 Dd = D - 5;
 Dw = Pw - 2*Sd;
 DBw = Dw - 2*T2;
-Doffset = 10;
-Doffset2 = 10;
+Doffset = 10;     // the lowest drawer offset from the corpus bottom
+Doffset2 = 10;    // the gap between drawers
+Dvspace = Dh + Doffset2;    // vertical space between drawers
+Dorigin = T1 + Doffset;     // offset of the bottom of the first drawer
+
+// Middle Plate
+Mz = Dorigin + N*Dvspace;
 
 // Drawer Fronts
 Gap = 3;
 Overhang = 3;
 Fw = W;
-Fh0 = Dh + Doffset - Gap;
-F1h = T1 + Fh0;
+Fh0 = Dh + Doffset2 - Gap;
+F1h = T1 + Doffset - Gap + Fh0;
 Fh = Fh0;
-F6h = Fh + Overhang;
+Ftoph = Fh + 3*Overhang;
+
+// Bookcase dimensions
+bookcase_start_z = Mz + T1;
+bookcase_end_z = H - T1;
+bookcase_h = bookcase_end_z - bookcase_start_z;
+bookcase_shelf_gap = (bookcase_h - 2 * T1) / 3;
+
+bookcase_glass_door_width = (W - (1 + Gap + 1))/2;
+bookcase_glass_door_height = T1 + bookcase_shelf_gap + T1 + bookcase_shelf_gap + T1/2;
+
+// Derived Measurements & Debugging
+echo(str("Middle Plate Z: ", Mz));
+echo(str("Bookcase Vertical Space: ", bookcase_h));
+echo(str("Bookcase Shelf Gap: ", bookcase_shelf_gap));
+echo(str("Bookcase Door Width: ", bookcase_glass_door_width));
+echo(str("Bookcase Door Height: ", bookcase_glass_door_height));
+echo(str("Drawer Vertical Space: ", Dvspace));
+echo(str("Drawer Width: ", Dw));
+echo(str("Shelf Width: ", Pw));
+echo(str("First Drawer Front Height: ", F1h));
+echo(str("Standard Drawer Front Height: ", Fh));
+echo(str("Top Drawer Front Height: ", Ftoph));
 
 // Colors
 color_corpus = "Red";
@@ -50,6 +79,7 @@ color_fronts = "Blue";
 color_shelves = "Yellow";
 color_slides = "Gray";
 color_joinery = "Black";
+color_glass = "LightBlue";
 
 module confirmat_hole() {
     cylinder(h=T1, r=2.5, $fn=16);
@@ -87,7 +117,7 @@ module corpus() {
     corpus_plate(W - 2*T1);
 
     // Middle plate
-    translate([T1, 0, 6 * (Dh + Doffset2) + Doffset + T1])
+    translate([T1, 0, Mz])
     corpus_plate(W - 2*T1);
 }
 
@@ -139,6 +169,11 @@ module shelf() {
     cube([Pw, Ph, T1]);
 }
 
+module glass_door() {
+    color(color_glass, 0.5)
+    cube([bookcase_glass_door_width, 4, bookcase_glass_door_height]);
+}
+
 module draw_corpus() {
     if (show_corpus) {
         corpus();
@@ -147,8 +182,8 @@ module draw_corpus() {
 
 module draw_drawers() {
     if (show_drawers) {
-        for (i = [0:5]) {
-            z = i * (Dh + Doffset2) + Doffset + T1;
+        for (i = [0:N-1]) {
+            z = Dorigin + i * Dvspace;
             // Drawer box
             translate([T1 + Sd, (D - Dd) / 2, z])
             drawer();
@@ -158,8 +193,8 @@ module draw_drawers() {
 
 module draw_slides() {
     if (show_slides) {
-        for (i = [0:5]) {
-            z = i * (Dh + Doffset2) + Doffset + T1;
+        for (i = [0:N-1]) {
+            z = Dorigin + i * Dvspace;
             // Slides
             translate([T1, (D - Sw) / 2, z + (Dh - Sh) / 2])
             slide();
@@ -171,15 +206,15 @@ module draw_slides() {
 
 module draw_fronts() {
     if (show_fronts) {
-        for (i = [0:5]) {
-            z = i * (Dh + Doffset2) + Doffset + T1;
+        for (i = [0:N-1]) {
+            z = Dorigin + i * Dvspace;
             // Drawer front
             if (i == 0) {
                 translate([0, D, 0])
                 drawer_front(F1h);
             } else if (i == 5) {
                 translate([0, D, z - Overhang])
-                drawer_front(F6h);
+                drawer_front(Ftoph);
             } else {
                 translate([0, D, z - Overhang])
                 drawer_front(Fh);
@@ -190,14 +225,23 @@ module draw_fronts() {
 
 module draw_shelves() {
     if (show_shelves) {
-        middle_plate_z = 6 * (Dh + Doffset2) + Doffset + T1;
-        shelf_spacing = (H - middle_plate_z - 3*T1) / 3;
-
         for (i = [0:1]) {
-            z = middle_plate_z + (i + 1) * (shelf_spacing + T1);
+            z = Mz + (i + 1) * (T1 + bookcase_shelf_gap);
             translate([T1, 0, z])
             shelf();
         }
+    }
+}
+
+module draw_glass_doors() {
+    if (show_glass_doors) {
+        // Left door
+        translate([1, D, H - bookcase_glass_door_height])
+        glass_door();
+
+        // Right door
+        translate([1 + bookcase_glass_door_width + Gap, D, H - bookcase_glass_door_height])
+        glass_door();
     }
 }
 
@@ -207,3 +251,4 @@ draw_drawers();
 draw_slides();
 draw_fronts();
 draw_shelves();
+draw_glass_doors();

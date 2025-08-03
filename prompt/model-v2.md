@@ -12,7 +12,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 
 ### Main Dimensions
 
--   **Corpus:** `H`, `W`, `D` (Height, Width, Depth)
+-   **Corpus:** `H`, `W`, `D` (Height, Width, Depth), `N` (Number of drawers)
 -   **Material Thickness:** `T1` (for corpus and fronts), `T2` (for drawer boxes)
 -   **Drawer & Fronts:** `Dh`, `Doffset`, `Doffset2`, `Gap`, `Overhang`
 
@@ -42,13 +42,20 @@ The model is broken down into several distinct components, each with its own Ope
 
 ### 3.4. Shelves
 
--   The top bookcase section contains two adjustable shelves.
+-   The top bookcase section contains two adjustable shelves, creating three open sections.
 -   The shelves are made from `T1` thickness material.
 
 ### 3.5. Slides
 
 -   Represents the drawer slides that mount to the corpus sides.
 -   These are modeled as simple blocks to correctly space the drawer boxes within the corpus.
+
+### 3.6. Glass Doors
+
+-   Two glass doors are positioned in front of the bookcase section.
+-   They cover the top two shelf gaps, leaving the lowest one open.
+-   The doors are modeled with a 4mm thickness and a semi-transparent light blue color to simulate glass.
+-   They are positioned to be flush with the top of the corpus, with a 1mm offset from the outer sides and a 3mm gap between them.
 
 ## 4. Joinery
 
@@ -61,7 +68,7 @@ The `model.scad` file is structured for clarity and ease of use.
 
 ### 5.1. Component Modules
 
-Each individual part (e.g., `corpus_side`, `drawer_bottom`) is defined in its own module. These are then assembled into more complex components (e.g., a full `drawer` or the `corpus`).
+Each individual part (e.g., `corpus_side`, `drawer_bottom`, `glass_door`) is defined in its own module. These are then assembled into more complex components (e.g., a full `drawer` or the `corpus`).
 
 ### 5.2. Drawing Modules & Debugging Flags
 
@@ -72,7 +79,10 @@ To aid in debugging and visualization, the final assembly is handled by a set of
 -   `draw_slides()`
 -   `draw_fronts()`
 -   `draw_shelves()`
+-   `draw_glass_doors()`
 
-The visibility of each of these component groups is controlled by a set of boolean flags at the top of the file (e.g., `show_corpus`, `show_drawers`). This allows a user to selectively render parts of the model to inspect specific areas without visual clutter.
+The visibility of each of these component groups is controlled by a set of boolean flags at the top of the file (e.g., `show_corpus`, `show_glass_doors`). This allows a user to selectively render parts of the model to inspect specific areas without visual clutter.
 
-This modular and flag-driven approach keeps the main assembly logic clean and makes the model significantly easier to debug and modify.
+## 6. Debugging and Verification
+
+To assist with verifying the parametric design, key calculated dimensions are printed to the OpenSCAD console using the `echo()` function. This includes values like the position of the middle plate, the spacing of the shelves, and the dimensions of the drawers and doors. This allows for quick verification of the model's dimensions without needing to manually measure the 3D view.
