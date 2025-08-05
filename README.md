@@ -1,17 +1,27 @@
 # Chest of Drawers Bookcase
 
-This project contains the OpenSCAD code for a chest of drawers with an integrated bookcase.
+This project is a parametric 3D model of a chest of drawers with an integrated bookcase, designed in OpenSCAD.
 
 ![Chest of Drawers Bookcase](artifacts/chest-of-drawers-bookcase-openscad.png)
 
-## Description
+## Overview
 
-The model is a parametric 3D model of a piece of furniture combining a six-drawer chest of drawers with a bookcase on top. The bookcase is enclosed by two glass doors.
+The model is a highly customizable piece of furniture that combines a six-drawer chest with a three-tier bookcase, enclosed by a pair of glass doors. The entire design is parametric, meaning its dimensions and features can be easily modified by changing variables in the source code.
 
-The OpenSCAD code is structured in a modular way to allow for easy customization and debugging. You can selectively show or hide different components of the model by changing the boolean flags at the top of the `model.scad` file.
+## Key Features
+
+*   **Parametric Design:** Easily change the height, width, depth, and material thicknesses by editing the variables at the top of the `model.scad` file.
+*   **Modular Structure:** The code is organized into logical, reusable modules for each component (e.g., corpus, drawers, shelves), making it clean and easy to understand.
+*   **Debugging Friendly:**
+    *   **Component Toggles:** Use boolean flags (e.g., `show_corpus`, `show_drawers`) to selectively render different parts of the model, simplifying inspection and debugging.
+    *   **Console Output:** Key calculated dimensions are automatically printed to the OpenSCAD console, allowing for quick verification of the model's geometry.
+*   **Descriptive Naming:** All variables use clear, descriptive names (e.g., `corpus_height`, `drawer_gap`) to enhance code readability and maintainability.
 
 ## Usage
 
-To view and customize the 3D model, open the `model.scad` file in [OpenSCAD](https://openscad.org/).
+1.  Open the `model.scad` file in [OpenSCAD](https://openscad.org/).
+2.  Modify the parameters in the "Parameters" section to customize the design.
+3.  Use the boolean flags in the "Debugging flags" section to show or hide specific components.
+4.  Check the OpenSCAD console to see the calculated dimensions of the components.
 
-The `prompt/model-v2.md` file contains a detailed description of the model and the design decisions.
+For a complete breakdown of the design decisions, parameters, and code structure, please see the detailed [Model Description](prompt/model-v2.md).

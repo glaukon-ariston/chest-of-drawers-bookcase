@@ -8,13 +8,13 @@ The model is a piece of furniture combining a six-drawer chest of drawers with a
 
 ## 2. Parametric Design
 
-The model is driven by a set of global parameters defined at the beginning of the `model.scad` file. This allows for easy modification of the overall dimensions and material thicknesses.
+The model is driven by a set of global parameters defined at the beginning of the `model.scad` file. This allows for easy modification of the overall dimensions and material thicknesses. The variable names are chosen to be descriptive for better readability.
 
 ### Main Dimensions
 
--   **Corpus:** `H`, `W`, `D` (Height, Width, Depth), `N` (Number of drawers)
--   **Material Thickness:** `T1` (for corpus and fronts), `T2` (for drawer boxes)
--   **Drawer & Fronts:** `Dh`, `Doffset`, `Doffset2`, `Gap`, `Overhang`
+-   **Corpus:** `corpus_height`, `corpus_width`, `corpus_depth`, `number_of_drawers`
+-   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes)
+-   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
 
@@ -26,24 +26,24 @@ The model is broken down into several distinct components, each with its own Ope
 
 -   The main body of the furniture.
 -   Consists of two side panels, a top plate, a bottom plate, and a middle plate that separates the drawers from the bookcase section.
--   Constructed from `T1` thickness material.
+-   Constructed from `melanine_thickness_main` material.
 
 ### 3.2. Drawers
 
--   The chest contains six identical drawer boxes.
--   Each drawer box is constructed from `T2` thickness material and consists of a bottom plate, two side plates, and a back plate.
+-   The chest contains a variable number of identical drawer boxes (`number_of_drawers`).
+-   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate.
 -   The drawers are designed to be mounted on slides.
 
 ### 3.3. Drawer Fronts
 
--   The drawer fronts are separate from the drawer boxes and are made from `T1` thickness material.
--   The design includes a consistent vertical `Gap` between each front.
+-   The drawer fronts are separate from the drawer boxes and are made from `melanine_thickness_main` material.
+-   The design includes a consistent vertical `front_gap` between each front.
 -   The top and bottom drawer fronts are sized differently to account for overlaps with the corpus middle and bottom plates, ensuring a visually clean appearance.
 
 ### 3.4. Shelves
 
 -   The top bookcase section contains two adjustable shelves, creating three open sections.
--   The shelves are made from `T1` thickness material.
+-   The shelves are made from `melanine_thickness_main` material.
 
 ### 3.5. Slides
 
@@ -55,7 +55,7 @@ The model is broken down into several distinct components, each with its own Ope
 -   Two glass doors are positioned in front of the bookcase section.
 -   They cover the top two shelf gaps, leaving the lowest one open.
 -   The doors are modeled with a 4mm thickness and a semi-transparent light blue color to simulate glass.
--   They are positioned to be flush with the top of the corpus, with a 1mm offset from the outer sides and a 3mm gap between them.
+-   They are positioned to be flush with the top of the corpus, with a 1mm offset from the outer sides and a 3mm `front_gap` between them.
 
 ## 4. Joinery
 

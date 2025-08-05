@@ -9,68 +9,68 @@ show_glass_doors = true;
 // Parameters
 
 // Corpus
-N = 6;      // number of drawers
-H = 2300;
-W = 800;
-D = 230;
+corpus_height = 2300;
+corpus_width = 800;
+corpus_depth = 230;
 
 // Melanine material thickness
-T1 = 19;
-T2 = 12;
+melanine_thickness_main = 19;
+melanine_thickness_secondary = 12;
 
 // Shelves
-Pw = W - 2*T1;
-Ph = D;
+shelf_width = corpus_width - 2*melanine_thickness_main;
+shelf_depth = corpus_depth;
 
 // Slides
-Sw = 200;
-Sh = 45;
-Sd = 13;
+slide_width = 200;
+slide_height = 45;
+slide_depth = 13;
 
 // Drawers
-Dh = 200;
-DBh = Dh - T2;
-Dd = D - 5;
-Dw = Pw - 2*Sd;
-DBw = Dw - 2*T2;
-Doffset = 10;     // the lowest drawer offset from the corpus bottom
-Doffset2 = 10;    // the gap between drawers
-Dvspace = Dh + Doffset2;    // vertical space between drawers
-Dorigin = T1 + Doffset;     // offset of the bottom of the first drawer
+number_of_drawers = 6;
+drawer_height = 200;
+drawer_body_height = drawer_height - melanine_thickness_secondary;
+drawer_depth = corpus_depth - 5;
+drawer_width = shelf_width - 2*slide_depth;
+drawer_body_width = drawer_width - 2*melanine_thickness_secondary;
+drawer_bottom_offset = 10;     // the lowest drawer offset from the corpus bottom
+drawer_gap = 10;    // the gap between drawers
+drawer_vertical_space = drawer_height + drawer_gap;    // vertical space between drawers
+drawer_origin_z = melanine_thickness_main + drawer_bottom_offset;     // offset of the bottom of the first drawer
 
 // Middle Plate
-Mz = Dorigin + N*Dvspace;
+middle_plate_z = drawer_origin_z + number_of_drawers*drawer_vertical_space;
 
 // Drawer Fronts
-Gap = 3;
-Overhang = 3;
-Fw = W;
-Fh0 = Dh + Doffset2 - Gap;
-F1h = T1 + Doffset - Gap + Fh0;
-Fh = Fh0;
-Ftoph = Fh + 3*Overhang;
+front_gap = 3;
+front_overhang = 3;
+front_width = corpus_width;
+front_height_base = drawer_height + drawer_gap - front_gap;
+front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base;
+front_height_standard = front_height_base;
+front_height_top = front_height_standard + 3*front_overhang;
 
 // Bookcase dimensions
-bookcase_start_z = Mz + T1;
-bookcase_end_z = H - T1;
-bookcase_h = bookcase_end_z - bookcase_start_z;
-bookcase_shelf_gap = (bookcase_h - 2 * T1) / 3;
+bookcase_start_z = middle_plate_z + melanine_thickness_main;
+bookcase_end_z = corpus_height - melanine_thickness_main;
+bookcase_height = bookcase_end_z - bookcase_start_z;
+bookcase_shelf_gap = (bookcase_height - 2 * melanine_thickness_main) / 3;
 
-bookcase_glass_door_width = (W - (1 + Gap + 1))/2;
-bookcase_glass_door_height = T1 + bookcase_shelf_gap + T1 + bookcase_shelf_gap + T1/2;
+bookcase_glass_door_width = (corpus_width - (1 + front_gap + 1))/2;
+bookcase_glass_door_height = melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main/2;
 
 // Derived Measurements & Debugging
-echo(str("Middle Plate Z: ", Mz));
-echo(str("Bookcase Vertical Space: ", bookcase_h));
+echo(str("Middle Plate Z: ", middle_plate_z));
+echo(str("Bookcase Vertical Space: ", bookcase_height));
 echo(str("Bookcase Shelf Gap: ", bookcase_shelf_gap));
 echo(str("Bookcase Door Width: ", bookcase_glass_door_width));
 echo(str("Bookcase Door Height: ", bookcase_glass_door_height));
-echo(str("Drawer Vertical Space: ", Dvspace));
-echo(str("Drawer Width: ", Dw));
-echo(str("Shelf Width: ", Pw));
-echo(str("First Drawer Front Height: ", F1h));
-echo(str("Standard Drawer Front Height: ", Fh));
-echo(str("Top Drawer Front Height: ", Ftoph));
+echo(str("Drawer Vertical Space: ", drawer_vertical_space));
+echo(str("Drawer Width: ", drawer_width));
+echo(str("Shelf Width: ", shelf_width));
+echo(str("First Drawer Front Height: ", front_height_first));
+echo(str("Standard Drawer Front Height: ", front_height_standard));
+echo(str("Top Drawer Front Height: ", front_height_top));
 
 // Colors
 color_corpus = "Red";
@@ -82,7 +82,7 @@ color_joinery = "Black";
 color_glass = "LightBlue";
 
 module confirmat_hole() {
-    cylinder(h=T1, r=2.5, $fn=16);
+    cylinder(h=melanine_thickness_main, r=2.5, $fn=16);
 }
 
 module dowel_hole() {
@@ -91,12 +91,12 @@ module dowel_hole() {
 
 module corpus_side(name="side") {
     color(color_corpus)
-    cube([T1, D, H]);
+    cube([melanine_thickness_main, corpus_depth, corpus_height]);
 }
 
 module corpus_plate(width) {
      color(color_corpus)
-    cube([width, D, T1]);
+    cube([width, corpus_depth, melanine_thickness_main]);
 }
 
 module corpus() {
@@ -105,40 +105,40 @@ module corpus() {
     corpus_side();
 
     // Right side
-    translate([W - T1, 0, 0])
+    translate([corpus_width - melanine_thickness_main, 0, 0])
     corpus_side();
 
     // Bottom plate
-    translate([T1, 0, 0])
-    corpus_plate(W - 2*T1);
+    translate([melanine_thickness_main, 0, 0])
+    corpus_plate(corpus_width - 2*melanine_thickness_main);
 
     // Top plate
-    translate([T1, 0, H - T1])
-    corpus_plate(W - 2*T1);
+    translate([melanine_thickness_main, 0, corpus_height - melanine_thickness_main])
+    corpus_plate(corpus_width - 2*melanine_thickness_main);
 
     // Middle plate
-    translate([T1, 0, Mz])
-    corpus_plate(W - 2*T1);
+    translate([melanine_thickness_main, 0, middle_plate_z])
+    corpus_plate(corpus_width - 2*melanine_thickness_main);
 }
 
 module drawer_side() {
     color(color_drawers)
-    cube([T2, Dd, Dh]);
+    cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
 }
 
 module drawer_back() {
     color(color_drawers)
-    cube([DBw, T2, DBh]);
+    cube([drawer_body_width, melanine_thickness_secondary, drawer_body_height]);
 }
 
 module drawer_bottom() {
     color(color_drawers)
-    cube([DBw, Dd, T2]);
+    cube([drawer_body_width, drawer_depth, melanine_thickness_secondary]);
 }
 
 module drawer() {
     // Bottom
-    translate([T2, 0, 0])
+    translate([melanine_thickness_secondary, 0, 0])
     drawer_bottom();
 
     // Left side
@@ -146,27 +146,27 @@ module drawer() {
     drawer_side();
 
     // Right side
-    translate([DBw + T2, 0, 0])
+    translate([drawer_body_width + melanine_thickness_secondary, 0, 0])
     drawer_side();
 
     // Back
-    translate([T2, Dd - T2, T2])
+    translate([melanine_thickness_secondary, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary])
     drawer_back();
 }
 
 module drawer_front(height) {
     color(color_fronts)
-    cube([Fw, T1, height]);
+    cube([front_width, melanine_thickness_main, height]);
 }
 
 module slide() {
     color(color_slides)
-    cube([Sd, Sw, Sh]);
+    cube([slide_depth, slide_width, slide_height]);
 }
 
 module shelf() {
     color(color_shelves)
-    cube([Pw, Ph, T1]);
+    cube([shelf_width, shelf_depth, melanine_thickness_main]);
 }
 
 module glass_door() {
@@ -182,10 +182,10 @@ module draw_corpus() {
 
 module draw_drawers() {
     if (show_drawers) {
-        for (i = [0:N-1]) {
-            z = Dorigin + i * Dvspace;
+        for (i = [0:number_of_drawers-1]) {
+            z = drawer_origin_z + i * drawer_vertical_space;
             // Drawer box
-            translate([T1 + Sd, (D - Dd) / 2, z])
+            translate([melanine_thickness_main + slide_depth, (corpus_depth - drawer_depth) / 2, z])
             drawer();
         }
     }
@@ -193,12 +193,12 @@ module draw_drawers() {
 
 module draw_slides() {
     if (show_slides) {
-        for (i = [0:N-1]) {
-            z = Dorigin + i * Dvspace;
+        for (i = [0:number_of_drawers-1]) {
+            z = drawer_origin_z + i * drawer_vertical_space;
             // Slides
-            translate([T1, (D - Sw) / 2, z + (Dh - Sh) / 2])
+            translate([melanine_thickness_main, (corpus_depth - slide_width) / 2, z + (drawer_height - slide_height) / 2])
             slide();
-            translate([W - T1 - Sd, (D - Sw) / 2, z + (Dh - Sh) / 2])
+            translate([corpus_width - melanine_thickness_main - slide_depth, (corpus_depth - slide_width) / 2, z + (drawer_height - slide_height) / 2])
             slide();
         }
     }
@@ -206,18 +206,18 @@ module draw_slides() {
 
 module draw_fronts() {
     if (show_fronts) {
-        for (i = [0:N-1]) {
-            z = Dorigin + i * Dvspace;
+        for (i = [0:number_of_drawers-1]) {
+            z = drawer_origin_z + i * drawer_vertical_space;
             // Drawer front
             if (i == 0) {
-                translate([0, D, 0])
-                drawer_front(F1h);
+                translate([0, corpus_depth, 0])
+                drawer_front(front_height_first);
             } else if (i == 5) {
-                translate([0, D, z - Overhang])
-                drawer_front(Ftoph);
+                translate([0, corpus_depth, z - front_overhang])
+                drawer_front(front_height_top);
             } else {
-                translate([0, D, z - Overhang])
-                drawer_front(Fh);
+                translate([0, corpus_depth, z - front_overhang])
+                drawer_front(front_height_standard);
             }
         }
     }
@@ -226,8 +226,8 @@ module draw_fronts() {
 module draw_shelves() {
     if (show_shelves) {
         for (i = [0:1]) {
-            z = Mz + (i + 1) * (T1 + bookcase_shelf_gap);
-            translate([T1, 0, z])
+            z = middle_plate_z + (i + 1) * (melanine_thickness_main + bookcase_shelf_gap);
+            translate([melanine_thickness_main, 0, z])
             shelf();
         }
     }
@@ -236,11 +236,11 @@ module draw_shelves() {
 module draw_glass_doors() {
     if (show_glass_doors) {
         // Left door
-        translate([1, D, H - bookcase_glass_door_height])
+        translate([1, corpus_depth, corpus_height - bookcase_glass_door_height])
         glass_door();
 
         // Right door
-        translate([1 + bookcase_glass_door_width + Gap, D, H - bookcase_glass_door_height])
+        translate([1 + bookcase_glass_door_width + front_gap, corpus_depth, corpus_height - bookcase_glass_door_height])
         glass_door();
     }
 }
