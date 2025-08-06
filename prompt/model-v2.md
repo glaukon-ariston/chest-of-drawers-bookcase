@@ -13,8 +13,9 @@ The model is driven by a set of global parameters defined at the beginning of th
 ### Main Dimensions
 
 -   **Corpus:** `corpus_height`, `corpus_width`, `corpus_depth`, `number_of_drawers`
--   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes)
+-   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
 -   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`
+-   **Slides:** `slide_z_offset`
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
 
@@ -27,12 +28,14 @@ The model is broken down into several distinct components, each with its own Ope
 -   The main body of the furniture.
 -   Consists of two side panels, a top plate, a bottom plate, and a middle plate that separates the drawers from the bookcase section.
 -   Constructed from `melanine_thickness_main` material.
+-   The back is enclosed by a 3mm HDF panel.
 
 ### 3.2. Drawers
 
 -   The chest contains a variable number of identical drawer boxes (`number_of_drawers`).
 -   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate.
--   The drawers are designed to be mounted on slides.
+-   The drawer construction is robust, with the back panel positioned behind the bottom plate for added strength.
+-   The drawers are designed to be mounted on slides and are positioned flush with the front of the corpus for a clean, modern look.
 
 ### 3.3. Drawer Fronts
 
@@ -49,6 +52,7 @@ The model is broken down into several distinct components, each with its own Ope
 
 -   Represents the drawer slides that mount to the corpus sides.
 -   These are modeled as simple blocks to correctly space the drawer boxes within the corpus.
+-   They are positioned flush with the front of the corpus, and their vertical position is controlled by the `slide_z_offset` parameter.
 
 ### 3.6. Glass Doors
 
@@ -68,7 +72,7 @@ The `model.scad` file is structured for clarity and ease of use.
 
 ### 5.1. Component Modules
 
-Each individual part (e.g., `corpus_side`, `drawer_bottom`, `glass_door`) is defined in its own module. These are then assembled into more complex components (e.g., a full `drawer` or the `corpus`).
+Each individual part (e.g., `corpus_side`, `drawer_bottom`, `glass_door`, `hdf_back_panel`) is defined in its own module. These are then assembled into more complex components (e.g., a full `drawer` or the `corpus`).
 
 ### 5.2. Drawing Modules & Debugging Flags
 
@@ -80,6 +84,7 @@ To aid in debugging and visualization, the final assembly is handled by a set of
 -   `draw_fronts()`
 -   `draw_shelves()`
 -   `draw_glass_doors()`
+-   `draw_hdf_back_panel()`
 
 The visibility of each of these component groups is controlled by a set of boolean flags at the top of the file (e.g., `show_corpus`, `show_glass_doors`). This allows a user to selectively render parts of the model to inspect specific areas without visual clutter.
 

@@ -6,6 +6,8 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 
 *   `model.scad`: The main OpenSCAD file containing the 3D model of the furniture.
 *   `prompt/model.md`: The detailed instructions and dimensions used to generate the `model.scad` file.
+*   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
+*   `artifacts/conversation.md`: A log of the conversation with the user.
 
 ## Model Description
 
@@ -50,6 +52,14 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   **Drawers:** The drawers are made of T2 thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of T1 thick melanine.
 *   **Shelves:** The bookcase has two shelves made of T1 thick melanine.
 *   **Joinery:** Confirmat screws (phi 5 mm) are used to join the corpus and drawer panels. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes.
+
+## Changelog
+
+### v2
+
+*   The drawer assembly has been fixed. The back panel of the drawer is now correctly positioned.
+*   The model has been made more parametric.
+*   The file `prompt/model-v2.md` has been added to reflect the changes in the model.
 
 ## Usage
 

@@ -6,11 +6,12 @@ This project is a parametric 3D model of a chest of drawers with an integrated b
 
 ## Overview
 
-The model is a highly customizable piece of furniture that combines a six-drawer chest with a three-tier bookcase, enclosed by a pair of glass doors. The entire design is parametric, meaning its dimensions and features can be easily modified by changing variables in the source code.
+The model is a highly customizable piece of furniture that combines a six-drawer chest with a three-tier bookcase, enclosed by a pair of glass doors. The entire design is parametric, meaning its dimensions and features can be easily modified by changing variables in the source code. The model is designed with realistic construction details in mind.
 
 ## Key Features
 
 *   **Parametric Design:** Easily change the height, width, depth, and material thicknesses by editing the variables at the top of the `model.scad` file.
+*   **Realistic Construction:** The model incorporates practical construction details, including a robust drawer assembly, a 3mm HDF back panel, and the precise, flush alignment of internal components like drawers and slides.
 *   **Modular Structure:** The code is organized into logical, reusable modules for each component (e.g., corpus, drawers, shelves), making it clean and easy to understand.
 *   **Debugging Friendly:**
     *   **Component Toggles:** Use boolean flags (e.g., `show_corpus`, `show_drawers`) to selectively render different parts of the model, simplifying inspection and debugging.
