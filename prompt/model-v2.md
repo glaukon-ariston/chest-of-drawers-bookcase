@@ -16,7 +16,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 -   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
 -   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`
 -   **Slides:** `slide_z_offset`
--   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`
+-   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`, `dowel_diameter`, `dowel_length`, `dowel_hole_depth_in_front`, `dowel_hole_edge_distance`, `panel_length_for_four_dowels`
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
 
@@ -34,13 +34,13 @@ The model is broken down into several distinct components, each with its own Ope
 ### 3.2. Drawers
 
 -   The chest contains a variable number of identical drawer boxes (`number_of_drawers`).
--   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate, joined together with confirmat screws.
+-   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate, joined together with confirmat screws. Dowel holes are included in the side and bottom panels for joining with the front panels.
 -   The drawer construction is robust, with the back panel positioned behind the bottom plate for added strength.
 -   The drawers are designed to be mounted on slides and are positioned flush with the front of the corpus for a clean, modern look.
 
 ### 3.3. Drawer Fronts
 
--   The drawer fronts are separate from the drawer boxes and are made from `melanine_thickness_main` material.
+-   The drawer fronts are separate from the drawer boxes and are made from `melanine_thickness_main` material. Dowel holes are included for joining with the drawer boxes.
 -   The design includes a consistent vertical `front_gap` between each front.
 -   The top and bottom drawer fronts are sized differently to account for overlaps with the corpus middle and bottom plates, ensuring a visually clean appearance.
 -   The drawer fronts are horizontally centered within the corpus, with a `front_margin` on both the left and right sides.
@@ -67,7 +67,7 @@ The model is broken down into several distinct components, each with its own Ope
 
 -   **Corpus and Shelves:** 5mm Confirmat screws are used for joining the main corpus panels and shelves. 4mm pilot holes for these screws are included in the model.
 -   **Drawers:** The drawer elements (sides, base, and back panels) are joined using 4.8mm thick and 49mm long Confirmat screws. The model now includes 4mm pilot holes for these screws. The number of screws is determined by the length of the joined panel edge: two screws for edges less than 50cm, and three for longer edges. The holes are positioned 5cm from each edge.
--   **Wooden Dowels:** The drawer fronts are intended to be joined to the drawer boxes using 6mm wooden dowels.
+-   **Wooden Dowels:** The drawer fronts are joined to the drawer boxes with 6mm (`dowel_diameter`) x 30mm (`dowel_length`) wooden dowels. The front's blind hole is 1cm (`dowel_hole_depth_in_front`) deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer. The hole locations are 5cm (`dowel_hole_edge_distance`) from the edge and are evenly spaced. The dowels will be glued.
 
 ## 5. Code Structure & Modularity
 

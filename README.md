@@ -11,7 +11,7 @@ The model is a highly customizable piece of furniture that combines a six-drawer
 ## Key Features
 
 *   **Parametric Design:** Easily change the height, width, depth, and material thicknesses by editing the variables at the top of the `model.scad` file.
-*   **Realistic Construction:** The model incorporates practical construction details, including a robust drawer assembly, a 3mm HDF back panel, and the precise, flush alignment of internal components like drawers and slides. It also includes 4mm pilot holes for the confirmat screws used for assembling the corpus and the drawers.
+*   **Realistic Construction:** The model incorporates practical construction details, including a robust drawer assembly, a 3mm HDF back panel, and the precise, flush alignment of internal components like drawers and slides. It also includes 4mm pilot holes for the confirmat screws used for assembling the corpus and the drawers. Wooden dowels (6mm x 30mm) are used to join the front panels to the drawer boxes, with precisely drilled holes (1cm deep in the front, 5cm from edges, and evenly spaced) to ensure proper alignment and a strong bond.
 *   **Modular Structure:** The code is organized into logical, reusable modules for each component (e.g., corpus, drawers, shelves), making it clean and easy to understand.
 *   **Debugging Friendly:**
     *   **Component Toggles:** Use boolean flags (e.g., `show_corpus`, `show_drawers`) to selectively render different parts of the model, simplifying inspection and debugging.
