@@ -360,3 +360,43 @@ This involves changing the y-translation for the `drawer()` module inside the `d
 I will now modify the `model.scad` file.
 
 I have updated the `draw_drawers` module in `model.scad`. The drawer boxes are now positioned to be flush with the front of the corpus.
+
+---
+
+### User
+
+> Decrease the drawer front's width by 1.5mm margin, both left and right.
+
+### Model
+
+I have decreased the drawer front's width by 1.5mm on both the left and right sides in the `model.scad` file. I also updated the `GEMINI.md` and `prompt/model.md` files to reflect this change.
+
+---
+
+### User
+
+> Change @GEMINI.md so it uses the same descriptive variable names as in the @model.scad
+
+### Model
+
+I have updated the `GEMINI.md` file to use the same descriptive variable names as in the `model.scad` file.
+
+---
+
+### User
+
+> Fix the drawer front positioning so it gets rendered horizontally centered in the corpus. Use the `front_margin` to offset the drawer't front from the corpus edge.
+
+### Model
+
+I have updated the `model.scad` file to fix the drawer front positioning. The drawer fronts are now horizontally centered in the corpus, using the `front_margin` to offset them from the corpus edge.
+
+---
+
+### User
+
+> Update the @prompt/model-v2.md file with the recent changes and design decisions.
+
+### Model
+
+I have updated the `prompt/model-v2.md` file to reflect the recent changes and design decisions.

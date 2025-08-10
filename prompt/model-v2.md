@@ -14,7 +14,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 
 -   **Corpus:** `corpus_height`, `corpus_width`, `corpus_depth`, `number_of_drawers`
 -   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
--   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`
+-   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`
 -   **Slides:** `slide_z_offset`
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
@@ -42,6 +42,7 @@ The model is broken down into several distinct components, each with its own Ope
 -   The drawer fronts are separate from the drawer boxes and are made from `melanine_thickness_main` material.
 -   The design includes a consistent vertical `front_gap` between each front.
 -   The top and bottom drawer fronts are sized differently to account for overlaps with the corpus middle and bottom plates, ensuring a visually clean appearance.
+-   The drawer fronts are horizontally centered within the corpus, with a `front_margin` on both the left and right sides.
 
 ### 3.4. Shelves
 

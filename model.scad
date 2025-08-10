@@ -6,9 +6,9 @@
 
 // Debugging flags
 show_corpus = true;
-show_corpus_sides = false;
+show_corpus_sides = true;
 show_drawers = true;
-show_fronts = false;
+show_fronts = true;
 show_slides = true;
 show_shelves = true;
 show_glass_doors = true;
@@ -56,7 +56,8 @@ middle_plate_z = drawer_origin_z + number_of_drawers*drawer_vertical_space;
 // Drawer Fronts
 front_gap = 3;
 front_overhang = 3;
-front_width = corpus_width;
+front_margin = 1.5; // margin on left and right side of drawer front
+front_width = corpus_width - 2 * front_margin;
 front_depth = melanine_thickness_main;
 front_height_base = drawer_height + drawer_gap - front_gap;
 front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base;
@@ -234,13 +235,13 @@ module draw_fronts() {
             z = drawer_origin_z + i * drawer_vertical_space;
             // Drawer front
             if (i == 0) {
-                translate([0, -front_depth, 0])
+                translate([front_margin, -front_depth, 0])
                 drawer_front(front_height_first);
             } else if (i == 5) {
-                translate([0, -front_depth, z - front_overhang])
+                translate([front_margin, -front_depth, z - front_overhang])
                 drawer_front(front_height_top);
             } else {
-                translate([0, -front_depth, z - front_overhang])
+                translate([front_margin, -front_depth, z - front_overhang])
                 drawer_front(front_height_standard);
             }
         }

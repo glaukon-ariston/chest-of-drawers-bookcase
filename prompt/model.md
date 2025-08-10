@@ -32,7 +32,8 @@ Doffset2 = 1 cm
 Drawer Fronts
 Gap = 3 mm
 Overhang = 3 mm
-Fw = W
+Margin = 1.5 mm
+Fw = W - 2 * Margin
 Fh0 = Dh + Doffset - Gap
 F1h = T1 + Fh0
 Fh = Fh0

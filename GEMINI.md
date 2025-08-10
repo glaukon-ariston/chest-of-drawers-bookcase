@@ -16,41 +16,42 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 ### Main Dimensions
 
 *   **Corpus:**
-    *   H = 230 cm
-    *   W = 80 cm
-    *   D = 23 cm
+    *   corpus_height = 2300
+    *   corpus_width = 800
+    *   corpus_depth = 230
 *   **Melanine material thickness:**
-    *   T1 = 19 mm
-    *   T2 = 12 mm
+    *   melanine_thickness_main = 19
+    *   melanine_thickness_secondary = 12
 *   **Shelves:**
-    *   Pw = W - 2*T1
-    *   Ph = D
+    *   shelf_width = corpus_width - 2*melanine_thickness_main
+    *   shelf_depth = corpus_depth
 *   **Slides:**
-    *   Sw = 200 mm
-    *   Sh = 45 mm
-    *   Sd = 13 mm
+    *   slide_width = 200
+    *   slide_height = 45
+    *   slide_depth = 13
 *   **Drawers:**
-    *   Dh = 20 cm
-    *   DBh = Dh - T2
-    *   Dd = D - 0.5 cm
-    *   Dw = Pw - 2*Sd
-    *   DBw = Dw - 2*T2
-    *   Doffset = 1 cm
-    *   Doffset2 = 1 cm
+    *   drawer_height = 200
+    *   drawer_body_height = drawer_height - melanine_thickness_secondary
+    *   drawer_depth = corpus_depth - 5
+    *   drawer_width = shelf_width - 2*slide_depth
+    *   drawer_body_width = drawer_width - 2*melanine_thickness_secondary
+    *   drawer_bottom_offset = 10
+    *   drawer_gap = 10
 *   **Drawer Fronts:**
-    *   Gap = 3 mm
-    *   Overhang = 3 mm
-    *   Fw = W
-    *   Fh0 = Dh + Doffset - Gap
-    *   F1h = T1 + Fh0
-    *   Fh = Overhang + Fh0
-    *   F6h = Fh + Overhang
+    *   front_gap = 3
+    *   front_overhang = 3
+    *   front_margin = 1.5
+    *   front_width = corpus_width - 2 * front_margin
+    *   front_height_base = drawer_height + drawer_gap - front_gap
+    *   front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base
+    *   front_height_standard = front_height_base
+    *   front_height_top = front_height_standard + 3*front_overhang
 
 ### Structure
 
-*   **Corpus:** The corpus is made of T1 thick melanine and consists of two sides, a top, a bottom and a middle plate. The corpus is divided into two compartments. The bottom compartment contains six drawers and the top compartment is a bookcase with two shelves.
-*   **Drawers:** The drawers are made of T2 thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of T1 thick melanine.
-*   **Shelves:** The bookcase has two shelves made of T1 thick melanine.
+*   **Corpus:** The corpus is made of `melanine_thickness_main` thick melanine and consists of two sides, a top, a bottom and a middle plate. The corpus is divided into two compartments. The bottom compartment contains six drawers and the top compartment is a bookcase with two shelves.
+*   **Drawers:** The drawers are made of `melanine_thickness_secondary` thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of `melanine_thickness_main` thick melanine.
+*   **Shelves:** The bookcase has two shelves made of `melanine_thickness_main` thick melanine.
 *   **Joinery:** Confirmat screws (phi 5 mm) are used to join the corpus and drawer panels. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes.
 
 ## Changelog
