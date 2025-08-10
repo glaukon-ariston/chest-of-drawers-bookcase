@@ -6,7 +6,7 @@
 
 // Debugging flags
 show_corpus = true;
-show_corpus_sides = true;
+show_corpus_sides = false;
 show_drawers = true;
 show_fronts = true;
 show_slides = true;
@@ -27,6 +27,12 @@ melanine_thickness_secondary = 12;
 
 // HDF Back Panel
 hdf_thickness = 3;
+
+// Joinery
+confirmat_screw_length = 49;
+confirmat_hole_diameter = 4;
+confirmat_hole_radius = confirmat_hole_diameter / 2;
+confirmat_hole_edge_distance = 50;
 
 // Shelves
 shelf_width = corpus_width - 2*melanine_thickness_main;
@@ -99,8 +105,12 @@ color_joinery = "Black";
 color_glass = "LightBlue";
 color_hdf_panel = "White";
 
-module confirmat_hole() {
-    cylinder(h=melanine_thickness_main, r=2.5, $fn=16);
+module confirmat_hole_side() {
+    cylinder(h=melanine_thickness_main, r=confirmat_hole_radius, $fn=16, center=true);
+}
+
+module confirmat_hole_plate() {
+    cylinder(h=confirmat_screw_length-melanine_thickness_main, r=confirmat_hole_radius, $fn=16);
 }
 
 module dowel_hole() {
@@ -108,13 +118,44 @@ module dowel_hole() {
 }
 
 module corpus_side(name="side") {
-    color(color_corpus)
-    cube([melanine_thickness_main, corpus_depth, corpus_height]);
+    difference() {
+        color(color_corpus)
+        cube([melanine_thickness_main, corpus_depth, corpus_height]);
+
+        // Holes for bottom plate
+        translate([melanine_thickness_main / 2, confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_side();
+        translate([melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_side();
+
+        // Holes for top plate
+        translate([melanine_thickness_main / 2, confirmat_hole_edge_distance, corpus_height - melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_side();
+        translate([melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, corpus_height - melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_side();
+
+        // Holes for middle plate
+        translate([melanine_thickness_main / 2, confirmat_hole_edge_distance, middle_plate_z + melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_side();
+        translate([melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, middle_plate_z + melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_side();
+
+        // Holes for shelves
+        for (i = [0:1]) {
+            z = middle_plate_z + (i + 1) * (melanine_thickness_main + bookcase_shelf_gap) + melanine_thickness_main / 2;
+            translate([melanine_thickness_main / 2, confirmat_hole_edge_distance, z]) rotate([0, 90, 0]) confirmat_hole_side();
+            translate([melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, z]) rotate([0, 90, 0]) confirmat_hole_side();
+        }
+    }
 }
 
 module corpus_plate(width) {
-    color(color_corpus)
-    cube([width, corpus_depth, melanine_thickness_main]);
+    difference() {
+        color(color_corpus)
+        cube([width, corpus_depth, melanine_thickness_main]);
+
+        // Holes for left side
+        translate([0, confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_plate();
+        translate([0, corpus_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_plate();
+
+        // Holes for right side
+        translate([width, confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, -90, 0]) confirmat_hole_plate();
+        translate([width, corpus_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, -90, 0]) confirmat_hole_plate();
+    }
 }
 
 module corpus() {
@@ -185,8 +226,18 @@ module slide() {
 }
 
 module shelf() {
-    color(color_shelves)
-    cube([shelf_width, shelf_depth, melanine_thickness_main]);
+    difference() {
+        color(color_shelves)
+        cube([shelf_width, shelf_depth, melanine_thickness_main]);
+
+        // Holes for left side
+        translate([0, confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_plate();
+        translate([0, shelf_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, 90, 0]) confirmat_hole_plate();
+
+        // Holes for right side
+        translate([shelf_width, confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, -90, 0]) confirmat_hole_plate();
+        translate([shelf_width, shelf_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate([0, -90, 0]) confirmat_hole_plate();
+    }
 }
 
 module glass_door() {

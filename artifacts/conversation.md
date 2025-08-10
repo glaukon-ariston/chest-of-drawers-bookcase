@@ -400,3 +400,43 @@ I have updated the `model.scad` file to fix the drawer front positioning. The dr
 ### Model
 
 I have updated the `prompt/model-v2.md` file to reflect the recent changes and design decisions.
+
+---
+
+### User
+
+> The corpus elements--sides, horizontal panels and  shelves--are joined using 4.8mm thick and 49mm long confirmat screws. Create 4mm holes for confirmat screws in both sides and panels and shelves. These holes will be slightly widened during assembly using the special drill for confirmat screws. There should be two screws per panel per side and the hole locations should be 5cm from the corpus edge.
+
+### Model
+
+I have added 4mm pilot holes for the 4.8mm x 49mm Confirmat screws that join the corpus elements. The holes are positioned 5cm from the corpus edge, with two screws per panel per side.
+
+---
+
+### User
+
+> Do not use magic constants for hole and confirmat screw dimensions. Instead define these as constants giving them descriptive names.
+
+### Model
+
+I have replaced the magic constants for the hole and confirmat screw dimensions with descriptive variables. The screw length, hole diameter, and edge distance are now defined as `confirmat_screw_length`, `confirmat_hole_diameter`, and `confirmat_hole_edge_distance` respectively.
+
+---
+
+### User
+
+> Update the @prompt/model-v2.md file with the recent changes and design decisions.Update the @GEMINI.md file with the recent changes and design
+
+### Model
+
+I have updated the `prompt/model-v2.md` and `GEMINI.md` files to reflect the recent changes and design decisions.
+
+---
+
+### User
+
+> Update the @README.md file with the recent changes and design decisions.
+
+### Model
+
+I have updated the `README.md` file to reflect the recent changes and design decisions.

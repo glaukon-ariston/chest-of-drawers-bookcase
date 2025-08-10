@@ -16,6 +16,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 -   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
 -   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`
 -   **Slides:** `slide_z_offset`
+-   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
 
