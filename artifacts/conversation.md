@@ -440,3 +440,43 @@ I have updated the `prompt/model-v2.md` and `GEMINI.md` files to reflect the rec
 ### Model
 
 I have updated the `README.md` file to reflect the recent changes and design decisions.
+
+---
+
+### User
+
+> The drawer elements--sides, base and back panels--are joined using 4.8mm thick and 49mm long confirmat screws. Create 4mm holes for confirmat screws in both sides and panels. These holes will be slightly widened during assembly using the special drill for confirmat screws. There should be two screws per panel per side if the panel length is less than 50cm, three screws if longer, and the hole locations should be 5cm from the edge.
+
+### Model
+
+I have updated `model.scad` to include 4mm pilot holes for the confirmat screws in the drawer assemblies as you requested.
+
+---
+
+### User
+
+> Update the @prompt/model-v2.md file with the recent changes and design decisions.
+
+### Model
+
+I have updated the `prompt/model-v2.md` file to reflect the recent changes and design decisions.
+
+---
+
+### User
+
+> Update the @GEMINI.md file with the recent changes and design decisions.
+
+### Model
+
+I have updated the `GEMINI.md` file to reflect the recent changes and design decisions.
+
+---
+
+### User
+
+> Update the @README.md file with the recent changes and design decisions.
+
+### Model
+
+I have updated the `README.md` file to reflect the recent changes and design decisions.

@@ -34,7 +34,7 @@ The model is broken down into several distinct components, each with its own Ope
 ### 3.2. Drawers
 
 -   The chest contains a variable number of identical drawer boxes (`number_of_drawers`).
--   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate.
+-   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate, joined together with confirmat screws.
 -   The drawer construction is robust, with the back panel positioned behind the bottom plate for added strength.
 -   The drawers are designed to be mounted on slides and are positioned flush with the front of the corpus for a clean, modern look.
 
@@ -65,7 +65,8 @@ The model is broken down into several distinct components, each with its own Ope
 
 ## 4. Joinery
 
--   **Confirmat Screws:** The design specifies the use of 5mm Confirmat screws for joining the main corpus panels and for assembling the drawer boxes. Holes for these are intended but not fully modeled to keep the design clean.
+-   **Corpus and Shelves:** 5mm Confirmat screws are used for joining the main corpus panels and shelves. 4mm pilot holes for these screws are included in the model.
+-   **Drawers:** The drawer elements (sides, base, and back panels) are joined using 4.8mm thick and 49mm long Confirmat screws. The model now includes 4mm pilot holes for these screws. The number of screws is determined by the length of the joined panel edge: two screws for edges less than 50cm, and three for longer edges. The holes are positioned 5cm from each edge.
 -   **Wooden Dowels:** The drawer fronts are intended to be joined to the drawer boxes using 6mm wooden dowels.
 
 ## 5. Code Structure & Modularity

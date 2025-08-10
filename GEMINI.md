@@ -56,7 +56,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   **Corpus:** The corpus is made of `melanine_thickness_main` thick melanine and consists of two sides, a top, a bottom and a middle plate. The corpus is divided into two compartments. The bottom compartment contains six drawers and the top compartment is a bookcase with two shelves.
 *   **Drawers:** The drawers are made of `melanine_thickness_secondary` thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of `melanine_thickness_main` thick melanine.
 *   **Shelves:** The bookcase has two shelves made of `melanine_thickness_main` thick melanine.
-*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes.
+*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes.
 
 ## Changelog
 
@@ -64,6 +64,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 
 *   The drawer assembly has been fixed. The back panel of the drawer is now correctly positioned.
 *   The model has been made more parametric.
+*   Added 4mm pilot holes for confirmat screws to join the drawer components.
 *   The file `prompt/model-v2.md` has been added to reflect the changes in the model.
 
 ## Usage

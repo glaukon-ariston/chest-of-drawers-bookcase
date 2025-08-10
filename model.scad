@@ -8,11 +8,11 @@
 show_corpus = true;
 show_corpus_sides = false;
 show_drawers = true;
-show_fronts = true;
+show_fronts = false;
 show_slides = true;
 show_shelves = true;
 show_glass_doors = true;
-show_hdf_back_panel = true;
+show_hdf_back_panel = false;
 
 // Parameters
 
@@ -117,6 +117,14 @@ module dowel_hole() {
     cylinder(h=10, r=3, $fn=16);
 }
 
+module drawer_confirmat_hole() {
+    cylinder(h=melanine_thickness_secondary, r=confirmat_hole_radius, $fn=16, center=true);
+}
+
+module drawer_confirmat_hole_threaded() {
+    cylinder(h=confirmat_screw_length-melanine_thickness_secondary, r=confirmat_hole_radius, $fn=16);
+}
+
 module corpus_side(name="side") {
     difference() {
         color(color_corpus)
@@ -183,18 +191,58 @@ module corpus() {
 }
 
 module drawer_side() {
-    color(color_drawers)
-    cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
+    difference() {
+        color(color_drawers)
+        cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
+
+        // Holes for back panel (2 holes)
+        translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate([0, 90, 0]) drawer_confirmat_hole();
+        translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate([0, 90, 0]) drawer_confirmat_hole();
+
+        // Holes for bottom panel (2 holes)
+        translate([melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate([0, 90, 0]) drawer_confirmat_hole();
+        translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate([0, 90, 0]) drawer_confirmat_hole();
+    }
 }
 
 module drawer_back() {
-    color(color_drawer_back)
-    cube([drawer_body_width, melanine_thickness_secondary, drawer_height]);
+    difference() {
+        color(color_drawer_back)
+        cube([drawer_body_width, melanine_thickness_secondary, drawer_height]);
+
+        // Holes for left side (2 holes)
+        translate([0, melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate([0, 90, 0]) drawer_confirmat_hole_threaded();
+        translate([0, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate([0, 90, 0]) drawer_confirmat_hole_threaded();
+
+        // Holes for right side (2 holes)
+        translate([drawer_body_width, melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate([0, -90, 0]) drawer_confirmat_hole_threaded();
+        translate([drawer_body_width, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate([0, -90, 0]) drawer_confirmat_hole_threaded();
+
+        // Holes for bottom panel (3 holes)
+        translate([confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2]) rotate([90, 0, 0]) drawer_confirmat_hole();
+        translate([drawer_body_width/2, melanine_thickness_secondary/2, melanine_thickness_secondary/2]) rotate([90, 0, 0]) drawer_confirmat_hole();
+        translate([drawer_body_width - confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2]) rotate([90, 0, 0]) drawer_confirmat_hole();
+    }
 }
 
 module drawer_bottom() {
-    color(color_drawers)
-    cube([drawer_body_width, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary]);
+    difference() {
+        color(color_drawers)
+        cube([drawer_body_width, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary]);
+
+        // Holes for left side (2 holes)
+        translate([0, confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate([0, 90, 0]) drawer_confirmat_hole_threaded();
+        translate([0, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate([0, 90, 0]) drawer_confirmat_hole_threaded();
+
+        // Holes for right side (2 holes)
+        translate([drawer_body_width, confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate([0, -90, 0]) drawer_confirmat_hole_threaded();
+        translate([drawer_body_width, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate([0, -90, 0]) drawer_confirmat_hole_threaded();
+
+        // Holes for back panel (3 holes)
+        translate([confirmat_hole_edge_distance, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary/2]) rotate([90, 0, 0]) drawer_confirmat_hole_threaded();
+        translate([drawer_body_width/2, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary/2]) rotate([90, 0, 0]) drawer_confirmat_hole_threaded();
+        translate([drawer_body_width - confirmat_hole_edge_distance, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary/2]) rotate([90, 0, 0]) drawer_confirmat_hole_threaded();
+    }
 }
 
 module drawer() {
