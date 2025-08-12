@@ -4,15 +4,18 @@
 // This means that drawer fronts and glass doors will have y-origin in the negative direction.
 
 
+// Transparency
+part_alpha = 0.7;
+
 // Debugging flags
 show_corpus = true;
-show_corpus_sides = false;
-show_drawers = false;
+show_corpus_sides = true;
+show_drawers = true;
 show_fronts = true;
 show_slides = true;
 show_shelves = true;
 show_glass_doors = true;
-show_hdf_back_panel = false;
+show_hdf_back_panel = true;
 
 // Parameters
 
@@ -77,6 +80,8 @@ front_height_base = drawer_height + drawer_gap - front_gap;
 front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base;
 front_height_standard = front_height_base;
 front_height_top = front_height_standard + 3*front_overhang;
+handle_hole_diameter = 4;
+handle_hole_spacing = 160;
 
 // Bookcase dimensions
 bookcase_start_z = middle_plate_z + melanine_thickness_main;
@@ -133,9 +138,13 @@ module drawer_confirmat_hole_threaded() {
     cylinder(h=confirmat_screw_length-melanine_thickness_secondary, r=confirmat_hole_radius, $fn=16);
 }
 
+module handle_hole() {
+    cylinder(h=melanine_thickness_main, r=handle_hole_diameter/2, $fn=16, center=true);
+}
+
 module corpus_side(name="side") {
     difference() {
-        color(color_corpus)
+        color(color_corpus, part_alpha)
         cube([melanine_thickness_main, corpus_depth, corpus_height]);
 
         // Holes for bottom plate
@@ -161,7 +170,7 @@ module corpus_side(name="side") {
 
 module corpus_plate(width) {
     difference() {
-        color(color_corpus)
+        color(color_corpus, part_alpha)
         cube([width, corpus_depth, melanine_thickness_main]);
 
         // Holes for left side
@@ -200,7 +209,7 @@ module corpus() {
 
 module drawer_side() {
     difference() {
-        color(color_drawers)
+        color(color_drawers, part_alpha)
         cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
 
         // Holes for back panel (2 holes)
@@ -219,7 +228,7 @@ module drawer_side() {
 
 module drawer_back() {
     difference() {
-        color(color_drawer_back)
+        color(color_drawer_back, part_alpha)
         cube([drawer_body_width, melanine_thickness_secondary, drawer_height]);
 
         // Holes for left side (2 holes)
@@ -239,7 +248,7 @@ module drawer_back() {
 
 module drawer_bottom() {
     difference() {
-        color(color_drawers)
+        color(color_drawers, part_alpha)
         cube([drawer_body_width, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary]);
 
         // Holes for left side (2 holes)
@@ -284,9 +293,9 @@ module drawer() {
     drawer_back();
 }
 
-module drawer_front(height) {
+module drawer_front(height, handle_z) {
     difference() {
-        color(color_fronts)
+        color(color_fronts, part_alpha)
         cube([front_width, melanine_thickness_main, height]);
 
         // Dowel holes for left drawer side panel
@@ -305,17 +314,21 @@ module drawer_front(height) {
              translate([(front_width - drawer_body_width)/2 + dowel_hole_edge_distance + x_offset, melanine_thickness_main, melanine_thickness_secondary/2]) rotate([-90,0,0]) dowel_hole(dowel_hole_depth_in_front);
              translate([(front_width - drawer_body_width)/2 + dowel_hole_edge_distance + 2 * x_offset, melanine_thickness_main, melanine_thickness_secondary/2]) rotate([-90,0,0]) dowel_hole(dowel_hole_depth_in_front);
         }
+        
+        // Handle holes
+        #translate([front_width/2 - handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate([90, 0, 0]) handle_hole();
+        #translate([front_width/2 + handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate([90, 0, 0]) handle_hole();
     }
 }
 
 module slide() {
-    color(color_slides)
+    color(color_slides, part_alpha)
     cube([slide_depth, slide_width, slide_height]);
 }
 
 module shelf() {
     difference() {
-        color(color_shelves)
+        color(color_shelves, part_alpha)
         cube([shelf_width, shelf_depth, melanine_thickness_main]);
 
         // Holes for left side
@@ -334,7 +347,7 @@ module glass_door() {
 }
 
 module hdf_back_panel() {
-    color(color_hdf_panel)
+    color(color_hdf_panel, part_alpha)
     cube([corpus_width, hdf_thickness, corpus_height]);
 }
 
@@ -375,13 +388,13 @@ module draw_fronts() {
             // Drawer front
             if (i == 0) {
                 translate([front_margin, -front_depth, 0])
-                drawer_front(front_height_first);
+                drawer_front(front_height_first, drawer_origin_z + drawer_height / 2);
             } else if (i == 5) {
                 translate([front_margin, -front_depth, z - front_overhang])
-                drawer_front(front_height_top);
+                drawer_front(front_height_top, drawer_height / 2 + front_overhang);
             } else {
                 translate([front_margin, -front_depth, z - front_overhang])
-                drawer_front(front_height_standard);
+                drawer_front(front_height_standard, drawer_height / 2 + front_overhang);
             }
         }
     }

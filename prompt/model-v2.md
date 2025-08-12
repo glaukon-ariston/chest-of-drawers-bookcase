@@ -14,7 +14,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 
 -   **Corpus:** `corpus_height`, `corpus_width`, `corpus_depth`, `number_of_drawers`
 -   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
--   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`
+-   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`, `handle_hole_diameter`, `handle_hole_spacing`
 -   **Slides:** `slide_z_offset`
 -   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`, `dowel_diameter`, `dowel_length`, `dowel_hole_depth_in_front`, `dowel_hole_edge_distance`, `panel_length_for_four_dowels`
 

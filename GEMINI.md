@@ -71,6 +71,8 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   The model has been made more parametric.
 *   Added 4mm pilot holes for confirmat screws to join the drawer components.
 *   The file `prompt/model-v2.md` has been added to reflect the changes in the model.
+*   Added handle holes to drawer fronts.
+*   Added transparency to the model for better visualization.
 
 ## Usage
 
