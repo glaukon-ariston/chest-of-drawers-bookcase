@@ -9,10 +9,10 @@ part_alpha = 0.4;
 
 // Debugging flags
 show_corpus = true;
-show_corpus_sides = false;
+show_corpus_sides = true;
 show_drawers = true;
-show_fronts = false;
-show_slides = false;
+show_fronts = true;
+show_slides = true;
 show_shelves = true;
 show_glass_doors = true;
 show_hdf_back_panel = true;
@@ -59,8 +59,8 @@ slide_z_offset = 50;
 slide_pilot_hole_depth = 2;
 slide_pilot_hole_diameter = 2.5;
 slide_pilot_hole_radius = slide_pilot_hole_diameter / 2;
-slide_pilot_hole_front_edge_distance_1 = 35;
-slide_pilot_hole_front_edge_distance_2 = 163;
+drawer_slide_pilot_hole_offsets = [35, 163];
+corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115];
 
 // Drawers
 number_of_drawers = 6;
@@ -153,7 +153,7 @@ module slide_pilot_hole() {
     cylinder(h=slide_pilot_hole_depth, r=slide_pilot_hole_radius, $fn=16);
 }
 
-module corpus_side(name="side") {
+module corpus_side(is_left = true) {
     difference() {
         color(color_corpus, part_alpha)
         cube([melanine_thickness_main, corpus_depth, corpus_height]);
@@ -176,6 +176,18 @@ module corpus_side(name="side") {
             translate([melanine_thickness_main / 2, confirmat_hole_edge_distance, z]) rotate([0, 90, 0]) confirmat_hole_side();
             translate([melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, z]) rotate([0, 90, 0]) confirmat_hole_side();
         }
+        
+        // Pilot holes for drawer slides
+        for (i = [0:number_of_drawers-1]) {
+            z = drawer_origin_z + i * drawer_vertical_space + slide_z_offset + slide_height / 2;
+            for (offset = corpus_slide_pilot_hole_offsets) {
+                if (is_left) {
+                    translate([melanine_thickness_main, offset, z]) rotate([0, -90, 0]) slide_pilot_hole();
+                } else {
+                    translate([0, offset, z]) rotate([0, 90, 0]) slide_pilot_hole();
+                }
+            }
+        }
     }
 }
 
@@ -197,12 +209,11 @@ module corpus_plate(width) {
 module corpus() {
     if (show_corpus_sides) {
         // Left side
-        translate([0, 0, 0])
-        corpus_side();
+        corpus_side(is_left = true);
 
         // Right side
         translate([corpus_width - melanine_thickness_main, 0, 0])
-        corpus_side();
+        corpus_side(is_left = false);
     }
 
     // Bottom plate
@@ -237,12 +248,12 @@ module drawer_side(is_left = true) {
         
         // Pilot holes for slides
         z_pos = slide_z_offset + slide_height/2;
-        if (is_left) {
-            #translate([0, slide_pilot_hole_front_edge_distance_1, z_pos]) rotate([0, 90, 0]) slide_pilot_hole();
-            #translate([0, slide_pilot_hole_front_edge_distance_2, z_pos]) rotate([0, 90, 0]) slide_pilot_hole();
-        } else {
-            #translate([melanine_thickness_secondary, slide_pilot_hole_front_edge_distance_1, z_pos]) rotate([0, -90, 0]) slide_pilot_hole();
-            #translate([melanine_thickness_secondary, slide_pilot_hole_front_edge_distance_2, z_pos]) rotate([0, -90, 0]) slide_pilot_hole();
+        for (offset = drawer_slide_pilot_hole_offsets) {
+            if (is_left) {
+                translate([0, offset, z_pos]) rotate([0, 90, 0]) slide_pilot_hole();
+            } else {
+                translate([melanine_thickness_secondary, offset, z_pos]) rotate([0, -90, 0]) slide_pilot_hole();
+            }
         }
     }
 }
