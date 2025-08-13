@@ -1,8 +1,8 @@
-feat: Add handle holes and transparency to model
+feat: Add pilot holes for drawer slides
 
-This commit introduces handle holes to drawer fronts and adds transparency for better visualization.
+This commit introduces pilot holes in the drawer sides for attaching the drawer slides.
 
-- Added `handle_hole_diameter` and `handle_hole_spacing` parameters.
-- Implemented `handle_hole` module and integrated into `drawer_front`.
-- Added `part_alpha` for transparency and applied to various modules.
-- Updated `prompt/model-v2.md`, `GEMINI.md`, and `README.md` to document these changes.
+- Added descriptive constants for pilot hole dimensions (depth, diameter, and distances).
+- Created a `slide_pilot_hole` module for the new holes.
+- Modified the `drawer_side` module to include the pilot holes on both left and right sides.
+- Updated documentation to reflect these changes.

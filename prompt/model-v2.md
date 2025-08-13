@@ -16,7 +16,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 -   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
 -   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`, `handle_hole_diameter`, `handle_hole_spacing`
 -   **Slides:** `slide_z_offset`
--   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`, `dowel_diameter`, `dowel_length`, `dowel_hole_depth_in_front`, `dowel_hole_edge_distance`, `panel_length_for_four_dowels`
+-   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`, `dowel_diameter`, `dowel_length`, `dowel_hole_depth_in_front`, `dowel_hole_edge_distance`, `panel_length_for_four_dowels`, `slide_pilot_hole_depth`, `slide_pilot_hole_diameter`, `slide_pilot_hole_front_edge_distance_1`, `slide_pilot_hole_front_edge_distance_2`
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
 
@@ -68,6 +68,7 @@ The model is broken down into several distinct components, each with its own Ope
 -   **Corpus and Shelves:** 5mm Confirmat screws are used for joining the main corpus panels and shelves. 4mm pilot holes for these screws are included in the model.
 -   **Drawers:** The drawer elements (sides, base, and back panels) are joined using 4.8mm thick and 49mm long Confirmat screws. The model now includes 4mm pilot holes for these screws. The number of screws is determined by the length of the joined panel edge: two screws for edges less than 50cm, and three for longer edges. The holes are positioned 5cm from each edge.
 -   **Wooden Dowels:** The drawer fronts are joined to the drawer boxes with 6mm (`dowel_diameter`) x 30mm (`dowel_length`) wooden dowels. The front's blind hole is 1cm (`dowel_hole_depth_in_front`) deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer. The hole locations are 5cm (`dowel_hole_edge_distance`) from the edge and are evenly spaced. The dowels will be glued.
+-   **Slide Pilot Holes:** To mount the drawer slides to the drawer sides, 2mm deep and 2.5mm diameter pilot holes are included. There are two holes per slide, located 35mm and 163mm from the front edge of the drawer side.
 
 ## 5. Code Structure & Modularity
 

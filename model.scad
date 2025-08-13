@@ -5,14 +5,14 @@
 
 
 // Transparency
-part_alpha = 0.7;
+part_alpha = 0.4;
 
 // Debugging flags
 show_corpus = true;
-show_corpus_sides = true;
+show_corpus_sides = false;
 show_drawers = true;
-show_fronts = true;
-show_slides = true;
+show_fronts = false;
+show_slides = false;
 show_shelves = true;
 show_glass_doors = true;
 show_hdf_back_panel = true;
@@ -54,6 +54,13 @@ slide_width = 200;
 slide_height = 45;
 slide_depth = 13;
 slide_z_offset = 50;
+
+// Slide Pilot Holes
+slide_pilot_hole_depth = 2;
+slide_pilot_hole_diameter = 2.5;
+slide_pilot_hole_radius = slide_pilot_hole_diameter / 2;
+slide_pilot_hole_front_edge_distance_1 = 35;
+slide_pilot_hole_front_edge_distance_2 = 163;
 
 // Drawers
 number_of_drawers = 6;
@@ -142,6 +149,10 @@ module handle_hole() {
     cylinder(h=melanine_thickness_main, r=handle_hole_diameter/2, $fn=16, center=true);
 }
 
+module slide_pilot_hole() {
+    cylinder(h=slide_pilot_hole_depth, r=slide_pilot_hole_radius, $fn=16);
+}
+
 module corpus_side(name="side") {
     difference() {
         color(color_corpus, part_alpha)
@@ -207,7 +218,7 @@ module corpus() {
     corpus_plate(corpus_width - 2*melanine_thickness_main);
 }
 
-module drawer_side() {
+module drawer_side(is_left = true) {
     difference() {
         color(color_drawers, part_alpha)
         cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
@@ -223,6 +234,16 @@ module drawer_side() {
         // Dowel holes for front panel
         translate([melanine_thickness_secondary/2, 0, dowel_hole_edge_distance]) rotate([90, 0, 0]) dowel_hole(dowel_length - dowel_hole_depth_in_front);
         translate([melanine_thickness_secondary/2, 0, drawer_height - dowel_hole_edge_distance]) rotate([90, 0, 0]) dowel_hole(dowel_length - dowel_hole_depth_in_front);
+        
+        // Pilot holes for slides
+        z_pos = slide_z_offset + slide_height/2;
+        if (is_left) {
+            #translate([0, slide_pilot_hole_front_edge_distance_1, z_pos]) rotate([0, 90, 0]) slide_pilot_hole();
+            #translate([0, slide_pilot_hole_front_edge_distance_2, z_pos]) rotate([0, 90, 0]) slide_pilot_hole();
+        } else {
+            #translate([melanine_thickness_secondary, slide_pilot_hole_front_edge_distance_1, z_pos]) rotate([0, -90, 0]) slide_pilot_hole();
+            #translate([melanine_thickness_secondary, slide_pilot_hole_front_edge_distance_2, z_pos]) rotate([0, -90, 0]) slide_pilot_hole();
+        }
     }
 }
 
@@ -282,11 +303,11 @@ module drawer() {
 
     // Left side
     translate([0, 0, 0])
-    drawer_side();
+    drawer_side(is_left = true);
 
     // Right side
     translate([melanine_thickness_secondary + drawer_body_width, 0, 0])
-    drawer_side();
+    drawer_side(is_left = false);
 
     // Back
     translate([melanine_thickness_secondary, drawer_depth - melanine_thickness_secondary, 0])
@@ -316,8 +337,8 @@ module drawer_front(height, handle_z) {
         }
         
         // Handle holes
-        #translate([front_width/2 - handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate([90, 0, 0]) handle_hole();
-        #translate([front_width/2 + handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate([90, 0, 0]) handle_hole();
+        translate([front_width/2 - handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate([90, 0, 0]) handle_hole();
+        translate([front_width/2 + handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate([90, 0, 0]) handle_hole();
     }
 }
 
