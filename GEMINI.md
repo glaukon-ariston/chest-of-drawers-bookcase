@@ -77,6 +77,8 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   The file `prompt/model-v2.md` has been added to reflect the changes in the model.
 *   Added handle holes to drawer fronts.
 *   Added transparency to the model for better visualization.
+*   Added pilot holes for drawer slides in the corpus sides.
+*   Added a configurable exploded view to visualize the assembly.
 
 ## Usage
 

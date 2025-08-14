@@ -97,3 +97,7 @@ The visibility of each of these component groups is controlled by a set of boole
 ## 6. Debugging and Verification
 
 To assist with verifying the parametric design, key calculated dimensions are printed to the OpenSCAD console using the `echo()` function. This includes values like the position of the middle plate, the spacing of the shelves, and the dimensions of the drawers and doors. This allows for quick verification of the model's dimensions without needing to manually measure the 3D view.
+
+## 7. Exploded View
+
+The model includes an exploded view feature to help visualize how the components are assembled. This feature can be enabled by setting the `exploded_view` variable to `true`. The `explosion_factor` variable controls the distance between the exploded parts.

@@ -17,6 +17,10 @@ show_shelves = true;
 show_glass_doors = true;
 show_hdf_back_panel = true;
 
+// Exploded View Parameters
+exploded_view = false; // Set to true to enable exploded view
+explosion_factor = 2; // Scale factor for explosion distance
+
 // Parameters
 
 // Corpus
@@ -124,6 +128,15 @@ color_slides = "Gray";
 color_joinery = "Black";
 color_glass = "LightBlue";
 color_hdf_panel = "White";
+
+module explode(component_center) {
+    if (exploded_view) {
+        corpus_center = [corpus_width/2, corpus_depth/2, corpus_height/2];
+        translate((component_center - corpus_center) * explosion_factor) children();
+    } else {
+        children();
+    }
+}
 
 module confirmat_hole_side() {
     cylinder(h=melanine_thickness_main, r=confirmat_hole_radius, $fn=16, center=true);
@@ -463,9 +476,19 @@ module draw_hdf_back_panel() {
 
 // Assembly
 draw_corpus();
-draw_drawers();
-draw_slides();
-draw_fronts();
-draw_shelves();
-draw_glass_doors();
-draw_hdf_back_panel();
+
+if (exploded_view) {
+    explode([melanine_thickness_main + slide_depth + drawer_width / 2, drawer_depth / 2, drawer_origin_z + (number_of_drawers * drawer_vertical_space) / 2]) { draw_drawers(); }
+    explode([corpus_width / 2, drawer_depth / 2, drawer_origin_z + (number_of_drawers * drawer_vertical_space) / 2]) { draw_slides(); }
+    explode([front_margin + front_width / 2, -front_depth / 2, drawer_origin_z + (number_of_drawers * drawer_vertical_space) / 2]) { draw_fronts(); }
+    explode([melanine_thickness_main + shelf_width / 2, shelf_depth / 2, bookcase_start_z + (bookcase_height - melanine_thickness_main) / 2]) { draw_shelves(); }
+    explode([corpus_width / 2, -bookcase_glass_door_tickness / 2, corpus_height - bookcase_glass_door_height / 2]) { draw_glass_doors(); }
+    explode([corpus_width / 2, corpus_depth + hdf_thickness / 2, corpus_height / 2]) { draw_hdf_back_panel(); }
+} else {
+    draw_drawers();
+    draw_slides();
+    draw_fronts();
+    draw_shelves();
+    draw_glass_doors();
+    draw_hdf_back_panel();
+}
