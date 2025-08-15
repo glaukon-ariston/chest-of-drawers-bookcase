@@ -1,0 +1,28 @@
+﻿openscad.exe : ECHO: "material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding 
+A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description"
+At D:\dev\boris\OpenSCAD\chest-of-drawers-bookcase\generate-csv.ps1:29 char:5
++     & $openscadPath -o $outputImagePath --imgsize="1920,1080" -D gene ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ECHO: "material...el description":String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ECHO: "MEL-19,19,2300,230,2,1,1,1,0,Corpus Side,Vertical side panel of the main body"
+ECHO: "MEL-19,19,762,230,2,1,0,0,0,Corpus Top/Bottom,Horizontal top and bottom panels"
+ECHO: "MEL-19,19,762,230,1,1,0,0,0,Corpus Middle,Horizontal shelf separating drawers and bookcase"
+ECHO: "MEL-12,12,200,225,12,1,1,0,1,Drawer Side,Vertical side panel of a drawer"
+ECHO: "MEL-12,12,712,200,6,1,1,0,0,Drawer Back,Vertical back panel of a drawer"
+ECHO: "MEL-12,12,712,213,6,0,0,0,0,Drawer Bottom,Bottom panel of a drawer"
+ECHO: "MEL-19,19,797,233,1,1,1,1,1,Drawer Front (First),Front panel for the bottom drawer"
+ECHO: "MEL-19,19,797,207,4,1,1,1,1,Drawer Front (Standard),Front panel for the middle 4 drawers"
+ECHO: "MEL-19,19,797,216,1,1,1,1,1,Drawer Front (Top),Front panel for the top drawer"
+ECHO: "MEL-19,19,762,230,2,1,0,0,0,Shelf,Shelf in the bookcase section"
+ECHO: "MEL-19,19,762,30,2,1,0,0,0,Pedestal Front/Back,Front and back panels of the pedestal"
+ECHO: "MEL-19,19,230,30,2,1,0,0,0,Pedestal Side,Side panels of the pedestal"
+ECHO: "HDF-3,3,2300,800,1,0,0,0,0,HDF Back Panel,The back panel of the entire unit"
+Compiling design (CSG Products normalization)...
+Normalized CSG tree has 452 elements
+Geometries in cache: 20
+Geometry cache size in bytes: 26656
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.287

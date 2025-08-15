@@ -3,6 +3,11 @@
 // The y-direction increases into the corpus body.
 // This means that drawer fronts and glass doors will have y-origin in the negative direction.
 
+// Trace string to console
+show_trace = false;
+
+// Cut List Generation
+generate_cut_list_csv = true;
 
 // Transparency
 part_alpha = 0.4;
@@ -110,18 +115,25 @@ bookcase_glass_door_width = (corpus_width - (1 + front_gap + 1))/2;
 bookcase_glass_door_height = melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main/2;
 bookcase_glass_door_tickness = 4;
 
+// Trace string to console
+module T(s) {
+    if (show_trace) {
+        echo(s);
+    }
+}
+
 // Derived Measurements & Debugging
-echo(str("Middle Plate Z: ", middle_plate_z));
-echo(str("Bookcase Vertical Space: ", bookcase_height));
-echo(str("Bookcase Shelf Gap: ", bookcase_shelf_gap));
-echo(str("Bookcase Door Width: ", bookcase_glass_door_width));
-echo(str("Bookcase Door Height: ", bookcase_glass_door_height));
-echo(str("Drawer Vertical Space: ", drawer_vertical_space));
-echo(str("Drawer Width: ", drawer_width));
-echo(str("Shelf Width: ", shelf_width));
-echo(str("First Drawer Front Height: ", front_height_first));
-echo(str("Standard Drawer Front Height: ", front_height_standard));
-echo(str("Top Drawer Front Height: ", front_height_top));
+T(str("Middle Plate Z: ", middle_plate_z));
+T(str("Bookcase Vertical Space: ", bookcase_height));
+T(str("Bookcase Shelf Gap: ", bookcase_shelf_gap));
+T(str("Bookcase Door Width: ", bookcase_glass_door_width));
+T(str("Bookcase Door Height: ", bookcase_glass_door_height));
+T(str("Drawer Vertical Space: ", drawer_vertical_space));
+T(str("Drawer Width: ", drawer_width));
+T(str("Shelf Width: ", shelf_width));
+T(str("First Drawer Front Height: ", front_height_first));
+T(str("Standard Drawer Front Height: ", front_height_standard));
+T(str("Top Drawer Front Height: ", front_height_top));
 
 // Colors
 color_corpus = "Red";
@@ -576,4 +588,37 @@ if (exploded_view) {
     draw_glass_doors();
     draw_hdf_back_panel();
     draw_pedestal();
+}
+
+module generate_cut_list() {
+    echo("material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description");
+
+    // Corpus
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",2,1,1,1,0,Corpus Side,Vertical side panel of the main body"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_width - 2*melanine_thickness_main, ",", corpus_depth, ",2,1,0,0,0,Corpus Top/Bottom,Horizontal top and bottom panels"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_width - 2*melanine_thickness_main, ",", corpus_depth, ",1,1,0,0,0,Corpus Middle,Horizontal shelf separating drawers and bookcase"));
+
+    // Drawers
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",12,1,1,0,1,Drawer Side,Vertical side panel of a drawer"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",6,1,1,0,0,Drawer Back,Vertical back panel of a drawer"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_depth - melanine_thickness_secondary, ",6,0,0,0,0,Drawer Bottom,Bottom panel of a drawer"));
+
+    // Drawer Fronts
+    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_first, ",1,1,1,1,1,Drawer Front (First),Front panel for the bottom drawer"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_standard, ",4,1,1,1,1,Drawer Front (Standard),Front panel for the middle 4 drawers"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_top, ",1,1,1,1,1,Drawer Front (Top),Front panel for the top drawer"));
+
+    // Bookcase
+    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,Shelf,Shelf in the bookcase section"));
+
+    // Pedestal
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_width - 2 * melanine_thickness_main, ",", pedestal_height, ",2,1,0,0,0,Pedestal Front/Back,Front and back panels of the pedestal"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",2,1,0,0,0,Pedestal Side,Side panels of the pedestal"));
+
+    // Back Panel
+    echo(str("HDF-3,", hdf_thickness, ",", corpus_height, ",", corpus_width, ",1,0,0,0,0,HDF Back Panel,The back panel of the entire unit"));
+}
+
+if (generate_cut_list_csv) {
+    generate_cut_list();
 }

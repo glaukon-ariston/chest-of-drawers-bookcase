@@ -19,6 +19,7 @@ The model is a highly customizable piece of furniture that combines a six-drawer
     *   **Console Output:** Key calculated dimensions are automatically printed to the OpenSCAD console, allowing for quick verification of the model's geometry.
 *   **Descriptive Naming:** All variables use clear, descriptive names (e.g., `corpus_height`, `drawer_gap`) to enhance code readability and maintainability.
 *   **Exploded View:** A configurable exploded view allows for easy visualization of the assembly by separating the components. This feature can be enabled by setting the `exploded_view` variable to `true`.
+*   **Cut List Generation:** The project includes a feature to automatically generate a CSV cut list for all panels, including dimensions, materials, and edge banding requirements.
 
 ## Usage
 
@@ -26,5 +27,13 @@ The model is a highly customizable piece of furniture that combines a six-drawer
 2.  Modify the parameters in the "Parameters" section to customize the design.
 3.  Use the boolean flags in the "Debugging flags" section to show or hide specific components.
 4.  Check the OpenSCAD console to see the calculated dimensions of the components.
+
+### Generating the Cut List
+
+To generate the cut list, run the `generate-csv.ps1` PowerShell script. This will create the `artifacts/cut_list.csv` file.
+
+```powershell
+.\generate-csv.ps1
+```
 
 For a complete breakdown of the design decisions, parameters, and code structure, please see the detailed [Model Description](prompt/model-v2.md).

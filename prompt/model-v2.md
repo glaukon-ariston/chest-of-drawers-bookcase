@@ -152,3 +152,11 @@ To assist with verifying the parametric design, key calculated dimensions are pr
 ## 7. Exploded View
 
 The model includes an exploded view feature to help visualize how the components are assembled. This feature can be enabled by setting the `exploded_view` variable to `true`. The `explosion_factor` variable controls the distance between the exploded parts. The exploded view is now more sophisticated, with individual explosion for different component groups.
+
+## 8. Cut List Generation
+
+The `model.scad` file includes a feature to generate a CSV (Comma-Separated Values) cut list for all the panels required to build the furniture. This cut list includes panel dimensions, materials, quantities, and edge banding requirements.
+
+To generate the cut list, set the `generate_cut_list_csv` variable to `true` at the top of the `model.scad` file. When the model is rendered, the cut list data will be printed to the OpenSCAD console. This data can then be saved to a CSV file.
+
+For a more automated process, the `generate-csv.ps1` PowerShell script is provided. This script runs OpenSCAD, captures the console output, and saves the cleaned CSV data to `artifacts/cut_list.csv`.
