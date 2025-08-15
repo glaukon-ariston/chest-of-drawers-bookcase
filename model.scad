@@ -16,6 +16,7 @@ show_slides = true;
 show_shelves = true;
 show_glass_doors = true;
 show_hdf_back_panel = true;
+show_pedestal = true;
 
 // Exploded View Parameters
 exploded_view = false; // Set to true to enable exploded view
@@ -34,6 +35,10 @@ melanine_thickness_secondary = 12;
 
 // HDF Back Panel
 hdf_thickness = 3;
+
+// Pedestal
+pedestal_height = 30;
+
 
 // Joinery
 confirmat_screw_length = 49;
@@ -128,6 +133,7 @@ color_slides = "Gray";
 color_joinery = "Black";
 color_glass = "LightBlue";
 color_hdf_panel = "White";
+color_pedestal = "SaddleBrown";
 
 module explode(component_center) {
     if (exploded_view) {
@@ -396,6 +402,82 @@ module hdf_back_panel() {
     cube([corpus_width, hdf_thickness, corpus_height]);
 }
 
+module pedestal() {
+    // Front
+    difference() {
+        translate([melanine_thickness_main, 0, -pedestal_height])
+        color(color_pedestal, part_alpha)
+        cube([corpus_width - 2 * melanine_thickness_main, melanine_thickness_main, pedestal_height]);
+        
+        // Holes for left side
+        translate([melanine_thickness_main, melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, 90, 0])
+        confirmat_hole_plate();
+        
+        // Holes for right side
+        translate([corpus_width - melanine_thickness_main, melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, -90, 0])
+        confirmat_hole_plate();
+    }
+
+    // Back
+    difference() {
+        translate([melanine_thickness_main, corpus_depth - melanine_thickness_main, -pedestal_height])
+        color(color_pedestal, part_alpha)
+        cube([corpus_width - 2 * melanine_thickness_main, melanine_thickness_main, pedestal_height]);
+        
+        // Holes for left side
+        translate([melanine_thickness_main, corpus_depth - melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, 90, 0])
+        confirmat_hole_plate();
+        
+        // Holes for right side
+        translate([corpus_width - melanine_thickness_main, corpus_depth - melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, -90, 0])
+        confirmat_hole_plate();
+    }
+
+    // Left
+    difference() {
+        translate([0, 0, -pedestal_height])
+        color(color_pedestal, part_alpha)
+        cube([melanine_thickness_main, corpus_depth, pedestal_height]);
+        
+        // Hole for front panel
+        translate([melanine_thickness_main/2, melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, 90, 0])
+        confirmat_hole_side();
+        
+        // Hole for back panel
+        translate([melanine_thickness_main/2, corpus_depth - melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, 90, 0])
+        confirmat_hole_side();
+    }
+
+    // Right
+    difference() {
+        translate([corpus_width - melanine_thickness_main, 0, -pedestal_height])
+        color(color_pedestal, part_alpha)
+        cube([melanine_thickness_main, corpus_depth, pedestal_height]);
+        
+        // Hole for front panel
+        translate([corpus_width - melanine_thickness_main/2, melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, -90, 0])
+        confirmat_hole_side();
+        
+        // Hole for back panel
+        translate([corpus_width - melanine_thickness_main/2, corpus_depth - melanine_thickness_main/2, -pedestal_height/2])
+        rotate([0, -90, 0])
+        confirmat_hole_side();
+    }
+}
+
+module draw_pedestal() {
+    if (show_pedestal) {
+        pedestal();
+    }
+}
+
 module draw_corpus() {
     if (show_corpus) {
         corpus();
@@ -476,6 +558,7 @@ module draw_hdf_back_panel() {
 
 // Assembly
 draw_corpus();
+draw_pedestal();
 
 if (exploded_view) {
     explode([melanine_thickness_main + slide_depth + drawer_width / 2, drawer_depth / 2, drawer_origin_z + (number_of_drawers * drawer_vertical_space) / 2]) { draw_drawers(); }
@@ -484,6 +567,7 @@ if (exploded_view) {
     explode([melanine_thickness_main + shelf_width / 2, shelf_depth / 2, bookcase_start_z + (bookcase_height - melanine_thickness_main) / 2]) { draw_shelves(); }
     explode([corpus_width / 2, -bookcase_glass_door_tickness / 2, corpus_height - bookcase_glass_door_height / 2]) { draw_glass_doors(); }
     explode([corpus_width / 2, corpus_depth + hdf_thickness / 2, corpus_height / 2]) { draw_hdf_back_panel(); }
+    explode([corpus_width / 2, corpus_depth / 2, -pedestal_height / 2]) { draw_pedestal(); }
 } else {
     draw_drawers();
     draw_slides();
@@ -491,4 +575,5 @@ if (exploded_view) {
     draw_shelves();
     draw_glass_doors();
     draw_hdf_back_panel();
+    draw_pedestal();
 }

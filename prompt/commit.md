@@ -1,9 +1,5 @@
-feat: Add exploded view feature
+feat: Add pedestal
 
-This commit introduces an exploded view feature to the model.
+- A 30mm high pedestal has been added to the bottom of the corpus, raising it from the floor.
 
-- Added `exploded_view` and `explosion_factor` parameters.
-- Implemented an `explode` module to translate components away from the center.
-- Updated the main assembly to use the `explode` module when `exploded_view` is enabled.
-- Refactored the `explode` module to use a single vector argument for the component center.
-- Updated documentation to reflect the new feature.
+In addition to these new features, the project documentation has been updated to reflect the changes.

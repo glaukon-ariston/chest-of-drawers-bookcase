@@ -1,1 +1,1 @@
-Add support for exploded view. The center of explosion should be the center of the corpus. Make a module to help with exploding components. Explode only the top level components. Make it optional, controlled by a flag.
+Create the chest's pedestal as rectangular frame 3cm high made out of the material `melanine_thickness_main` thick. It is made out of four strips of `melanine_thickness_main` thick material 3cm high and sitting below the bottom panel, being perfectly flush with the bottom panel and corpus sides.

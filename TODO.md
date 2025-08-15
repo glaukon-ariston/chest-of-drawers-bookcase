@@ -8,7 +8,7 @@
 [x] Glass door
 [] Glass door joinery
 [x] Slides
-[] Slides joinery
+[x] Slides joinery
 [] Cabinet's pedestal (base)
 [] Create cutting list (CSV)
 [] Export DWG file for all panels needing CNC operation (drill holes)

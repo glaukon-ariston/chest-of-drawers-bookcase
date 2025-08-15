@@ -4,7 +4,7 @@ This document provides a detailed description of the OpenSCAD model for the ches
 
 ## 1. Overview
 
-The model is a piece of furniture combining a six-drawer chest of drawers with a bookcase on top. The design is fully parametric, meaning the entire model can be resized by changing a few key variables. The model is built in a modular way in OpenSCAD, allowing for easy customization and debugging.
+The model is a piece of furniture combining a six-drawer chest of drawers with a bookcase on top. The design is fully parametric, meaning the entire model can be resized by changing a few key variables. The model is built in a modular way in OpenSCAD, allowing for easy customization and debugging. The model also includes transparency for better visualization.
 
 ## 2. Parametric Design
 
@@ -12,11 +12,58 @@ The model is driven by a set of global parameters defined at the beginning of th
 
 ### Main Dimensions
 
--   **Corpus:** `corpus_height`, `corpus_width`, `corpus_depth`, `number_of_drawers`
--   **Material Thickness:** `melanine_thickness_main` (for corpus and fronts), `melanine_thickness_secondary` (for drawer boxes), `hdf_thickness` (for the back panel)
--   **Drawer & Fronts:** `drawer_height`, `drawer_bottom_offset`, `drawer_gap`, `front_gap`, `front_overhang`, `front_margin`, `handle_hole_diameter`, `handle_hole_spacing`
--   **Slides:** `slide_z_offset`
--   **Joinery:** `confirmat_screw_length`, `confirmat_hole_diameter`, `confirmat_hole_edge_distance`, `dowel_diameter`, `dowel_length`, `dowel_hole_depth_in_front`, `dowel_hole_edge_distance`, `panel_length_for_four_dowels`, `slide_pilot_hole_depth`, `slide_pilot_hole_diameter`, `slide_pilot_hole_radius`, `drawer_slide_pilot_hole_offsets`, `corpus_slide_pilot_hole_offsets`
+*   **Corpus:**
+    *   corpus_height = 2300
+    *   corpus_width = 800
+    *   corpus_depth = 230
+*   **Melanine material thickness:**
+    *   melanine_thickness_main = 19
+    *   melanine_thickness_secondary = 12
+*   **HDF Back Panel:**
+    *   hdf_thickness = 3
+*   **Pedestal:**
+    *   pedestal_height = 30
+*   **Shelves:**
+    *   shelf_width = corpus_width - 2*melanine_thickness_main
+    *   shelf_depth = corpus_depth
+*   **Slides:**
+    *   slide_width = 200
+    *   slide_height = 45
+    *   slide_depth = 13
+*   **Drawers:**
+    *   drawer_height = 200
+    *   drawer_body_height = drawer_height - melanine_thickness_secondary
+    *   drawer_depth = corpus_depth - 5
+    *   drawer_width = shelf_width - 2*slide_depth
+    *   drawer_body_width = drawer_width - 2*melanine_thickness_secondary
+    *   drawer_bottom_offset = 10
+    *   drawer_gap = 10
+*   **Drawer Fronts:**
+    *   front_gap = 3
+    *   front_overhang = 3
+    *   front_margin = 1.5
+    *   front_width = corpus_width - 2 * front_margin
+    *   front_height_base = drawer_height + drawer_gap - front_gap
+    *   front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base
+    *   front_height_standard = front_height_base
+    *   front_height_top = front_height_standard + 3*front_overhang
+*   **Bookcase Glass Doors:**
+    *   bookcase_glass_door_width = (corpus_width - (1 + front_gap + 1))/2
+    *   bookcase_glass_door_height = melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main/2
+    *   bookcase_glass_door_tickness = 4
+*   **Joinery:**
+    *   confirmat_screw_length = 49
+    *   confirmat_hole_diameter = 4
+    *   confirmat_hole_edge_distance = 50
+    *   dowel_diameter = 6
+    *   dowel_length = 30
+    *   dowel_hole_depth_in_front = 10
+    *   dowel_hole_edge_distance = 50
+    *   panel_length_for_four_dowels = 500
+    *   slide_pilot_hole_depth = 2
+    *   slide_pilot_hole_diameter = 2.5
+    *   drawer_slide_pilot_hole_offsets = [35, 163]
+    *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
 
@@ -29,48 +76,51 @@ The model is broken down into several distinct components, each with its own Ope
 -   The main body of the furniture.
 -   Consists of two side panels, a top plate, a bottom plate, and a middle plate that separates the drawers from the bookcase section.
 -   Constructed from `melanine_thickness_main` material.
--   The back is enclosed by a 3mm HDF panel.
+-   The corpus is divided into two compartments. The bottom compartment contains six drawers and the top compartment is a bookcase with two shelves.
 
 ### 3.2. Drawers
 
--   The chest contains a variable number of identical drawer boxes (`number_of_drawers`).
--   Each drawer box is constructed from `melanine_thickness_secondary` material and consists of a bottom plate, two side plates, and a back plate, joined together with confirmat screws. Dowel holes are included in the side and bottom panels for joining with the front panels.
--   The drawer construction is robust, with the back panel positioned behind the bottom plate for added strength.
--   The drawers are designed to be mounted on slides and are positioned flush with the front of the corpus for a clean, modern look.
+-   The drawers are made of `melanine_thickness_secondary` thick melanine and are mounted to the sides of the corpus with slides.
+-   Each drawer has a front panel made of `melanine_thickness_main` thick melanine.
+-   Dowel holes are included in the side and bottom panels for joining with the front panels.
+-   The drawer assembly has been fixed, and the back panel of the drawer is now correctly positioned.
 
 ### 3.3. Drawer Fronts
 
--   The drawer fronts are separate from the drawer boxes and are made from `melanine_thickness_main` material. Dowel holes are included for joining with the drawer boxes.
+-   The drawer fronts are separate from the drawer boxes and are made from `melanine_thickness_main` material.
+-   Dowel holes are included for joining with the drawer boxes.
 -   The design includes a consistent vertical `front_gap` between each front.
--   The top and bottom drawer fronts are sized differently to account for overlaps with the corpus middle and bottom plates, ensuring a visually clean appearance.
--   The drawer fronts are horizontally centered within the corpus, with a `front_margin` on both the left and right sides.
+-   Handle holes have been added to drawer fronts.
 
 ### 3.4. Shelves
 
--   The top bookcase section contains two adjustable shelves, creating three open sections.
--   The shelves are made from `melanine_thickness_main` material.
+-   The bookcase has two shelves made of `melanine_thickness_main` thick melanine.
 
 ### 3.5. Slides
 
 -   Represents the drawer slides that mount to the corpus sides.
 -   These are modeled as simple blocks to correctly space the drawer boxes within the corpus.
--   They are positioned flush with the front of the corpus, and their vertical position is controlled by the `slide_z_offset` parameter.
 
-### 3.6. Glass Doors
+### 3.6. HDF Back Panel
 
--   Two glass doors are positioned in front of the bookcase section.
--   They cover the top two shelf gaps, leaving the lowest one open.
--   The doors are modeled with a 4mm thickness and a semi-transparent light blue color to simulate glass.
--   They are positioned to be flush with the top of the corpus, with a 1mm offset from the outer sides and a 3mm `front_gap` between them.
+-   A 3mm HDF back panel is attached to the back of the corpus.
+
+### 3.7. Pedestal
+
+-   A 30mm high pedestal is placed under the corpus.
+
+### 3.8. Glass Doors
+
+-   The bookcase section is enclosed by two glass doors.
 
 ## 4. Joinery
 
--   **Corpus and Shelves:** 5mm Confirmat screws are used for joining the main corpus panels and shelves. 4mm pilot holes for these screws are included in the model.
--   **Drawers:** The drawer elements (sides, base, and back panels) are joined using 4.8mm thick and 49mm long Confirmat screws. The model now includes 4mm pilot holes for these screws. The number of screws is determined by the length of the joined panel edge: two screws for edges less than 50cm, and three for longer edges. The holes are positioned 5cm from each edge.
--   **Wooden Dowels:** The drawer fronts are joined to the drawer boxes with 6mm (`dowel_diameter`) x 30mm (`dowel_length`) wooden dowels. The front's blind hole is 1cm (`dowel_hole_depth_in_front`) deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer. The hole locations are 5cm (`dowel_hole_edge_distance`) from the edge and are evenly spaced. The dowels will be glued.
--   **Slide Pilot Holes:** Pilot holes for mounting drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter.
-    -   **In Drawer Sides:** Two holes per slide, located 35mm and 163mm from the front edge of the drawer side.
-    -   **In Corpus Sides:** Six holes per slide, located 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm from the front edge of the corpus side.
+-   **Corpus and Shelves:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model.
+-   **Drawers:** The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. 4mm pilot holes for confirmat screws to join the drawer components have been added.
+-   **Wooden Dowels:** Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge.
+-   **Slide Pilot Holes:** Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter.
+    -   **In Drawer Sides:** Two holes per slide, located 35mm and 163mm from the front edge.
+    -   **In Corpus Sides:** Six holes per slide, located 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm from the front edge.
 
 ## 5. Code Structure & Modularity
 
@@ -78,7 +128,7 @@ The `model.scad` file is structured for clarity and ease of use.
 
 ### 5.1. Component Modules
 
-Each individual part (e.g., `corpus_side`, `drawer_bottom`, `glass_door`, `hdf_back_panel`) is defined in its own module. These are then assembled into more complex components (e.g., a full `drawer` or the `corpus`).
+Each individual part (e.g., `corpus_side`, `drawer_bottom`) is defined in its own module. These are then assembled into more complex components (e.g., a full `drawer` or the `corpus`).
 
 ### 5.2. Drawing Modules & Debugging Flags
 
@@ -91,8 +141,9 @@ To aid in debugging and visualization, the final assembly is handled by a set of
 -   `draw_shelves()`
 -   `draw_glass_doors()`
 -   `draw_hdf_back_panel()`
+-   `draw_pedestal()`
 
-The visibility of each of these component groups is controlled by a set of boolean flags at the top of the file (e.g., `show_corpus`, `show_glass_doors`). This allows a user to selectively render parts of the model to inspect specific areas without visual clutter.
+The visibility of each of these component groups is controlled by a set of boolean flags at the top of the file (e.g., `show_corpus`). This allows a user to selectively render parts of the model to inspect specific areas without visual clutter.
 
 ## 6. Debugging and Verification
 
@@ -100,4 +151,4 @@ To assist with verifying the parametric design, key calculated dimensions are pr
 
 ## 7. Exploded View
 
-The model includes an exploded view feature to help visualize how the components are assembled. This feature can be enabled by setting the `exploded_view` variable to `true`. The `explosion_factor` variable controls the distance between the exploded parts.
+The model includes an exploded view feature to help visualize how the components are assembled. This feature can be enabled by setting the `exploded_view` variable to `true`. The `explosion_factor` variable controls the distance between the exploded parts. The exploded view is now more sophisticated, with individual explosion for different component groups.

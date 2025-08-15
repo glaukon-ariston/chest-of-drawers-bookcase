@@ -6,15 +6,15 @@ This project is a parametric 3D model of a chest of drawers with an integrated b
 
 ## Overview
 
-The model is a highly customizable piece of furniture that combines a six-drawer chest with a three-tier bookcase, enclosed by a pair of glass doors. The entire design is parametric, meaning its dimensions and features can be easily modified by changing variables in the source code. The model is designed with realistic construction details in mind.
+The model is a highly customizable piece of furniture that combines a six-drawer chest with a three-tier bookcase. The entire design is parametric, meaning its dimensions and features can be easily modified by changing variables in the source code. The model is designed with realistic construction details in mind.
 
 ## Key Features
 
 *   **Parametric Design:** Easily change the height, width, depth, and material thicknesses by editing the variables at the top of the `model.scad` file.
-*   **Realistic Construction:** The model incorporates practical construction details, including a robust drawer assembly, a 3mm HDF back panel, and the precise, flush alignment of internal components like drawers and slides. It also includes 4mm pilot holes for the confirmat screws used for assembling the corpus and the drawers. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. Wooden dowels (6mm x 30mm) are used to join the front panels to the drawer boxes, with precisely drilled holes (1cm deep in the front, 5cm from edges, and evenly spaced) to ensure proper alignment and a strong bond.
+*   **Realistic Construction:** The model incorporates practical construction details, including a fixed and correctly positioned drawer assembly with handle holes, a 3mm HDF back panel, a 30mm high pedestal, glass doors for the bookcase, and the precise, flush alignment of internal components like drawers and slides. It also includes 4mm pilot holes for the confirmat screws used for assembling the corpus and for joining the drawer components. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. Wooden dowels (6mm x 30mm) are used to join the front panels to the drawer boxes, with precisely drilled holes (1cm deep in the front, 5cm from edges, and evenly spaced) to ensure proper alignment and a strong bond.
 *   **Modular Structure:** The code is organized into logical, reusable modules for each component (e.g., corpus, drawers, shelves), making it clean and easy to understand.
 *   **Debugging Friendly:**
-    *   **Transparency:** `part_alpha` controls the transparency of the rendered parts, useful for visualizing internal structures.
+    *   **Transparency:** The model includes transparency for better visualization of internal structures.
     *   **Component Toggles:** Use boolean flags (e.g., `show_corpus`, `show_drawers`) to selectively render different parts of the model, simplifying inspection and debugging.
     *   **Console Output:** Key calculated dimensions are automatically printed to the OpenSCAD console, allowing for quick verification of the model's geometry.
 *   **Descriptive Naming:** All variables use clear, descriptive names (e.g., `corpus_height`, `drawer_gap`) to enhance code readability and maintainability.

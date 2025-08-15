@@ -22,6 +22,10 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   **Melanine material thickness:**
     *   melanine_thickness_main = 19
     *   melanine_thickness_secondary = 12
+*   **HDF Back Panel:**
+    *   hdf_thickness = 3
+*   **Pedestal:**
+    *   pedestal_height = 30
 *   **Shelves:**
     *   shelf_width = corpus_width - 2*melanine_thickness_main
     *   shelf_depth = corpus_depth
@@ -46,6 +50,10 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base
     *   front_height_standard = front_height_base
     *   front_height_top = front_height_standard + 3*front_overhang
+*   **Bookcase Glass Doors:**
+    *   bookcase_glass_door_width = (corpus_width - (1 + front_gap + 1))/2
+    *   bookcase_glass_door_height = melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main/2
+    *   bookcase_glass_door_tickness = 4
 *   **Joinery:**
     *   confirmat_screw_length = 49
     *   confirmat_hole_diameter = 4
@@ -63,8 +71,11 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 ### Structure
 
 *   **Corpus:** The corpus is made of `melanine_thickness_main` thick melanine and consists of two sides, a top, a bottom and a middle plate. The corpus is divided into two compartments. The bottom compartment contains six drawers and the top compartment is a bookcase with two shelves.
-*   **Drawers:** The drawers are made of `melanine_thickness_secondary` thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of `melanine_thickness_main` thick melanine. Dowel holes are included in the side and bottom panels for joining with the front panels.
+*   **Drawers:** The drawers are made of `melanine_thickness_secondary` thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of `melanine_thickness_main` thick melanine. Dowel holes are included in the side and bottom panels for joining with the front panels. The drawer assembly has been fixed, and handle holes have been added to the drawer fronts.
 *   **Shelves:** The bookcase has two shelves made of `melanine_thickness_main` thick melanine.
+*   **HDF Back Panel:** A 3mm HDF back panel is attached to the back of the corpus.
+*   **Pedestal:** A 30mm high pedestal is placed under the corpus.
+*   **Glass Doors:** The bookcase section is enclosed by two glass doors.
 *   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter. In drawer sides, there are two holes per slide, located 35mm and 163mm from the front edge. In corpus sides, there are six holes per slide, located 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm from the front edge.
 
 ## Changelog
@@ -79,6 +90,9 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   Added transparency to the model for better visualization.
 *   Added pilot holes for drawer slides in the corpus sides.
 *   Added a configurable exploded view to visualize the assembly.
+*   Added an HDF back panel to the corpus.
+*   Added a pedestal to the bottom of the corpus.
+*   Added glass doors to the bookcase section.
 
 ## Usage
 
