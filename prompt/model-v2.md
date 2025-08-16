@@ -31,6 +31,7 @@ The model is driven by a set of global parameters defined at the beginning of th
     *   slide_height = 45
     *   slide_depth = 13
 *   **Drawers:**
+    *   number_of_drawers = 6
     *   drawer_height = 200
     *   drawer_body_height = drawer_height - melanine_thickness_secondary
     *   drawer_depth = corpus_depth - 5
@@ -160,3 +161,8 @@ The `model.scad` file includes a feature to generate a CSV (Comma-Separated Valu
 To generate the cut list, set the `generate_cut_list_csv` variable to `true` at the top of the `model.scad` file. When the model is rendered, the cut list data will be printed to the OpenSCAD console. This data can then be saved to a CSV file.
 
 For a more automated process, the `generate-csv.ps1` PowerShell script is provided. This script runs OpenSCAD, captures the console output, and saves the cleaned CSV data to `artifacts/cut_list.csv`.
+
+## 9. Changelog
+
+### v2
+*   The number of drawers is now configurable.

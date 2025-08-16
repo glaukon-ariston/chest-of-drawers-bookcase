@@ -11,6 +11,7 @@ The model is a highly customizable piece of furniture that combines a six-drawer
 ## Key Features
 
 *   **Parametric Design:** Easily change the height, width, depth, and material thicknesses by editing the variables at the top of the `model.scad` file.
+*   **Configurable Number of Drawers:** The number of drawers can be easily configured by changing the `number_of_drawers` variable.
 *   **Realistic Construction:** The model incorporates practical construction details, including a fixed and correctly positioned drawer assembly with handle holes, a 3mm HDF back panel, a 30mm high pedestal, glass doors for the bookcase, and the precise, flush alignment of internal components like drawers and slides. It also includes 4mm pilot holes for the confirmat screws used for assembling the corpus and for joining the drawer components. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. Wooden dowels (6mm x 30mm) are used to join the front panels to the drawer boxes, with precisely drilled holes (1cm deep in the front, 5cm from edges, and evenly spaced) to ensure proper alignment and a strong bond.
 *   **Modular Structure:** The code is organized into logical, reusable modules for each component (e.g., corpus, drawers, shelves), making it clean and easy to understand.
 *   **Debugging Friendly:**

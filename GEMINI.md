@@ -34,6 +34,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   slide_height = 45
     *   slide_depth = 13
 *   **Drawers:**
+    *   number_of_drawers = 6
     *   drawer_height = 200
     *   drawer_body_height = drawer_height - melanine_thickness_secondary
     *   drawer_depth = corpus_depth - 5
@@ -86,6 +87,7 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 
 ### v2
 
+*   The number of drawers is now configurable.
 *   The drawer assembly has been fixed. The back panel of the drawer is now correctly positioned.
 *   The model has been made more parametric.
 *   Added 4mm pilot holes for confirmat screws to join the drawer components.
