@@ -9,21 +9,21 @@ cgalutils-project: <svg width='480px' height='100000px' xmlns='http://www.w3.org
 cgalutils-project: <!-- volume. mark: 0 -->
 cgalutils-project: <!-- shell. (vol mark was: 0)
 cgalutils-project:  <!-- ZRemover Halffacet visit. Mark: 1 --> 
-cgalutils-project:   <!-- ZRemover down-facing half-facet. skipping -->
-cgalutils-project:  <!-- ZRemover Halffacet visit end-->
-cgalutils-project:  <!-- ZRemover Halffacet visit. Mark: 1 --> 
 cgalutils-project:  <!-- ZRemover Halffacet cycle begin -->
 cgalutils-project:  <!-- is_simple_2: 1 -->
 cgalutils-project:  <!-- contour is a body. make union(). 4 points -->
 cgalutils-project:  <!-- ZRemover Halffacet cycle end -->
 cgalutils-project:  <!-- ZRemover Halffacet visit end -->
+cgalutils-project:  <!-- ZRemover Halffacet visit. Mark: 1 --> 
+cgalutils-project:   <!-- ZRemover down-facing half-facet. skipping -->
+cgalutils-project:  <!-- ZRemover Halffacet visit end-->
 cgalutils-project: <!-- shell. end. -->
 cgalutils-project: <!-- volume end. -->
 cgalutils-project: </svg>
-Geometries in cache: 3
-Geometry cache size in bytes: 1840
+Geometries in cache: 5
+Geometry cache size in bytes: 3536
 CGAL Polyhedrons in cache: 0
 CGAL cache size in bytes: 0
-Total rendering time: 0:00:00.035
+Total rendering time: 0:00:00.028
 Top level object is a 2D object:
    Contours:        1

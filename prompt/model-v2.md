@@ -172,6 +172,8 @@ The workflow consists of two main steps:
 
 This workflow ensures that the final DXF files are ready for use with CAM software, with clean separation between cutting paths and drill holes.
 
+The export logic for SVG files has been fixed to ensure that all drill holes are correctly projected, regardless of their depth. This was achieved by translating the panels before rotation to ensure the face with the holes is on the `z=0` plane during projection.
+
 ## 10. Changelog
 
 ### v2
@@ -192,3 +194,4 @@ This workflow ensures that the final DXF files are ready for use with CAM softwa
 *   Standardized all panel names to single-word strings (e.g., `CorpusSideLeft`) for consistency and easier use in scripts.
 *   Updated the cut list to include CNC comments.
 *   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.
+*   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.

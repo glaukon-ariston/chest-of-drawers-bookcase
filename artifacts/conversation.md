@@ -91,3 +91,53 @@ To fulfill this request, I performed the following actions:
 3.  **Updated `GEMINI.md`:** I added a "CNC Export" section and updated the changelog to reflect the new workflow.
 4.  **Updated `README.md`:** I added a "CNC Export Workflow" section and updated the "Key Features" list.
 5.  **Prepared a commit message:** I created a commit message that summarizes the new CNC export workflow and saved it to `prompt/commit.md`.
+
+---
+
+### User:
+
+> Do the left and right DrawerSide panel as they are not the same. They have slide mounting holes on different sides.
+
+### Model:
+
+The user pointed out that the left and right drawer sides are not the same. I updated the `model.scad` file to create `DrawerSideLeft` and `DrawerSideRight` panels and updated the export and cut list logic accordingly.
+
+### User:
+
+> Modify @export-panels.ps1 so it accepts export_type as an argument.
+
+### Model:
+
+The user asked me to modify the `export-panels.ps1` script to accept the `export_type` as an argument. I added a parameter to the script with validation.
+
+### User:
+
+> Generate @export-all.ps1 that calls @export-panels.ps1 three times, for stl, dxf and svg export types.
+
+### Model:
+
+The user asked me to create a new script, `export-all.ps1`, that calls `export-panels.ps1` for each export type (`stl`, `dxf`, `svg`).
+
+### User:
+
+> I am not getting pilot holes for drawer slide shown in the 2D projection in @artifacts/export/stl/CorpusSideLeft.stl but do get them shown in @artifacts/export/stl/CorpusSideRight.stl
+
+### Model:
+
+The user reported that pilot holes were not showing up in the SVG exports for `CorpusSideLeft`. I identified the issue as being related to the `projection(cut=true)` function and the placement of the panels before projection. I fixed this by adding a `translate` operation to the `export_panel` module to ensure the holed faces were on the `z=0` plane during projection.
+
+### User:
+
+> I have the same issue with drawer fronts. The 1cm deep dowel holes are not being shown.
+
+### Model:
+
+The user reported the same issue with the drawer fronts. I fixed this by adding a `translate` operation to the `export_panel` module for the drawer fronts.
+
+### User:
+
+> I have the same issue with drawer sides. The drawer side pilot holes are not being shown for the right side.
+
+### Model:
+
+The user reported the same issue with the drawer sides. I fixed this by adding a `translate` operation to the `export_panel` module for the right drawer side.

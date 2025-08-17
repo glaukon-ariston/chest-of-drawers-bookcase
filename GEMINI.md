@@ -108,6 +108,7 @@ The project includes a workflow for exporting 2D panel drawings in DXF format, s
 *   Standardized all panel names to single-word strings (e.g., `CorpusSideLeft`) for consistency and easier use in scripts.
 *   Updated the cut list to include CNC comments.
 *   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.
+*   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
 
 ## Usage
 

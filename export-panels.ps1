@@ -3,6 +3,12 @@
 # This script automates the export of all panels from the model.scad file
 # to the artifacts/export directory.
 
+param(
+    [Parameter(Mandatory = $false)]
+    [ValidateSet("dxf", "stl", "svg")]
+    [string]$exportType = "svg"
+)
+
 # --- Configuration ---
 
 # Set-PSDebug -Trace 1
@@ -23,8 +29,6 @@ $consoleLogPath = "artifacts\openscad-console.log"
 # Project paths
 $scriptDir = $PSScriptRoot
 $modelFile = Join-Path $scriptDir "model.scad"
-$exportType = "svg" # "stl" | "dxf" | "svg"
-
 $exportDir = Join-Path $scriptDir "artifacts/export/$exportType"
 
 # Create export directory if it doesn't exist
