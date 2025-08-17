@@ -44,6 +44,6 @@ To generate the cut list, run the `generate-csv.ps1` PowerShell script. This wil
 The project includes a workflow for exporting the 2D panel drawings in DXF format, suitable for CNC cutting services.
 
 1.  **Export Panels:** Run the `export-panels.ps1` PowerShell script to export all panels to the `artifacts/export` directory.
-2.  **Layer DXF Files:** Use the `split_layers.py` Python script to post-process the exported DXF files. This will separate the geometry into `CUT` and `DRILL` layers, which is required by most CAM software.
+2.  **Layer DXF Files:** Use the `split-layers-dxf.ps1` PowerShell script to post-process the exported DXF files. This will separate the geometry into `CUT` and `DRILL` layers, which is required by most CAM software.
 
 For a complete breakdown of the design decisions, parameters, and code structure, please see the detailed [Model Description](prompt/model-v2.md).

@@ -109,6 +109,8 @@ The project includes a workflow for exporting 2D panel drawings in DXF format, s
 *   Updated the cut list to include CNC comments.
 *   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.
 *   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
+*   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
+*   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
 
 ## Usage
 

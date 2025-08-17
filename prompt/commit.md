@@ -1,9 +1,8 @@
-feat: Differentiate drawer sides and fix SVG export
+feat: Add DXF layering and analysis scripts
 
-This commit introduces several improvements to the design and export process.
+This commit introduces new scripts to enhance the DXF export workflow and provide tools for analyzing DXF files.
 
-The drawer side panels are now differentiated into `DrawerSideLeft` and `DrawerSideRight` to account for the asymmetrical placement of slide mounting holes. The cut list and export logic have been updated to reflect this change.
+- A PowerShell script `split-layers-dxf.ps1` has been added to automate the process of separating DXF geometry into `CUT` and `DRILL` layers using the `split_layers.py` script.
+- A Python script `analyze_dxf.py` has been added to analyze DXF files, providing a summary of layers and the number of entities on each layer. This script can analyze individual files or all DXF files within a specified directory.
 
-The `export-panels.ps1` script has been parameterized to accept the `export_type` as a command-line argument, allowing for more flexible export options. A new script, `export-all.ps1`, has been added to automate the export of all panels in all supported formats (STL, DXF, and SVG).
-
-The SVG export process has been fixed to ensure that all non-through holes are correctly projected. This was achieved by translating the panels before rotation to ensure the face with the holes is on the `z=0` plane during projection. This fix has been applied to the corpus sides, drawer fronts, and drawer sides.
+Documentation has been updated to reflect these new tools and their usage.

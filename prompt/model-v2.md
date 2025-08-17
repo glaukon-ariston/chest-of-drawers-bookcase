@@ -168,13 +168,17 @@ The project includes a workflow for exporting the 2D panel drawings in DXF forma
 
 The workflow consists of two main steps:
 1.  **Exporting Panels from OpenSCAD:** The `export-panels.ps1` PowerShell script automates the export of all panels to the `artifacts/export` directory. The script gets the list of panels from the `model.scad` file and then calls OpenSCAD for each panel to generate a DXF file.
-2.  **Layering DXF Files:** The `split_layers.py` Python script post-processes the exported DXF files to separate the geometry into `CUT` and `DRILL` layers. This is necessary because OpenSCAD exports all geometry to a single layer. The script uses the `ezdxf` library to perform this operation.
+2.  **Layering DXF Files:** The `split-layers-dxf.ps1` PowerShell script processes the exported DXF files using the `split_layers.py` Python script to separate the geometry into `CUT` and `DRILL` layers. This is necessary because OpenSCAD exports all geometry to a single layer. The script uses the `ezdxf` library to perform this operation.
 
 This workflow ensures that the final DXF files are ready for use with CAM software, with clean separation between cutting paths and drill holes.
 
 The export logic for SVG files has been fixed to ensure that all drill holes are correctly projected, regardless of their depth. This was achieved by translating the panels before rotation to ensure the face with the holes is on the `z=0` plane during projection.
 
-## 10. Changelog
+## 10. DXF Analysis
+
+To verify that the DXF files have been correctly layered, the `analyze_dxf.py` script is provided. This script takes a directory as input and analyzes all the DXF files in that directory, printing a summary of the layers and the number of entities on each layer.
+
+## 11. Changelog
 
 ### v2
 *   The number of drawers is now configurable.
@@ -195,3 +199,5 @@ The export logic for SVG files has been fixed to ensure that all drill holes are
 *   Updated the cut list to include CNC comments.
 *   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.
 *   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
+*   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
+*   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.

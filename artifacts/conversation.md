@@ -141,3 +141,13 @@ The user reported the same issue with the drawer fronts. I fixed this by adding 
 ### Model:
 
 The user reported the same issue with the drawer sides. I fixed this by adding a `translate` operation to the `export_panel` module for the right drawer side.
+
+---
+
+### User:
+
+> Generate @layer-dxf.ps1 that processes DXF files using @split_layers.py in @artifacts/export/dxf//** and stores output in @artifacts/export/dxf-layered//**
+
+### Model:
+
+I created the `split-layers-dxf.ps1` script that processes DXF files using `split_layers.py` and stores the output in the `dxf-layered` directory. I also created an analysis script `analyze_dxf.py` to verify the results.
