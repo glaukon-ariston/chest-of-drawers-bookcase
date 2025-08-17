@@ -156,13 +156,39 @@ The model includes an exploded view feature to help visualize how the components
 
 ## 8. Cut List Generation
 
-The `model.scad` file includes a feature to generate a CSV (Comma-Separated Values) cut list for all the panels required to build the furniture. This cut list includes panel dimensions, materials, quantities, and edge banding requirements.
+The `model.scad` file includes a feature to generate a CSV (Comma-Separated Values) cut list for all the panels required to build the furniture. This cut list includes panel dimensions, materials, quantities, edge banding requirements, and CNC comments.
 
 To generate the cut list, set the `generate_cut_list_csv` variable to `true` at the top of the `model.scad` file. When the model is rendered, the cut list data will be printed to the OpenSCAD console. This data can then be saved to a CSV file.
 
 For a more automated process, the `generate-csv.ps1` PowerShell script is provided. This script runs OpenSCAD, captures the console output, and saves the cleaned CSV data to `artifacts/cut_list.csv`.
 
-## 9. Changelog
+## 9. CNC Export Workflow
+
+The project includes a workflow for exporting the 2D panel drawings in DXF format, suitable for CNC cutting services.
+
+The workflow consists of two main steps:
+1.  **Exporting Panels from OpenSCAD:** The `export-panels.ps1` PowerShell script automates the export of all panels to the `artifacts/export` directory. The script gets the list of panels from the `model.scad` file and then calls OpenSCAD for each panel to generate a DXF file.
+2.  **Layering DXF Files:** The `split_layers.py` Python script post-processes the exported DXF files to separate the geometry into `CUT` and `DRILL` layers. This is necessary because OpenSCAD exports all geometry to a single layer. The script uses the `ezdxf` library to perform this operation.
+
+This workflow ensures that the final DXF files are ready for use with CAM software, with clean separation between cutting paths and drill holes.
+
+## 10. Changelog
 
 ### v2
 *   The number of drawers is now configurable.
+*   The drawer assembly has been fixed. The back panel of the drawer is now correctly positioned.
+*   The model has been made more parametric.
+*   Added 4mm pilot holes for confirmat screws to join the drawer components.
+*   The file `prompt/model-v2.md` has been added to reflect the changes in the model.
+*   Added handle holes to drawer fronts.
+*   Added transparency to the model for better visualization.
+*   Added pilot holes for drawer slides in the corpus sides.
+*   Added a configurable exploded view to visualize the assembly.
+*   Added an HDF back panel to the corpus.
+*   Added a pedestal to the bottom of the corpus.
+*   Added glass doors to the bookcase section.
+*   Added a feature to generate a CSV cut list.
+*   Replaced the batch script for CSV generation with a more robust PowerShell script.
+*   Standardized all panel names to single-word strings (e.g., `CorpusSideLeft`) for consistency and easier use in scripts.
+*   Updated the cut list to include CNC comments.
+*   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.

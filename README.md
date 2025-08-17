@@ -20,7 +20,9 @@ The model is a highly customizable piece of furniture that combines a six-drawer
     *   **Console Output:** Key calculated dimensions are automatically printed to the OpenSCAD console, allowing for quick verification of the model's geometry.
 *   **Descriptive Naming:** All variables use clear, descriptive names (e.g., `corpus_height`, `drawer_gap`) to enhance code readability and maintainability.
 *   **Exploded View:** A configurable exploded view allows for easy visualization of the assembly by separating the components. This feature can be enabled by setting the `exploded_view` variable to `true`.
-*   **Cut List Generation:** The project includes a feature to automatically generate a CSV cut list for all panels, including dimensions, materials, and edge banding requirements.
+*   **Cut List Generation:** The project includes a feature to automatically generate a CSV cut list for all panels, including dimensions, materials, edge banding requirements, and CNC comments.
+*   **Standardized Panel Naming:** All panel names have been updated to be single-word strings (e.g., `CorpusSideLeft`) for improved clarity and easier integration with other tools or scripts.
+*   **CNC Export Workflow:** The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services.
 
 ## Usage
 
@@ -36,5 +38,12 @@ To generate the cut list, run the `generate-csv.ps1` PowerShell script. This wil
 ```powershell
 .\generate-csv.ps1
 ```
+
+### CNC Export Workflow
+
+The project includes a workflow for exporting the 2D panel drawings in DXF format, suitable for CNC cutting services.
+
+1.  **Export Panels:** Run the `export-panels.ps1` PowerShell script to export all panels to the `artifacts/export` directory.
+2.  **Layer DXF Files:** Use the `split_layers.py` Python script to post-process the exported DXF files. This will separate the geometry into `CUT` and `DRILL` layers, which is required by most CAM software.
 
 For a complete breakdown of the design decisions, parameters, and code structure, please see the detailed [Model Description](prompt/model-v2.md).

@@ -1,10 +1,10 @@
 ### User
 
-> Create pilot holes in corpus sides for fixing drawer slides. The holes should be 2mm deep and 2.5mm wide. There are six holes running on the slide's central line. The holes' offsets from the front edge are as follows: 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm. Create constants with descriptive names for all the specified dimensions.
+> Make all panel names one-word strings. Without space or other non-alphanum characters.
 
 ### Model
 
-I will add the pilot holes for the drawer slides. First, I'll define the constants for the hole dimensions and offsets. Then, I'll modify the `corpus_side` module to create the holes and update the `corpus` module to correctly position them on both sides.
+I will update the `model.scad` file to make all panel names one-word strings. I will also update the `README.md`, `GEMINI.md`, and `prompt/model-v2.md` files to reflect these changes.
 
 ### User
 
@@ -73,3 +73,21 @@ All modifications are complete. I've updated the constants and modules as reques
 
 5.  **`conversation.md` and Current Request**
     Finally, you asked me to update the `artifacts/conversation.md` file with the traces of our conversation. I explained that due to privacy and security constraints, I cannot access the raw log of our conversation history to perform this task. This led to our current point, where you have asked for this summary.
+
+---
+
+### User:
+
+> Use @prompt/latest.md to do @prompt/update.md
+
+### Model:
+
+The user requested to update the project documentation based on the information in `prompt/latest.md`, which described a new workflow for preparing the OpenSCAD design for CNC cutting services.
+
+To fulfill this request, I performed the following actions:
+
+1.  **Analyzed the new workflow:** I examined the `export-panels.ps1` and `split_layers.py` scripts, along with the `model.scad` file, to understand the new CNC export process.
+2.  **Updated `prompt/model-v2.md`:** I added a new "CNC Export Workflow" section and updated the changelog to document the new scripts and their purpose.
+3.  **Updated `GEMINI.md`:** I added a "CNC Export" section and updated the changelog to reflect the new workflow.
+4.  **Updated `README.md`:** I added a "CNC Export Workflow" section and updated the "Key Features" list.
+5.  **Prepared a commit message:** I created a commit message that summarizes the new CNC export workflow and saved it to `prompt/commit.md`.

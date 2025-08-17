@@ -83,6 +83,10 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 
 The model can generate a CSV cut list for all panels. This is controlled by the `generate_cut_list_csv` variable in `model.scad`. A PowerShell script, `generate-csv.ps1`, is provided to automate the process of generating the `artifacts/cut_list.csv` file.
 
+### CNC Export
+
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `split_layers.py` script post-processes the DXF files to separate geometry into `CUT` and `DRILL` layers.
+
 ## Changelog
 
 ### v2
@@ -101,6 +105,9 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 *   Added glass doors to the bookcase section.
 *   Added a feature to generate a CSV cut list.
 *   Replaced the batch script for CSV generation with a more robust PowerShell script.
+*   Standardized all panel names to single-word strings (e.g., `CorpusSideLeft`) for consistency and easier use in scripts.
+*   Updated the cut list to include CNC comments.
+*   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.
 
 ## Usage
 

@@ -24,46 +24,46 @@ The dimensions and quantities remain the same, but the edge banding requirements
 
 **Component: Corpus**
 
-| Panel Name | Panel Description | Count | Dimension A (grain) | Dimension B | Material | A-1 | A-2 | B-1 | B-2 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Corpus Side | Vertical side panel of the main body | 2 | `corpus_height` | `corpus_depth` | MEL-19 | 1 | 1 | 1 | 0 |
-| Corpus Top/Bottom | Horizontal top and bottom panels | 2 | `corpus_width - 2*melanine_thickness_main` | `corpus_depth` | MEL-19 | 1 | 0 | 0 | 0 |
-| Corpus Middle | Horizontal shelf separating drawers and bookcase | 1 | `corpus_width - 2*melanine_thickness_main` | `corpus_depth` | MEL-19 | 1 | 0 | 0 | 0 |
+| Panel Name          | Panel Description                                | Count | Dimension A (grain)                       | Dimension B                               | Material | A-1 | A-2 | B-1 | B-2 |
+| :------------------ | :----------------------------------------------- | :---: | :---------------------------------------- | :---------------------------------------- | :------- | :-: | :-: | :-: | :-: |
+| CorpusSide          | Vertical side panel of the main body             |   2   | `corpus_height`                           | `corpus_depth`                            | MEL-19   |  1  |  1  |  1  |  0  |
+| CorpusTopBottom     | Horizontal top and bottom panels                 |   2   | `corpus_width - 2*melanine_thickness_main`  | `corpus_depth`                            | MEL-19   |  1  |  0  |  0  |  0  |
+| CorpusMiddle        | Horizontal shelf separating drawers and bookcase |   1   | `corpus_width - 2*melanine_thickness_main`  | `corpus_depth`                            | MEL-19   |  1  |  0  |  0  |  0  |
 
 **Component: Drawers (for each of the 6 drawers)**
 
-| Panel Name | Panel Description | Count | Dimension A (grain) | Dimension B | Material | A-1 | A-2 | B-1 | B-2 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Drawer Side | Vertical side panel of a drawer | 12 | `drawer_height` | `drawer_depth` | MEL-12 | 1 | 1 | 0 | 1 |
-| Drawer Back | Vertical back panel of a drawer | 6 | `drawer_body_width` | `drawer_height` | MEL-12 | 1 | 1 | 0 | 0 |
-| Drawer Bottom | Bottom panel of a drawer | 6 | `drawer_body_width` | `drawer_depth - melanine_thickness_secondary` | MEL-12 | 0 | 0 | 0 | 0 |
+| Panel Name   | Panel Description                | Count | Dimension A (grain) | Dimension B                               | Material | A-1 | A-2 | B-1 | B-2 |
+| :----------- | :------------------------------- | :---: | :------------------ | :---------------------------------------- | :------- | :-: | :-: | :-: | :-: |
+| DrawerSide   | Vertical side panel of a drawer  |  12   | `drawer_height`     | `drawer_depth`                            | MEL-12   |  1  |  1  |  0  |  1  |
+| DrawerBack   | Vertical back panel of a drawer  |   6   | `drawer_body_width` | `drawer_height`                           | MEL-12   |  1  |  1  |  0  |  0  |
+| DrawerBottom | Bottom panel of a drawer         |   6   | `drawer_body_width` | `drawer_depth - melanine_thickness_secondary` | MEL-12   |  0  |  0  |  0  |  0  |
 
 **Component: Drawer Fronts**
 
-| Panel Name | Panel Description | Count | Dimension A (grain) | Dimension B | Material | A-1 | A-2 | B-1 | B-2 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Drawer Front (First) | Front panel for the bottom drawer | 1 | `front_width` | `front_height_first` | MEL-19 | 1 | 1 | 1 | 1 |
-| Drawer Front (Standard) | Front panel for the middle 4 drawers | 4 | `front_width` | `front_height_standard` | MEL-19 | 1 | 1 | 1 | 1 |
-| Drawer Front (Top) | Front panel for the top drawer | 1 | `front_width` | `front_height_top` | MEL-19 | 1 | 1 | 1 | 1 |
+| Panel Name          | Panel Description                       | Count | Dimension A (grain) | Dimension B               | Material | A-1 | A-2 | B-1 | B-2 |
+| :------------------ | :-------------------------------------- | :---: | :------------------ | :------------------------ | :------- | :-: | :-: | :-: | :-: |
+| DrawerFrontFirst    | Front panel for the bottom drawer       |   1   | `front_width`       | `front_height_first`      | MEL-19   |  1  |  1  |  1  |  1  |
+| DrawerFrontStandard | Front panel for the middle 4 drawers    |   4   | `front_width`       | `front_height_standard`   | MEL-19   |  1  |  1  |  1  |  1  |
+| DrawerFrontTop      | Front panel for the top drawer          |   1   | `front_width`       | `front_height_top`        | MEL-19   |  1  |  1  |  1  |  1  |
 
 **Component: Bookcase**
 
-| Panel Name | Panel Description | Count | Dimension A (grain) | Dimension B | Material | A-1 | A-2 | B-1 | B-2 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Shelf | Shelf in the bookcase section | 2 | `shelf_width` | `shelf_depth` | MEL-19 | 1 | 0 | 0 | 0 |
+| Panel Name | Panel Description              | Count | Dimension A (grain) | Dimension B     | Material | A-1 | A-2 | B-1 | B-2 |
+| :--------- | :----------------------------- | :---: | :------------------ | :-------------- | :------- | :-: | :-: | :-: | :-: |
+| Shelf      | Shelf in the bookcase section  |   2   | `shelf_width`       | `shelf_depth`   | MEL-19   |  1  |  0  |  0  |  0  |
 
 **Component: Pedestal**
 
-| Panel Name | Panel Description | Count | Dimension A (grain) | Dimension B | Material | A-1 | A-2 | B-1 | B-2 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Pedestal Front/Back | Front and back panels of the pedestal | 2 | `corpus_width - 2 * melanine_thickness_main` | `pedestal_height` | MEL-19 | 1 | 0 | 0 | 0 |
-| Pedestal Side | Side panels of the pedestal | 2 | `corpus_depth` | `pedestal_height` | MEL-19 | 1 | 0 | 0 | 0 |
+| Panel Name        | Panel Description                        | Count | Dimension A (grain)                       | Dimension B         | Material | A-1 | A-2 | B-1 | B-2 |
+| :---------------- | :--------------------------------------- | :---: | :---------------------------------------- | :------------------ | :------- | :-: | :-: | :-: | :-: |
+| PedestalFrontBack | Front and back panels of the pedestal    |   2   | `corpus_width - 2 * melanine_thickness_main` | `pedestal_height`   | MEL-19   |  1  |  0  |  0  |  0  |
+| PedestalSide      | Side panels of the pedestal              |   2   | `corpus_depth`                            | `pedestal_height`   | MEL-19   |  1  |  0  |  0  |  0  |
 
 **Component: Back Panel**
 
-| Panel Name | Panel Description | Count | Dimension A (grain) | Dimension B | Material | A-1 | A-2 | B-1 | B-2 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| HDF Back Panel | The back panel of the entire unit | 1 | `corpus_height` | `corpus_width` | HDF-3 | 0 | 0 | 0 | 0 |
+| Panel Name     | Panel Description                   | Count | Dimension A (grain) | Dimension B      | Material | A-1 | A-2 | B-1 | B-2 |
+| :------------- | :---------------------------------- | :---: | :------------------ | :--------------- | :------- | :-: | :-: | :-: | :-: |
+| HDFBackPanel   | The back panel of the entire unit   |   1   | `corpus_height`     | `corpus_width`   | HDF-3    |  0  |  0  |  0  |  0  |
 
 ---
 
