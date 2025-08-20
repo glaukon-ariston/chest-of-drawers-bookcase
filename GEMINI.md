@@ -2,6 +2,10 @@
 
 This project contains the OpenSCAD code for a chest of drawers with an integrated bookcase.
 
+## Coding Guidelines
+
+* Do not use magic constants. Instead, give the value a descriptive name and define a constant.
+
 ## Files
 
 *   `model.scad`: The main OpenSCAD file containing the 3D model of the furniture.
@@ -111,6 +115,7 @@ The project includes a workflow for exporting 2D panel drawings in DXF format, s
 *   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
 *   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
 *   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
+*   Added annotations for hole dimensions and locations to the DXF export.
 
 ## Usage
 

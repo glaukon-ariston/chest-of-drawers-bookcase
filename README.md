@@ -23,6 +23,7 @@ The model is a highly customizable piece of furniture that combines a six-drawer
 *   **Cut List Generation:** The project includes a feature to automatically generate a CSV cut list for all panels, including dimensions, materials, edge banding requirements, and CNC comments.
 *   **Standardized Panel Naming:** All panel names have been updated to be single-word strings (e.g., `CorpusSideLeft`) for improved clarity and easier integration with other tools or scripts.
 *   **CNC Export Workflow:** The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services.
+*   **DXF Annotations:** The DXF export can include annotations for hole dimensions and locations, making the files more informative.
 
 ## Usage
 

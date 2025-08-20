@@ -1,8 +1,15 @@
-feat: Add DXF layering and analysis scripts
+feat: Add hole annotations to DXF export
 
-This commit introduces new scripts to enhance the DXF export workflow and provide tools for analyzing DXF files.
+This feature adds annotations for hole dimensions and locations to the DXF export workflow.
 
-- A PowerShell script `split-layers-dxf.ps1` has been added to automate the process of separating DXF geometry into `CUT` and `DRILL` layers using the `split_layers.py` script.
-- A Python script `analyze_dxf.py` has been added to analyze DXF files, providing a summary of layers and the number of entities on each layer. This script can analyze individual files or all DXF files within a specified directory.
+The annotations are generated as text labels on a separate `ANNOTATION` layer in the DXF file. Each label specifies the diameter and depth of the hole (e.g., "d4 h19").
 
-Documentation has been updated to reflect these new tools and their usage.
+A legend is also added to the DXF file to explain the different layers (`CUT`, `DRILL`, `ANNOTATION`) and the format of the annotations.
+
+This makes the DXF files more informative and easier to use for manual drilling or for verifying CNC toolpaths.
+
+The following changes were made:
+- Added a `show_hole_annotations` flag to `model.scad` to control the visibility of the annotations.
+- Added `..._annotations` modules to `model.scad` to generate the annotation text.
+- Updated the `split_layers.py` script to handle the new `ANNOTATION` layer and to add a legend to the DXF files.
+- Updated the documentation to reflect the new feature.

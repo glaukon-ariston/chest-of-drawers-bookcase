@@ -56,6 +56,16 @@ def extract_entity_data(entity):
         # Extract just the x,y coordinates (first two elements of each point)
         data['points'] = [(p[0], p[1]) for p in points]
         data['closed'] = entity.closed
+    elif dtype == "TEXT":
+        data['text'] = entity.dxf.text
+        data['insert'] = entity.dxf.insert
+        data['height'] = entity.dxf.height
+        data['rotation'] = entity.dxf.rotation
+    elif dtype == "MTEXT":
+        data['text'] = entity.dxf.text
+        data['insert'] = entity.dxf.insert
+        data['char_height'] = entity.dxf.char_height
+        data['rotation'] = entity.dxf.rotation
     else:
         raise ValueError(f"Unsupported entity type: {dtype}")
     
@@ -89,6 +99,24 @@ def create_new_entity(msp, data, target_layer):
     elif dtype in ["LWPOLYLINE", "POLYLINE"]:
         new_entity = msp.add_lwpolyline(data['points'])
         new_entity.closed = data['closed']
+    elif dtype == "TEXT":
+        new_entity = msp.add_text(
+            text=data['text'],
+            dxfattribs={
+                'insert': data['insert'],
+                'height': data['height'],
+                'rotation': data['rotation']
+            }
+        )
+    elif dtype == "MTEXT":
+        new_entity = msp.add_mtext(
+            text=data['text'],
+            dxfattribs={
+                'insert': data['insert'],
+                'char_height': data['char_height'],
+                'rotation': data['rotation']
+            }
+        )
     else:
         raise ValueError(f"Unsupported entity type for creation: {dtype}")
     
@@ -100,6 +128,36 @@ def create_new_entity(msp, data, target_layer):
         new_entity.dxf.color = data['color']
     
     return new_entity
+
+def add_legend(msp):
+    """Add a legend to the DXF file."""
+    # Get the bounding box of the existing entities
+    try:
+        bounding_box = msp.get_extents()
+        min_x, min_y, _, max_x, max_y, _ = bounding_box
+        legend_x = min_x
+        legend_y = min_y - 20  # Place legend 20 units below the drawing
+    except ezdxf.DXFError:
+        # No entities in modelspace, place legend at origin
+        legend_x = 0
+        legend_y = 0
+
+    legend_text = [
+        "Legend:",
+        "- CUT layer (red): Panel outline",
+        "- DRILL layer (blue): Holes to be drilled",
+        "- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth)"
+    ]
+
+    for i, text in enumerate(legend_text):
+        msp.add_text(
+            text,
+            dxfattribs={
+                'layer': 'ANNOTATION',
+                'height': 5,
+                'insert': (legend_x, legend_y - i * 10)
+            }
+        )
 
 def split_layers(input_file, output_file):
     doc = ezdxf.readfile(input_file)
@@ -148,12 +206,21 @@ def split_layers(input_file, output_file):
         drill_layer.on = True
         drill_layer.freeze = False
         drill_layer.lock = False
+
+    # Create ANNOTATION layer (magenta, visible, continuous line)
+    if "ANNOTATION" not in layers:
+        annotation_layer = layers.new("ANNOTATION")
+        annotation_layer.dxf.color = 6  # Magenta
+        annotation_layer.dxf.linetype = "CONTINUOUS"
+        annotation_layer.on = True
+        annotation_layer.freeze = False
+        annotation_layer.lock = False
     
     # Ensure CONTINUOUS linetype exists
     if "CONTINUOUS" not in doc.linetypes:
         doc.linetypes.new("CONTINUOUS")
     
-    allowed = {"LWPOLYLINE", "POLYLINE", "LINE", "ARC", "CIRCLE"}
+    allowed = {"LWPOLYLINE", "POLYLINE", "LINE", "ARC", "CIRCLE", "TEXT", "MTEXT"}
     print(f"Processing file: {input_file}")
     
     # Step 1: Collect entities and extract their data
@@ -174,6 +241,8 @@ def split_layers(input_file, output_file):
                 target_layer = "DRILL"
             else:
                 target_layer = "CUT"
+        elif dtype in ["TEXT", "MTEXT"]:
+            target_layer = "ANNOTATION"
         else:  # LINE or ARC
             target_layer = "CUT"
         
@@ -198,13 +267,15 @@ def split_layers(input_file, output_file):
     # Verify entities were created
     cut_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "CUT")
     drill_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "DRILL")
+    annotation_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "ANNOTATION")
     
     print(f"Entities on CUT layer: {cut_count}")
     print(f"Entities on DRILL layer: {drill_count}")
+    print(f"Entities on ANNOTATION layer: {annotation_count}")
     
     # FAIL EARLY: Verify all entities were properly created
-    if cut_count + drill_count != entities_created:
-        raise RuntimeError(f"Entity creation failed: created {entities_created} but only {cut_count + drill_count} were assigned to layers")
+    if cut_count + drill_count + annotation_count != entities_created:
+        raise RuntimeError(f"Entity creation failed: created {entities_created} but only {cut_count + drill_count + annotation_count} were assigned to layers")
     
     # Debug: Check entities before saving
     print("Before saving - checking entities:")
@@ -213,6 +284,9 @@ def split_layers(input_file, output_file):
     
     for e in remaining_entities:
         print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
+
+    # Add legend
+    add_legend(msp)
     
     # Save the file
     try:
@@ -232,7 +306,7 @@ def split_layers(input_file, output_file):
         for e in saved_entities:
             print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
         
-        if total_entities != entities_created:
+        if total_entities != entities_created + 4: # 4 legend lines
             # Additional debugging
             all_doc_entities = []
             for layout in verify_doc.layouts:
@@ -240,10 +314,10 @@ def split_layers(input_file, output_file):
                 print(f"Layout '{layout.dxf.name}': {len(layout_entities)} entities")
                 all_doc_entities.extend(layout_entities)
             
-            raise RuntimeError(f"File save verification failed: expected {entities_created} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
+            raise RuntimeError(f"File save verification failed: expected {entities_created + 4} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
         
         # Verify layers exist in saved file
-        for layer_name in ["CUT", "DRILL"]:
+        for layer_name in ["CUT", "DRILL", "ANNOTATION"]:
             if layer_name not in verify_doc.layers:
                 raise RuntimeError(f"Layer {layer_name} missing from saved file")
         

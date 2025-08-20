@@ -178,7 +178,15 @@ The export logic for SVG files has been fixed to ensure that all drill holes are
 
 To verify that the DXF files have been correctly layered, the `analyze_dxf.py` script is provided. This script takes a directory as input and analyzes all the DXF files in that directory, printing a summary of the layers and the number of entities on each layer.
 
-## 11. Changelog
+## 11. DXF Annotations
+
+The DXF export workflow has been enhanced to include annotations for hole dimensions and locations. This is controlled by the `show_hole_annotations` variable in `model.scad`.
+
+When enabled, the generated DXF files will include an `ANNOTATION` layer with text labels for each hole, specifying its diameter and depth (e.g., "d4 h19"). A legend is also added to the DXF file to explain the layers and annotations.
+
+This feature makes the DXF files more informative and easier to use for manual drilling or verification.
+
+## 12. Changelog
 
 ### v2
 *   The number of drawers is now configurable.
@@ -201,3 +209,4 @@ To verify that the DXF files have been correctly layered, the `analyze_dxf.py` s
 *   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
 *   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
 *   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
+*   Added annotations for hole dimensions and locations to the DXF export.
