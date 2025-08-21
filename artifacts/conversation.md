@@ -151,3 +151,20 @@ The user reported the same issue with the drawer sides. I fixed this by adding a
 ### Model:
 
 I created the `split-layers-dxf.ps1` script that processes DXF files using `split_layers.py` and stores the output in the `dxf-layered` directory. I also created an analysis script `analyze_dxf.py` to verify the results.
+
+---
+
+### User:
+
+> Make annotation_text_offset a vector and make it as a parameter to the hole_annotation module. Different annotations need different offsets in order to stay within the panel. For example, there is a case where the hole annotation on the drawer bottom panel, at the back, falls out of panel.
+
+### Model:
+
+The user requested to make the `annotation_text_offset` a vector parameter in the `hole_annotation` module to allow for different offsets for each annotation. This was to fix an issue where some annotations were being placed outside the panel boundaries.
+
+To address this, I performed the following actions:
+
+1.  **Modified `hole_annotation` module:** I updated the `hole_annotation` module in `model.scad` to accept a `text_offset` vector as a parameter.
+2.  **Updated `annotation_text_offset`:** I changed the global `annotation_text_offset` variable to a vector.
+3.  **Updated `hole_annotation` calls:** I updated all calls to the `hole_annotation` module to pass the new `text_offset` parameter, with custom offsets where needed to ensure annotations are correctly placed.
+4.  **Corrected rotations and positions:** I also corrected the rotation and position of annotations in several modules to ensure they match the drill holes.

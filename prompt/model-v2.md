@@ -184,7 +184,7 @@ The DXF export workflow has been enhanced to include annotations for hole dimens
 
 When enabled, the generated DXF files will include an `ANNOTATION` layer with text labels for each hole, specifying its diameter and depth (e.g., "d4 h19"). A legend is also added to the DXF file to explain the layers and annotations.
 
-This feature makes the DXF files more informative and easier to use for manual drilling or verification.
+This feature makes the DXF files more informative and easier to use for manual drilling or verification. The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.
 
 ## 12. Changelog
 
@@ -210,3 +210,4 @@ This feature makes the DXF files more informative and easier to use for manual d
 *   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
 *   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
 *   Added annotations for hole dimensions and locations to the DXF export.
+*   The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.

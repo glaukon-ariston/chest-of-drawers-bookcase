@@ -1,15 +1,8 @@
-feat: Add hole annotations to DXF export
+feat: Make hole annotation offset a vector parameter
 
-This feature adds annotations for hole dimensions and locations to the DXF export workflow.
+Make the `annotation_text_offset` a vector parameter in the `hole_annotation` module. This allows for different offsets for each annotation, which is necessary to keep the annotations within the panel boundaries.
 
-The annotations are generated as text labels on a separate `ANNOTATION` layer in the DXF file. Each label specifies the diameter and depth of the hole (e.g., "d4 h19").
-
-A legend is also added to the DXF file to explain the different layers (`CUT`, `DRILL`, `ANNOTATION`) and the format of the annotations.
-
-This makes the DXF files more informative and easier to use for manual drilling or for verifying CNC toolpaths.
-
-The following changes were made:
-- Added a `show_hole_annotations` flag to `model.scad` to control the visibility of the annotations.
-- Added `..._annotations` modules to `model.scad` to generate the annotation text.
-- Updated the `split_layers.py` script to handle the new `ANNOTATION` layer and to add a legend to the DXF files.
-- Updated the documentation to reflect the new feature.
+- The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module.
+- All calls to `hole_annotation` have been updated to use the new `text_offset` parameter.
+- The rotation and position of annotations in several modules have been corrected.
+- A bug where some annotations were placed outside the panel has been fixed.

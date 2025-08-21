@@ -116,6 +116,7 @@ The project includes a workflow for exporting 2D panel drawings in DXF format, s
 *   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
 *   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
 *   Added annotations for hole dimensions and locations to the DXF export.
+*   The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.
 
 ## Usage
 
