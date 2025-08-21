@@ -186,6 +186,20 @@ When enabled, the generated DXF files will include an `ANNOTATION` layer with te
 
 This feature makes the DXF files more informative and easier to use for manual drilling or verification. The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.
 
+## 12. Hole Metadata Export
+
+To facilitate the creation of manufacturing documentation, the model can now export detailed metadata for all holes on a given panel. This metadata includes the hole's name, its 2D projected coordinates (x, y), its diameter, and its depth.
+
+This is achieved through a series of new functions and modules:
+
+- **`get_*_hole_2d_coords()` functions:** These functions are responsible for calculating the 2D projected coordinates of a hole based on the panel's export transformation.
+- **`*_hole_metadata()` modules:** Each panel type with holes has a corresponding module that uses the coordinate transformation functions to `echo` the hole metadata to the OpenSCAD console during export.
+- **`echo_hole_metadata()` module:** This top-level module is called during the export process and, based on the `export_panel_name` variable, it calls the appropriate `*_hole_metadata()` module to generate the metadata for the specified panel.
+
+The `export-panels.ps1` script has been updated to capture this metadata from the console output and save it to a CSV file named after the panel (e.g., `CorpusSideLeft.csv`) in the `artifacts/export/dxf` directory.
+
+The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
+
 ## 12. Changelog
 
 ### v2
@@ -211,3 +225,17 @@ This feature makes the DXF files more informative and easier to use for manual d
 *   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
 *   Added annotations for hole dimensions and locations to the DXF export.
 *   The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.
+
+## 12. Hole Metadata Export
+
+To facilitate the creation of manufacturing documentation, the model can now export detailed metadata for all holes on a given panel. This metadata includes the hole's name, its 2D projected coordinates (x, y), its diameter, and its depth.
+
+This is achieved through a series of new functions and modules:
+
+- **`get_*_hole_2d_coords()` functions:** These functions are responsible for calculating the 2D projected coordinates of a hole based on the panel's export transformation.
+- **`*_hole_metadata()` modules:** Each panel type with holes has a corresponding module that uses the coordinate transformation functions to `echo` the hole metadata to the OpenSCAD console during export.
+- **`echo_hole_metadata()` module:** This top-level module is called during the export process and, based on the `export_panel_name` variable, it calls the appropriate `*_hole_metadata()` module to generate the metadata for the specified panel.
+
+The `export-panels.ps1` script has been updated to capture this metadata from the console output and save it to a CSV file named after the panel (e.g., `CorpusSideLeft.csv`) in the `artifacts/export/dxf` directory.
+
+The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.

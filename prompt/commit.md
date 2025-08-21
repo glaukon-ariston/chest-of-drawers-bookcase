@@ -1,8 +1,9 @@
-feat: Make hole annotation offset a vector parameter
+feat: Add hole metadata export and DXF annotation
 
-Make the `annotation_text_offset` a vector parameter in the `hole_annotation` module. This allows for different offsets for each annotation, which is necessary to keep the annotations within the panel boundaries.
+This commit introduces a new feature to export detailed hole metadata from the OpenSCAD model and use it to generate annotations in the DXF files.
 
-- The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module.
-- All calls to `hole_annotation` have been updated to use the new `text_offset` parameter.
-- The rotation and position of annotations in several modules have been corrected.
-- A bug where some annotations were placed outside the panel has been fixed.
+- In `model.scad`, added a mechanism to echo hole metadata (panel name, hole name, 2D projected coordinates, diameter, and depth) to the console during panel export.
+- The `export-panels.ps1` script is updated to parse this metadata and create a corresponding CSV file for each exported panel.
+- The `split_layers.py` script now reads the CSV file and adds text annotations for each hole on a new `ANNOTATION` layer in the DXF file.
+
+This provides a fully automated workflow for generating richly annotated DXF files, ready for manufacturing, directly from the OpenSCAD model.

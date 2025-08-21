@@ -1,50 +1,124 @@
-# Chest of Drawers Bookcase
+# Gemini Project: Chest of Drawers Bookcase
 
-This project is a parametric 3D model of a chest of drawers with an integrated bookcase, designed in OpenSCAD.
+This project contains the OpenSCAD code for a chest of drawers with an integrated bookcase.
 
-![Chest of Drawers Bookcase](artifacts/chest-of-drawers-bookcase-openscad.png)
+## Coding Guidelines
 
-## Overview
+* Do not use magic constants. Instead, give the value a descriptive name and define a constant.
 
-The model is a highly customizable piece of furniture that combines a six-drawer chest with a three-tier bookcase. The entire design is parametric, meaning its dimensions and features can be easily modified by changing variables in the source code. The model is designed with realistic construction details in mind.
+## Files
 
-## Key Features
+*   `model.scad`: The main OpenSCAD file containing the 3D model of the furniture.
+*   `prompt/model.md`: The detailed instructions and dimensions used to generate the `model.scad` file.
+*   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
+*   `artifacts/conversation.md`: A log of the conversation with the user.
 
-*   **Parametric Design:** Easily change the height, width, depth, and material thicknesses by editing the variables at the top of the `model.scad` file.
-*   **Configurable Number of Drawers:** The number of drawers can be easily configured by changing the `number_of_drawers` variable.
-*   **Realistic Construction:** The model incorporates practical construction details, including a fixed and correctly positioned drawer assembly with handle holes, a 3mm HDF back panel, a 30mm high pedestal, glass doors for the bookcase, and the precise, flush alignment of internal components like drawers and slides. It also includes 4mm pilot holes for the confirmat screws used for assembling the corpus and for joining the drawer components. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. Wooden dowels (6mm x 30mm) are used to join the front panels to the drawer boxes, with precisely drilled holes (1cm deep in the front, 5cm from edges, and evenly spaced) to ensure proper alignment and a strong bond.
-*   **Modular Structure:** The code is organized into logical, reusable modules for each component (e.g., corpus, drawers, shelves), making it clean and easy to understand.
-*   **Debugging Friendly:**
-    *   **Transparency:** The model includes transparency for better visualization of internal structures.
-    *   **Component Toggles:** Use boolean flags (e.g., `show_corpus`, `show_drawers`) to selectively render different parts of the model, simplifying inspection and debugging.
-    *   **Console Output:** Key calculated dimensions are automatically printed to the OpenSCAD console, allowing for quick verification of the model's geometry.
-*   **Descriptive Naming:** All variables use clear, descriptive names (e.g., `corpus_height`, `drawer_gap`) to enhance code readability and maintainability.
-*   **Exploded View:** A configurable exploded view allows for easy visualization of the assembly by separating the components. This feature can be enabled by setting the `exploded_view` variable to `true`.
-*   **Cut List Generation:** The project includes a feature to automatically generate a CSV cut list for all panels, including dimensions, materials, edge banding requirements, and CNC comments.
-*   **Standardized Panel Naming:** All panel names have been updated to be single-word strings (e.g., `CorpusSideLeft`) for improved clarity and easier integration with other tools or scripts.
-*   **CNC Export Workflow:** The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services.
-*   **DXF Annotations:** The DXF export can include annotations for hole dimensions and locations, making the files more informative. The annotation text offset is now a vector parameter, allowing for different offsets for each annotation.
+## Model Description
+
+The 3D model is a chest of drawers with an integrated bookcase. The design is parametric and all dimensions are derived from the main dimensions.
+
+### Main Dimensions
+
+*   **Corpus:**
+    *   corpus_height = 2300
+    *   corpus_width = 800
+    *   corpus_depth = 230
+*   **Melanine material thickness:**
+    *   melanine_thickness_main = 19
+    *   melanine_thickness_secondary = 12
+*   **HDF Back Panel:**
+    *   hdf_thickness = 3
+*   **Pedestal:**
+    *   pedestal_height = 30
+*   **Shelves:**
+    *   shelf_width = corpus_width - 2*melanine_thickness_main
+    *   shelf_depth = corpus_depth
+*   **Slides:**
+    *   slide_width = 200
+    *   slide_height = 45
+    *   slide_depth = 13
+*   **Drawers:**
+    *   number_of_drawers = 6
+    *   drawer_height = 200
+    *   drawer_body_height = drawer_height - melanine_thickness_secondary
+    *   drawer_depth = corpus_depth - 5
+    *   drawer_width = shelf_width - 2*slide_depth
+    *   drawer_body_width = drawer_width - 2*melanine_thickness_secondary
+    *   drawer_bottom_offset = 10
+    *   drawer_gap = 10
+*   **Drawer Fronts:**
+    *   front_gap = 3
+    *   front_overhang = 3
+    *   front_margin = 1.5
+    *   front_width = corpus_width - 2 * front_margin
+    *   front_height_base = drawer_height + drawer_gap - front_gap
+    *   front_height_first = melanine_thickness_main + drawer_bottom_offset - front_gap + front_height_base
+    *   front_height_standard = front_height_base
+    *   front_height_top = front_height_standard + 3*front_overhang
+*   **Bookcase Glass Doors:**
+    *   bookcase_glass_door_width = (corpus_width - (1 + front_gap + 1))/2
+    *   bookcase_glass_door_height = melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main + bookcase_shelf_gap + melanine_thickness_main/2
+    *   bookcase_glass_door_tickness = 4
+*   **Joinery:**
+    *   confirmat_screw_length = 49
+    *   confirmat_hole_diameter = 4
+    *   confirmat_hole_edge_distance = 50
+    *   dowel_diameter = 6
+    *   dowel_length = 30
+    *   dowel_hole_depth_in_front = 10
+    *   dowel_hole_edge_distance = 50
+    *   panel_length_for_four_dowels = 500
+    *   slide_pilot_hole_depth = 2
+    *   slide_pilot_hole_diameter = 2.5
+    *   drawer_slide_pilot_hole_offsets = [35, 163]
+    *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
+
+### Structure
+
+*   **Corpus:** The corpus is made of `melanine_thickness_main` thick melanine and consists of two sides, a top, a bottom and a middle plate. The corpus is divided into two compartments. The bottom compartment contains six drawers and the top compartment is a bookcase with two shelves.
+*   **Drawers:** The drawers are made of `melanine_thickness_secondary` thick melanine and are mounted to the sides of the corpus with slides. Each drawer has a front panel made of `melanine_thickness_main` thick melanine. Dowel holes are included in the side and bottom panels for joining with the front panels. The drawer assembly has been fixed, and handle holes have been added to the drawer fronts.
+*   **Shelves:** The bookcase has two shelves made of `melanine_thickness_main` thick melanine.
+*   **HDF Back Panel:** A 3mm HDF back panel is attached to the back of the corpus.
+*   **Pedestal:** A 30mm high pedestal is placed under the corpus.
+*   **Glass Doors:** The bookcase section is enclosed by two glass doors.
+*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter. In drawer sides, there are two holes per slide, located 35mm and 163mm from the front edge. ... In corpus sides, there are six holes per slide, located 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm from the front edge.
+
+### Cut List Generation
+
+The model can generate a CSV cut list for all panels. This is controlled by the `generate_cut_list_csv` variable in `model.scad`. A PowerShell script, `generate-csv.ps1`, is provided to automate the process of generating the `artifacts/cut_list.csv` file.
+
+### CNC Export
+
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `split_layers.py` script post-processes the DXF files to separate geometry into `CUT` and `DRILL` layers.
+
+## Changelog
+
+### v2
+
+*   The number of drawers is now configurable.
+*   The drawer assembly has been fixed. The back panel of the drawer is now correctly positioned.
+*   The model has been made more parametric.
+*   Added 4mm pilot holes for confirmat screws to join the drawer components.
+*   The file `prompt/model-v2.md` has been added to reflect the changes in the model.
+*   Added handle holes to drawer fronts.
+*   Added transparency to the model for better visualization.
+*   Added pilot holes for drawer slides in the corpus sides.
+*   Added a configurable exploded view to visualize the assembly.
+*   Added an HDF back panel to the corpus.
+*   Added a pedestal to the bottom of the corpus.
+*   Added glass doors to the bookcase section.
+*   Added a feature to generate a CSV cut list.
+*   Replaced the batch script for CSV generation with a more robust PowerShell script.
+*   Standardized all panel names to single-word strings (e.g., `CorpusSideLeft`) for consistency and easier use in scripts.
+*   Updated the cut list to include CNC comments.
+*   Added a CNC export workflow using PowerShell and Python scripts to generate layered DXF files.
+*   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
+*   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
+*   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
+*   Added annotations for hole dimensions and locations to the DXF export.
+*   The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.
+*   Added a hole metadata export feature to generate CSV files with hole locations, which are then used to create annotations in the DXF files.
 
 ## Usage
 
-1.  Open the `model.scad` file in [OpenSCAD](https://openscad.org/).
-2.  Modify the parameters in the "Parameters" section to customize the design.
-3.  Use the boolean flags in the "Debugging flags" section to show or hide specific components.
-4.  Check the OpenSCAD console to see the calculated dimensions of the components.
-
-### Generating the Cut List
-
-To generate the cut list, run the `generate-csv.ps1` PowerShell script. This will create the `artifacts/cut_list.csv` file.
-
-```powershell
-.\generate-csv.ps1
-```
-
-### CNC Export Workflow
-
-The project includes a workflow for exporting the 2D panel drawings in DXF format, suitable for CNC cutting services.
-
-1.  **Export Panels:** Run the `export-panels.ps1` PowerShell script to export all panels to the `artifacts/export` directory.
-2.  **Layer DXF Files:** Use the `split-layers-dxf.ps1` PowerShell script to post-process the exported DXF files. This will separate the geometry into `CUT` and `DRILL` layers, which is required by most CAM software.
-
-For a complete breakdown of the design decisions, parameters, and code structure, please see the detailed [Model Description](prompt/model-v2.md).
+To view the 3D model, open the `model.scad` file in [OpenSCAD](https://openscad.org/).

@@ -21,8 +21,52 @@ arise with other files.
 import ezdxf
 import sys
 
+import ezdxf
+import sys
+import csv
+import os
+
 # Threshold for slot detection (in DXF units, e.g., mm)
 SLOT_MAX_SIZE = 10.0
+
+def add_hole_annotations_from_csv(msp, input_file):
+    """Read a CSV file with the same name as the input DXF and add hole annotations."""
+    csv_file = os.path.splitext(input_file)[0] + ".csv"
+    if not os.path.exists(csv_file):
+        print(f"No annotation file found at: {csv_file}")
+        return
+
+    print(f"Found annotation file: {csv_file}")
+    with open(csv_file, mode='r', newline='') as f:
+        # Skip the header row
+        next(f)
+        reader = csv.reader(f)
+        for row in reader:
+            try:
+                # Unpack row data
+                panel_name, hole_name, x, y, diameter, depth = row
+                
+                # Convert numeric values
+                x = float(x)
+                y = float(y)
+                diameter = float(diameter)
+                depth = float(depth)
+                
+                # Create annotation text
+                text = f"d{diameter} h{depth}"
+                
+                # Add text to the ANNOTATION layer
+                msp.add_text(
+                    text,
+                    dxfattribs={
+                        'layer': 'ANNOTATION',
+                        'height': 2.5,  # Adjust height as needed
+                        'insert': (x, y + 5)  # Offset Y for visibility
+                    }
+                )
+                print(f"  - Added annotation: {text} at ({x}, {y})")
+            except (ValueError, KeyError) as e:
+                print(f"  - Warning: Skipping invalid row in CSV: {row} ({e})")
 
 def is_small_slot(poly):
     """Return True if polyline is closed and small enough to be considered a drill/slot."""
@@ -219,6 +263,9 @@ def split_layers(input_file, output_file):
     # Ensure CONTINUOUS linetype exists
     if "CONTINUOUS" not in doc.linetypes:
         doc.linetypes.new("CONTINUOUS")
+
+    # Add hole annotations from CSV file
+    add_hole_annotations_from_csv(msp, input_file)
     
     allowed = {"LWPOLYLINE", "POLYLINE", "LINE", "ARC", "CIRCLE", "TEXT", "MTEXT"}
     print(f"Processing file: {input_file}")

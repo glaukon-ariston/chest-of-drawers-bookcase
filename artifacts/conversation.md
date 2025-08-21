@@ -168,3 +168,26 @@ To address this, I performed the following actions:
 2.  **Updated `annotation_text_offset`:** I changed the global `annotation_text_offset` variable to a vector.
 3.  **Updated `hole_annotation` calls:** I updated all calls to the `hole_annotation` module to pass the new `text_offset` parameter, with custom offsets where needed to ensure annotations are correctly placed.
 4.  **Corrected rotations and positions:** I also corrected the rotation and position of annotations in several modules to ensure they match the drill holes.
+
+---
+
+### User:
+
+> In @model.scad add code that will echo a table of hole metadata. The table will include panel name, hole name, x and y coordinates, hole diameter, depth. Make it conditional on export being in progress, i.e. `export_panel_name != ""`. You do not need to pass panel name around. The export is done one panel at a time so you can use the globally defined `export_panel_name` variable. Do all the 2D projection calculation in OpenSCAD during the export. 
+
+### Model:
+
+The user requested to add a feature to export hole metadata from the OpenSCAD model to be used for generating annotations in the DXF files.
+
+To implement this, I performed the following actions:
+
+1.  **`model.scad`:**
+    *   Added `get_*_hole_2d_coords()` functions to calculate the 2D projected coordinates for holes on each panel type.
+    *   Created `*_hole_metadata()` modules for each panel with holes to `echo` the metadata to the console during export.
+    *   Implemented a top-level `echo_hole_metadata()` module to orchestrate the metadata export based on the `export_panel_name`.
+2.  **`export-panels.ps1`:**
+    *   Modified the script to capture the console output from OpenSCAD.
+    *   Added logic to parse the echoed hole metadata and save it to a CSV file for each panel.
+3.  **`split_layers.py`:**
+    *   Added an `add_hole_annotations_from_csv()` function to read the generated CSV files.
+    *   This function adds text annotations to a new `ANNOTATION` layer in the DXF file based on the data from the CSV.

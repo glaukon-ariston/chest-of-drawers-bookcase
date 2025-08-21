@@ -71,6 +71,19 @@ foreach ($panelName in $panelNames) {
     # Check the exit code of the last command
     if ($LASTEXITCODE -eq 0) {
         Write-Host "OK"
+
+        # --- Create Hole Metadata CSV ---
+        $holeMetadata = Get-Content $consoleLogPath | Where-Object { $_.StartsWith('ECHO: "Hole,') } | ForEach-Object { $_.Substring(6).Trim('"') }
+        if ($holeMetadata.Count -gt 0) {
+            $csvFile = Join-Path $exportDir "$safePanelName.csv"
+            $csvContent = @("PanelName,HoleName,X,Y,Diameter,Depth")
+            $holeMetadata | ForEach-Object {
+                $line = $_ -replace 'Hole,', ''
+                $csvContent += $line
+            }
+            $csvContent | Out-File -FilePath $csvFile -Encoding utf8
+            Write-Host "  -> Created hole metadata file: $csvFile"
+        }
     } else {
         Write-Host "FAILED" -ForegroundColor Red
         Write-Error "OpenSCAD failed to export '$panelName'."
