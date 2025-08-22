@@ -1,26 +1,3 @@
-'''
-https://claude.ai/chat/361d017e-9fb3-487b-bf1a-298aa634a54f
-The key issues we resolved were:
-
-Iterator invalidation - Fixed by collecting entity data before modifying anything
-Entity corruption - Solved by creating new entities instead of modifying existing ones
-DXF version compatibility - Resolved by upgrading old DXF files to R2000 format to support LWPOLYLINE entities
-Layer visibility - Fixed by properly setting layer properties (color, visibility, etc.)
-
-The final approach creates a clean separation between:
-
-Data extraction from original entities
-Document preparation (version upgrade if needed)
-New entity creation with proper layer assignments
-
-This should now work reliably with your DXF files and display properly in LibreCAD 
-with entities correctly assigned to CUT and DRILL layers. The script will fail early 
-if it encounters any unexpected conditions, making debugging much easier if issues 
-arise with other files.
-'''
-import ezdxf
-import sys
-
 import ezdxf
 import sys
 import csv
@@ -32,9 +9,10 @@ SLOT_MAX_SIZE = 10.0
 def add_hole_annotations_from_csv(msp, input_file):
     """Read a CSV file with the same name as the input DXF and add hole annotations."""
     csv_file = os.path.splitext(input_file)[0] + ".csv"
+    annotations_added = 0
     if not os.path.exists(csv_file):
         print(f"No annotation file found at: {csv_file}")
-        return
+        return annotations_added
 
     print(f"Found annotation file: {csv_file}")
     with open(csv_file, mode='r', newline='') as f:
@@ -65,8 +43,10 @@ def add_hole_annotations_from_csv(msp, input_file):
                     }
                 )
                 print(f"  - Added annotation: {text} at ({x}, {y})")
+                annotations_added += 1
             except (ValueError, KeyError) as e:
                 print(f"  - Warning: Skipping invalid row in CSV: {row} ({e})")
+    return annotations_added
 
 def is_small_slot(poly):
     """Return True if polyline is closed and small enough to be considered a drill/slot."""
@@ -173,16 +153,82 @@ def create_new_entity(msp, data, target_layer):
     
     return new_entity
 
+def calculate_bounding_box(msp):
+    """Calculate the bounding box of all entities in modelspace."""
+    min_x = min_y = float('inf')
+    max_x = max_y = float('-inf')
+    
+    for entity in msp:
+        try:
+            # Get entity's bounding box if available
+            if hasattr(entity, 'bbox') and callable(entity.bbox):
+                bbox = entity.bbox()
+                if bbox:
+                    min_x = min(min_x, bbox.extmin.x)
+                    min_y = min(min_y, bbox.extmin.y)
+                    max_x = max(max_x, bbox.extmax.x)
+                    max_y = max(max_y, bbox.extmax.y)
+                    continue
+            
+            # Fallback: extract coordinates based on entity type
+            dtype = entity.dxftype()
+            if dtype == "CIRCLE":
+                cx, cy = entity.dxf.center[:2]
+                r = entity.dxf.radius
+                min_x = min(min_x, cx - r)
+                min_y = min(min_y, cy - r)
+                max_x = max(max_x, cx + r)
+                max_y = max(max_y, cy + r)
+            elif dtype == "LINE":
+                x1, y1 = entity.dxf.start[:2]
+                x2, y2 = entity.dxf.end[:2]
+                min_x = min(min_x, x1, x2)
+                min_y = min(min_y, y1, y2)
+                max_x = max(max_x, x1, x2)
+                max_y = max(max_y, y1, y2)
+            elif dtype == "ARC":
+                # Simplified: use center +/- radius (not exact for arcs)
+                cx, cy = entity.dxf.center[:2]
+                r = entity.dxf.radius
+                min_x = min(min_x, cx - r)
+                min_y = min(min_y, cy - r)
+                max_x = max(max_x, cx + r)
+                max_y = max(max_y, cy + r)
+            elif dtype in ["LWPOLYLINE", "POLYLINE"]:
+                points = list(entity.get_points())
+                for point in points:
+                    x, y = point[:2]
+                    min_x = min(min_x, x)
+                    min_y = min(min_y, y)
+                    max_x = max(max_x, x)
+                    max_y = max(max_y, y)
+            elif dtype in ["TEXT", "MTEXT"]:
+                x, y = entity.dxf.insert[:2]
+                min_x = min(min_x, x)
+                min_y = min(min_y, y)
+                max_x = max(max_x, x)
+                max_y = max(max_y, y)
+        except Exception:
+            # Skip entities that can't be processed
+            continue
+    
+    if min_x == float('inf'):
+        # No entities found, return default
+        return 0, 0, 0, 0
+    
+    return min_x, min_y, max_x, max_y
+
 def add_legend(msp):
     """Add a legend to the DXF file."""
-    # Get the bounding box of the existing entities
-    try:
-        bounding_box = msp.get_extents()
-        min_x, min_y, _, max_x, max_y, _ = bounding_box
-        legend_x = min_x
-        legend_y = min_y - 20  # Place legend 20 units below the drawing
-    except ezdxf.DXFError:
-        # No entities in modelspace, place legend at origin
+    # Calculate the bounding box of the existing entities
+    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
+    
+    # Place legend below the drawing
+    legend_x = min_x
+    legend_y = min_y - 20  # Place legend 20 units below the drawing
+    
+    # If no entities were found, place legend at origin
+    if min_x == max_x == min_y == max_y == 0:
         legend_x = 0
         legend_y = 0
 
@@ -265,7 +311,7 @@ def split_layers(input_file, output_file):
         doc.linetypes.new("CONTINUOUS")
 
     # Add hole annotations from CSV file
-    add_hole_annotations_from_csv(msp, input_file)
+    annotations_added = add_hole_annotations_from_csv(msp, input_file)
     
     allowed = {"LWPOLYLINE", "POLYLINE", "LINE", "ARC", "CIRCLE", "TEXT", "MTEXT"}
     print(f"Processing file: {input_file}")
@@ -321,8 +367,8 @@ def split_layers(input_file, output_file):
     print(f"Entities on ANNOTATION layer: {annotation_count}")
     
     # FAIL EARLY: Verify all entities were properly created
-    if cut_count + drill_count + annotation_count != entities_created:
-        raise RuntimeError(f"Entity creation failed: created {entities_created} but only {cut_count + drill_count + annotation_count} were assigned to layers")
+    if cut_count + drill_count + annotation_count != entities_created + annotations_added:
+        raise RuntimeError(f"Entity creation failed: created {entities_created + annotations_added} but only {cut_count + drill_count + annotation_count} were assigned to layers")
     
     # Debug: Check entities before saving
     print("Before saving - checking entities:")
@@ -353,7 +399,7 @@ def split_layers(input_file, output_file):
         for e in saved_entities:
             print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
         
-        if total_entities != entities_created + 4: # 4 legend lines
+        if total_entities != entities_created + annotations_added + 4: # 4 legend lines
             # Additional debugging
             all_doc_entities = []
             for layout in verify_doc.layouts:
@@ -361,7 +407,7 @@ def split_layers(input_file, output_file):
                 print(f"Layout '{layout.dxf.name}': {len(layout_entities)} entities")
                 all_doc_entities.extend(layout_entities)
             
-            raise RuntimeError(f"File save verification failed: expected {entities_created + 4} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
+            raise RuntimeError(f"File save verification failed: expected {entities_created + annotations_added + 4} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
         
         # Verify layers exist in saved file
         for layer_name in ["CUT", "DRILL", "ANNOTATION"]:
@@ -375,7 +421,7 @@ def split_layers(input_file, output_file):
     except Exception as e:
         raise RuntimeError(f"Saved file verification failed: {e}")
     
-    print(f"✅ Layered DXF saved as {output_file}")
+    print(f"Layered DXF saved as {output_file}")
 
 def main():
     if len(sys.argv) != 3:

@@ -445,7 +445,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2460905.914699074
+2460910.3142939815
   9
 $TDUCREATE
  40
@@ -453,7 +453,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2460905.914699074
+2460910.3142939815
   9
 $TDUUPDATE
  40
@@ -505,7 +505,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-35
+3C
   9
 $SURFTAB1
  70
@@ -885,11 +885,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{8EF03F1E-7109-4D63-832A-5F05053B638D}
+{0AB2DFCB-BF94-4F27-855D-9A08AE64EF5B}
   9
 $VERSIONGUID
   2
-{C173F927-32D4-4C37-956E-EDED9A34CD22}
+{3CA4DCD0-E088-43DD-B5CE-C88EF4450EE4}
   9
 $EXTNAMES
 290
@@ -1315,7 +1315,7 @@ LAYER
 100
 AcDbSymbolTable
  70
-4
+5
   0
 LAYER
   5
@@ -1400,6 +1400,28 @@ DRILL
 0
  62
 5
+  6
+CONTINUOUS
+370
+-3
+390
+13
+  0
+LAYER
+  5
+31
+330
+1
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+ANNOTATION
+ 70
+0
+ 62
+6
   6
 CONTINUOUS
 370
@@ -1507,7 +1529,7 @@ ACAD
   0
 APPID
   5
-32
+39
 330
 3
 100
@@ -1521,7 +1543,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-33
+3A
 330
 3
 100
@@ -1813,9 +1835,57 @@ SECTION
   2
 ENTITIES
   0
+TEXT
+  5
+32
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-10.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h30.0
+100
+AcDbText
+  0
+TEXT
+  5
+33
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+762.0
+ 20
+-10.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h30.0
+100
+AcDbText
+  0
 LWPOLYLINE
   5
-31
+34
 330
 17
 100
@@ -1844,6 +1914,102 @@ AcDbPolyline
 0.0
  20
 0.0
+  0
+TEXT
+  5
+35
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-50.0
+ 30
+0.0
+ 40
+5.0
+  1
+Legend:
+100
+AcDbText
+  0
+TEXT
+  5
+36
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-60.0
+ 30
+0.0
+ 40
+5.0
+  1
+- CUT layer (red): Panel outline
+100
+AcDbText
+  0
+TEXT
+  5
+37
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-70.0
+ 30
+0.0
+ 40
+5.0
+  1
+- DRILL layer (blue): Holes to be drilled
+100
+AcDbText
+  0
+TEXT
+  5
+38
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-80.0
+ 30
+0.0
+ 40
+5.0
+  1
+- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth)
+100
+AcDbText
   0
 ENDSEC
   0
@@ -2835,7 +3001,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-34
+3B
   0
 DICTIONARYVAR
   5
@@ -2847,11 +3013,11 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-17T19:57:10.298396+00:00
+1.4.2 @ 2025-08-22T05:32:35.668208+00:00
   0
 DICTIONARYVAR
   5
-34
+3B
 330
 2D
 100
@@ -2859,7 +3025,7 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-17T19:57:10.303158+00:00
+1.4.2 @ 2025-08-22T05:32:35.672054+00:00
   0
 ENDSEC
   0

@@ -19,7 +19,7 @@ $splitLayersScript = Join-Path $scriptDir "split_layers.py"
 
 # Create output directory if it doesn't exist
 if (-not (Test-Path $outputDir)) {
-    Write-Host "Creating output directory at '$outputDir'"
+    Write-Output "Creating output directory at '$outputDir'"
     New-Item -ItemType Directory -Path $outputDir | Out-Null
 }
 
@@ -27,30 +27,30 @@ if (-not (Test-Path $outputDir)) {
 $dxfFiles = Get-ChildItem -Path $inputDir -Filter *.dxf -Recurse
 
 if ($dxfFiles.Count -eq 0) {
-    Write-Host "No DXF files found in '$inputDir'."
+    Write-Output "No DXF files found in '$inputDir'."
     exit 0
 }
 
-Write-Host "Found $($dxfFiles.Count) DXF files to process."
+Write-Output "Found $($dxfFiles.Count) DXF files to process."
 
 # Loop through each DXF file and process it
 foreach ($file in $dxfFiles) {
     $inputFile = $file.FullName
     $outputFile = Join-Path $outputDir $file.Name
-    Write-Host -NoNewline "Processing '$($file.Name)' ... "
+    [System.Console]::Write("Processing '$($file.Name)' ... ")
 
     # Execute the python script
     & $pythonPath $splitLayersScript $inputFile $outputFile
 
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "OK"
+        Write-Output "OK"
     } else {
-        Write-Host "FAILED" -ForegroundColor Red
+        Write-Output "FAILED"
         Write-Error "Failed to process '$($file.Name)'."
         exit 1
     }
 }
 
-Write-Host "All DXF files processed successfully."
+Write-Output "All DXF files processed successfully."
 
 # Set-PSDebug -Trace 0

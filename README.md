@@ -89,7 +89,7 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 
 ### CNC Export
 
-The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `split_layers.py` script post-processes the DXF files to separate geometry into `CUT` and `DRILL` layers.
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT` and `DRILL` layers, and adds annotations for holes.
 
 ## Changelog
 
@@ -115,8 +115,8 @@ The project includes a workflow for exporting 2D panel drawings in DXF format, s
 *   Fixed SVG export for panels with non-through holes by ensuring the holed face is on the `z=0` plane during projection.
 *   Added a PowerShell script `split-layers-dxf.ps1` to automate the layering of DXF files.
 *   Added a Python script `analyze_dxf.py` to analyze the layers in the generated DXF files.
-*   Added annotations for hole dimensions and locations to the DXF export.
-*   The `annotation_text_offset` is now a vector parameter in the `hole_annotation` module, allowing for different offsets for each annotation.
+*   Removed in-model text annotations for hole dimensions and locations to speed up DXF export.
+*   The `split_layers.py` script now adds annotations to the DXF files based on the hole metadata exported from OpenSCAD.
 *   Added a hole metadata export feature to generate CSV files with hole locations, which are then used to create annotations in the DXF files.
 
 ## Usage

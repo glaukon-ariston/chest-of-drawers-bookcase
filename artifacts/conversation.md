@@ -191,3 +191,20 @@ To implement this, I performed the following actions:
 3.  **`split_layers.py`:**
     *   Added an `add_hole_annotations_from_csv()` function to read the generated CSV files.
     *   This function adds text annotations to a new `ANNOTATION` layer in the DXF file based on the data from the CSV.
+
+---
+
+### User:
+
+> Refactor the model to simplify the hole metadata generation and remove the in-model annotations.
+
+### Model:
+
+The user requested to refactor the hole metadata generation and remove the in-model annotations to simplify the OpenSCAD code and improve performance.
+
+To address this, I performed the following actions:
+
+1.  **Refactored `*_metadata()` functions:** I updated the `*_metadata()` functions in `model.scad` to use the `export_panel_name` global variable instead of hardcoded panel names, making the code more reusable.
+2.  **Removed `*_annotations()` code:** I removed all `*_annotations()` modules and related code from `model.scad`, as the annotations are now handled externally by the `split_layers.py` script.
+3.  **Fixed `split_layers.py`:** I fixed several errors in the `split_layers.py` script, including issues with entity counting, attribute errors, and unicode encoding.
+4.  **Improved Logging:** I refactored the logging of the DXF processing scripts. I created a new `run-split-layers.ps1` script to execute the main processing script and pipe the output to a log file using `Tee-Object`, which allows the output to be displayed in the console and saved to a file simultaneously. I also modified the `split-layers-dxf.ps1` script to use `Write-Output` instead of `Write-Host` to ensure all output is captured.

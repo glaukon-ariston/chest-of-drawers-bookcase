@@ -1,0 +1,12 @@
+﻿PanelName,HoleName,X,Y,Diameter,Depth
+DrawerBottom,left_side_1,0,50,4,37
+DrawerBottom,left_side_2,0,163,4,37
+DrawerBottom,right_side_1,712,50,4,37
+DrawerBottom,right_side_2,712,163,4,37
+DrawerBottom,back_panel_1,50,213,4,37
+DrawerBottom,back_panel_2,356,213,4,37
+DrawerBottom,back_panel_3,662,213,4,37
+DrawerBottom,dowel_front_1,50,0,6,20
+DrawerBottom,dowel_front_2,662,0,6,20
+DrawerBottom,dowel_front_3,254,0,6,20
+DrawerBottom,dowel_front_4,458,0,6,20

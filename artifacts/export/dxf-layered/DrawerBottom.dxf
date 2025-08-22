@@ -445,7 +445,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2460905.9145833333
+2460910.3141550925
   9
 $TDUCREATE
  40
@@ -453,7 +453,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2460905.9145833333
+2460910.3141550925
   9
 $TDUUPDATE
  40
@@ -505,7 +505,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-35
+45
   9
 $SURFTAB1
  70
@@ -885,11 +885,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{FB837CA1-C8B0-4FDA-A15F-4F13C07CD460}
+{93538234-6ED6-4965-A6FA-EF2B83AFBFC7}
   9
 $VERSIONGUID
   2
-{5F7C3263-E61F-4AB2-9040-6E275272D623}
+{7D68CB9B-90DA-46C0-8AE0-63CA450921D9}
   9
 $EXTNAMES
 290
@@ -1315,7 +1315,7 @@ LAYER
 100
 AcDbSymbolTable
  70
-4
+5
   0
 LAYER
   5
@@ -1400,6 +1400,28 @@ DRILL
 0
  62
 5
+  6
+CONTINUOUS
+370
+-3
+390
+13
+  0
+LAYER
+  5
+31
+330
+1
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+ANNOTATION
+ 70
+0
+ 62
+6
   6
 CONTINUOUS
 370
@@ -1507,7 +1529,7 @@ ACAD
   0
 APPID
   5
-32
+42
 330
 3
 100
@@ -1521,7 +1543,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-33
+43
 330
 3
 100
@@ -1813,9 +1835,273 @@ SECTION
   2
 ENTITIES
   0
+TEXT
+  5
+32
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+55.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+33
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+168.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+34
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+712.0
+ 20
+55.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+35
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+712.0
+ 20
+168.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+36
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+50.0
+ 20
+218.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+37
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+356.0
+ 20
+218.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+38
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+662.0
+ 20
+218.0
+ 30
+0.0
+ 40
+2.5
+  1
+d4.0 h37.0
+100
+AcDbText
+  0
+TEXT
+  5
+39
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+50.0
+ 20
+5.0
+ 30
+0.0
+ 40
+2.5
+  1
+d6.0 h20.0
+100
+AcDbText
+  0
+TEXT
+  5
+3A
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+662.0
+ 20
+5.0
+ 30
+0.0
+ 40
+2.5
+  1
+d6.0 h20.0
+100
+AcDbText
+  0
+TEXT
+  5
+3B
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+254.0
+ 20
+5.0
+ 30
+0.0
+ 40
+2.5
+  1
+d6.0 h20.0
+100
+AcDbText
+  0
+TEXT
+  5
+3C
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+458.0
+ 20
+5.0
+ 30
+0.0
+ 40
+2.5
+  1
+d6.0 h20.0
+100
+AcDbText
+  0
 LWPOLYLINE
   5
-31
+3D
 330
 17
 100
@@ -1844,6 +2130,102 @@ AcDbPolyline
 0.0
  20
 213.0
+  0
+TEXT
+  5
+3E
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-20.0
+ 30
+0.0
+ 40
+5.0
+  1
+Legend:
+100
+AcDbText
+  0
+TEXT
+  5
+3F
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-30.0
+ 30
+0.0
+ 40
+5.0
+  1
+- CUT layer (red): Panel outline
+100
+AcDbText
+  0
+TEXT
+  5
+40
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-40.0
+ 30
+0.0
+ 40
+5.0
+  1
+- DRILL layer (blue): Holes to be drilled
+100
+AcDbText
+  0
+TEXT
+  5
+41
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-50.0
+ 30
+0.0
+ 40
+5.0
+  1
+- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth)
+100
+AcDbText
   0
 ENDSEC
   0
@@ -2835,7 +3217,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-34
+44
   0
 DICTIONARYVAR
   5
@@ -2847,11 +3229,11 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-17T19:57:00.588634+00:00
+1.4.2 @ 2025-08-22T05:32:23.159232+00:00
   0
 DICTIONARYVAR
   5
-34
+44
 330
 2D
 100
@@ -2859,7 +3241,7 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-17T19:57:00.592338+00:00
+1.4.2 @ 2025-08-22T05:32:23.162336+00:00
   0
 ENDSEC
   0

@@ -6,7 +6,7 @@
 param(
     [Parameter(Mandatory = $false)]
     [ValidateSet("dxf", "stl", "svg")]
-    [string]$exportType = "svg"
+    [string]$exportType = "dxf"
 )
 
 # --- Configuration ---
