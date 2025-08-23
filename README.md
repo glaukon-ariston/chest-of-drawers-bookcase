@@ -81,7 +81,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   **HDF Back Panel:** A 3mm HDF back panel is attached to the back of the corpus.
 *   **Pedestal:** A 30mm high pedestal is placed under the corpus.
 *   **Glass Doors:** The bookcase section is enclosed by two glass doors.
-*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter. In drawer sides, there are two holes per slide, located 35mm and 163mm from the front edge. ... In corpus sides, there are six holes per slide, located 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm from the front edge.
+*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter. In drawer sides, there are two holes per slide, located 35mm and 163mm from the front edge. ... In corpus sides, there are six holes per slide, located 6.5mm, 35mm, 51mm, 76, 99mm, and 115mm from the front edge.
 
 ### Cut List Generation
 
@@ -92,6 +92,13 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT` and `DRILL` layers, and adds annotations for holes.
 
 ## Changelog
+
+### v3
+
+*   Corrected the 2D hole coordinate calculation for DXF export.
+*   All exported 2D panels are now positioned at the origin (0,0).
+*   Added a detailed "Hole Schedule" table to the DXF annotations.
+*   The Z-coordinate in the hole metadata is now correctly represented.
 
 ### v2
 

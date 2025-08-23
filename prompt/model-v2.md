@@ -121,7 +121,7 @@ The model is broken down into several distinct components, each with its own Ope
 -   **Wooden Dowels:** Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge.
 -   **Slide Pilot Holes:** Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter.
     -   **In Drawer Sides:** Two holes per slide, located 35mm and 163mm from the front edge.
-    -   **In Corpus Sides:** Six holes per slide, located 6.5mm, 35mm, 51mm, 76mm, 99mm, and 115mm from the front edge.
+    -   **In Corpus Sides:** Six holes per slide, located 6.5mm, 35mm, 51mm, 76, 99mm, and 115mm from the front edge.
 
 ## 5. Code Structure & Modularity
 
@@ -167,12 +167,10 @@ For a more automated process, the `generate-csv.ps1` PowerShell script is provid
 The project includes a workflow for exporting the 2D panel drawings in DXF format, suitable for CNC cutting services.
 
 The workflow consists of two main steps:
-1.  **Exporting Panels from OpenSCAD:** The `export-panels.ps1` PowerShell script automates the export of all panels to the `artifacts/export` directory. The script gets the list of panels from the `model.scad` file and then calls OpenSCAD for each panel to generate a DXF file.
+1.  **Exporting Panels from OpenSCAD:** The `export-panels.ps1` PowerShell script automates the export of all panels to the `artifacts/export` directory. The script gets the list of panels from the `model.scad` file and then calls OpenSCAD for each panel to generate a DXF file. All exported panels are positioned at the origin (0,0) to ensure consistency.
 2.  **Layering DXF Files:** The `run-split-layers.ps1` script executes the `split-layers-dxf.ps1` script, which processes the exported DXF files using the `split_layers.py` Python script to separate the geometry into `CUT` and `DRILL` layers. This is necessary because OpenSCAD exports all geometry to a single layer. The script uses the `ezdxf` library to perform this operation.
 
 This workflow ensures that the final DXF files are ready for use with CAM software, with clean separation between cutting paths and drill holes.
-
-The export logic for SVG files has been fixed to ensure that all drill holes are correctly projected, regardless of their depth. This was achieved by translating the panels before rotation to ensure the face with the holes is on the `z=0` plane during projection.
 
 ## 10. DXF Analysis
 
@@ -180,21 +178,29 @@ To verify that the DXF files have been correctly layered, the `analyze_dxf.py` s
 
 ## 11. Hole Metadata Export
 
-To facilitate the creation of manufacturing documentation, the model can now export detailed metadata for all holes on a given panel. This metadata includes the hole's name, its 2D projected coordinates (x, y), its diameter, and its depth.
+To facilitate the creation of manufacturing documentation, the model can now export detailed metadata for all holes on a given panel. This metadata includes the hole's name, its 2D projected coordinates (x, y), its Z coordinate (relative to the panel's thickness), its diameter, and its depth.
 
 This is achieved through a series of new functions and modules:
 
 - **`get_*_hole_2d_coords()` functions:** These functions are responsible for calculating the 2D projected coordinates of a hole based on the panel's export transformation.
-- **`*_hole_metadata()` modules:** Each panel type with holes has a corresponding module that uses the coordinate transformation functions to `echo` the hole metadata to the OpenSCAD console during export.
+- **`*_hole_metadata()` modules:** Each panel type with holes has a corresponding module that uses the coordinate transformation functions to `echo` the hole metadata to the OpenSCAD console during export. The Z coordinate is now correctly represented, with a value of `0` for holes drilled perpendicularly into the panel face and a value of half the panel's thickness for holes drilled into the edge.
 - **`echo_hole_metadata()` module:** This top-level module is called during the export process and, based on the `export_panel_name` variable, it calls the appropriate `*_hole_metadata()` module to generate the metadata for the specified panel.
 
 The `export-panels.ps1` script has been updated to capture this metadata from the console output and save it to a CSV file named after the panel (e.g., `CorpusSideLeft.csv`) in the `artifacts/export/dxf` directory.
 
-The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
+The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
 
 ## 12. Changelog
 
+### v3
+
+*   Corrected the 2D hole coordinate calculation for DXF export to fix issues with reflected coordinates.
+*   All exported 2D panels are now translated to start at the (0,0) origin.
+*   The `split_layers.py` script now adds a detailed "Hole Schedule" table to the `ANNOTATION` layer of the DXF files.
+*   The Z-coordinate in the hole metadata now correctly distinguishes between perpendicular and edge-drilled holes.
+
 ### v2
+
 *   The number of drawers is now configurable.
 *   The drawer assembly has been fixed. The back panel of the drawer is now correctly positioned.
 *   The model has been made more parametric.

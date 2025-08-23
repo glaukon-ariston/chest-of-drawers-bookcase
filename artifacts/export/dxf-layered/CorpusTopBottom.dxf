@@ -445,7 +445,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2460910.3141203704
+2460911.756284722
   9
 $TDUCREATE
  40
@@ -453,7 +453,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2460910.3141203704
+2460911.756284722
   9
 $TDUUPDATE
  40
@@ -505,7 +505,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-3E
+5E
   9
 $SURFTAB1
  70
@@ -885,11 +885,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{75B8CB4D-D268-4197-9DCD-2191AE70CC45}
+{E8D93106-36AF-4DB2-9DD1-F4B437671978}
   9
 $VERSIONGUID
   2
-{865A1F91-142D-41C8-8938-34724E20F255}
+{B6429EE3-5854-409B-A24C-DBB1E13570E1}
   9
 $EXTNAMES
 290
@@ -1529,7 +1529,7 @@ ACAD
   0
 APPID
   5
-3B
+5B
 330
 3
 100
@@ -1543,7 +1543,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-3C
+5C
 330
 3
 100
@@ -1975,6 +1975,774 @@ ANNOTATION
 100
 AcDbText
  10
+782.0
+ 20
+230.0
+ 30
+0.0
+ 40
+3.75
+  1
+Hole Schedule
+100
+AcDbText
+  0
+TEXT
+  5
+38
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+782.0
+ 20
+222.5
+ 30
+0.0
+ 40
+2.5
+  1
+Hole Name
+100
+AcDbText
+  0
+TEXT
+  5
+39
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+822.0
+ 20
+222.5
+ 30
+0.0
+ 40
+2.5
+  1
+X
+100
+AcDbText
+  0
+TEXT
+  5
+3A
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+842.0
+ 20
+222.5
+ 30
+0.0
+ 40
+2.5
+  1
+Y
+100
+AcDbText
+  0
+TEXT
+  5
+3B
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+862.0
+ 20
+222.5
+ 30
+0.0
+ 40
+2.5
+  1
+Z
+100
+AcDbText
+  0
+TEXT
+  5
+3C
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+882.0
+ 20
+222.5
+ 30
+0.0
+ 40
+2.5
+  1
+Dia
+100
+AcDbText
+  0
+TEXT
+  5
+3D
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+902.0
+ 20
+222.5
+ 30
+0.0
+ 40
+2.5
+  1
+Depth
+100
+AcDbText
+  0
+LINE
+  5
+3E
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbLine
+ 10
+782.0
+ 20
+221.25
+ 30
+0.0
+ 11
+922.0
+ 21
+221.25
+ 31
+0.0
+  0
+TEXT
+  5
+3F
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+782.0
+ 20
+218.75
+ 30
+0.0
+ 40
+2.5
+  1
+left_side_1
+100
+AcDbText
+  0
+TEXT
+  5
+40
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+822.0
+ 20
+218.75
+ 30
+0.0
+ 40
+2.5
+  1
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+41
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+842.0
+ 20
+218.75
+ 30
+0.0
+ 40
+2.5
+  1
+50.0
+100
+AcDbText
+  0
+TEXT
+  5
+42
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+862.0
+ 20
+218.75
+ 30
+0.0
+ 40
+2.5
+  1
+9.5
+100
+AcDbText
+  0
+TEXT
+  5
+43
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+882.0
+ 20
+218.75
+ 30
+0.0
+ 40
+2.5
+  1
+4.0
+100
+AcDbText
+  0
+TEXT
+  5
+44
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+902.0
+ 20
+218.75
+ 30
+0.0
+ 40
+2.5
+  1
+30.0
+100
+AcDbText
+  0
+TEXT
+  5
+45
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+782.0
+ 20
+215.0
+ 30
+0.0
+ 40
+2.5
+  1
+left_side_2
+100
+AcDbText
+  0
+TEXT
+  5
+46
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+822.0
+ 20
+215.0
+ 30
+0.0
+ 40
+2.5
+  1
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+47
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+842.0
+ 20
+215.0
+ 30
+0.0
+ 40
+2.5
+  1
+180.0
+100
+AcDbText
+  0
+TEXT
+  5
+48
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+862.0
+ 20
+215.0
+ 30
+0.0
+ 40
+2.5
+  1
+9.5
+100
+AcDbText
+  0
+TEXT
+  5
+49
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+882.0
+ 20
+215.0
+ 30
+0.0
+ 40
+2.5
+  1
+4.0
+100
+AcDbText
+  0
+TEXT
+  5
+4A
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+902.0
+ 20
+215.0
+ 30
+0.0
+ 40
+2.5
+  1
+30.0
+100
+AcDbText
+  0
+TEXT
+  5
+4B
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+782.0
+ 20
+211.25
+ 30
+0.0
+ 40
+2.5
+  1
+right_side_1
+100
+AcDbText
+  0
+TEXT
+  5
+4C
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+822.0
+ 20
+211.25
+ 30
+0.0
+ 40
+2.5
+  1
+762.0
+100
+AcDbText
+  0
+TEXT
+  5
+4D
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+842.0
+ 20
+211.25
+ 30
+0.0
+ 40
+2.5
+  1
+50.0
+100
+AcDbText
+  0
+TEXT
+  5
+4E
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+862.0
+ 20
+211.25
+ 30
+0.0
+ 40
+2.5
+  1
+9.5
+100
+AcDbText
+  0
+TEXT
+  5
+4F
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+882.0
+ 20
+211.25
+ 30
+0.0
+ 40
+2.5
+  1
+4.0
+100
+AcDbText
+  0
+TEXT
+  5
+50
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+902.0
+ 20
+211.25
+ 30
+0.0
+ 40
+2.5
+  1
+30.0
+100
+AcDbText
+  0
+TEXT
+  5
+51
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+782.0
+ 20
+207.5
+ 30
+0.0
+ 40
+2.5
+  1
+right_side_2
+100
+AcDbText
+  0
+TEXT
+  5
+52
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+822.0
+ 20
+207.5
+ 30
+0.0
+ 40
+2.5
+  1
+762.0
+100
+AcDbText
+  0
+TEXT
+  5
+53
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+842.0
+ 20
+207.5
+ 30
+0.0
+ 40
+2.5
+  1
+180.0
+100
+AcDbText
+  0
+TEXT
+  5
+54
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+862.0
+ 20
+207.5
+ 30
+0.0
+ 40
+2.5
+  1
+9.5
+100
+AcDbText
+  0
+TEXT
+  5
+55
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+882.0
+ 20
+207.5
+ 30
+0.0
+ 40
+2.5
+  1
+4.0
+100
+AcDbText
+  0
+TEXT
+  5
+56
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+902.0
+ 20
+207.5
+ 30
+0.0
+ 40
+2.5
+  1
+30.0
+100
+AcDbText
+  0
+TEXT
+  5
+57
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
 0.0
  20
 -20.0
@@ -1989,7 +2757,7 @@ AcDbText
   0
 TEXT
   5
-38
+58
 330
 17
 100
@@ -2013,7 +2781,7 @@ AcDbText
   0
 TEXT
   5
-39
+59
 330
 17
 100
@@ -2037,7 +2805,7 @@ AcDbText
   0
 TEXT
   5
-3A
+5A
 330
 17
 100
@@ -3049,7 +3817,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-3D
+5D
   0
 DICTIONARYVAR
   5
@@ -3061,11 +3829,11 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-22T05:32:20.623595+00:00
+1.4.2 @ 2025-08-23T16:09:03.185234+00:00
   0
 DICTIONARYVAR
   5
-3D
+5D
 330
 2D
 100
@@ -3073,7 +3841,7 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-22T05:32:20.627804+00:00
+1.4.2 @ 2025-08-23T16:09:03.189609+00:00
   0
 ENDSEC
   0

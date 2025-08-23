@@ -6,13 +6,87 @@ import os
 # Threshold for slot detection (in DXF units, e.g., mm)
 SLOT_MAX_SIZE = 10.0
 
+def add_hole_table(msp, holes, position):
+    """Adds a table of hole information to the DXF."""
+    if not holes:
+        return 0
+
+    # Table properties
+    text_height = 2.5
+    line_height = text_height * 1.5
+    col_widths = {
+        "name": 40,
+        "x": 20,
+        "y": 20,
+        "z": 20,
+        "diameter": 20,
+        "depth": 20
+    }
+    header = ["Hole Name", "X", "Y", "Z", "Dia", "Depth"]
+    keys = ["name", "x", "y", "z", "diameter", "depth"]
+    entities_added = 0
+
+    # Starting position
+    x_start, y_start = position
+    
+    # Title
+    msp.add_text(
+        "Hole Schedule",
+        dxfattribs={
+            'layer': 'ANNOTATION',
+            'height': text_height * 1.5,
+            'insert': (x_start, y_start)
+        }
+    )
+    entities_added += 1
+    y_start -= line_height * 2
+
+    # Draw header
+    current_x = x_start
+    for i, col_header in enumerate(header):
+        msp.add_text(
+            col_header,
+            dxfattribs={
+                'layer': 'ANNOTATION',
+                'height': text_height,
+                'insert': (current_x, y_start)
+            }
+        )
+        current_x += col_widths[keys[i]]
+    entities_added += len(header)
+
+    # Draw header underline
+    y = y_start - text_height / 2
+    msp.add_line((x_start, y), (current_x, y), dxfattribs={'layer': 'ANNOTATION'})
+    entities_added += 1
+
+    # Draw rows
+    y_start -= line_height
+    for hole in holes:
+        current_x = x_start
+        for key in keys:
+            msp.add_text(
+                str(hole[key]),
+                dxfattribs={
+                    'layer': 'ANNOTATION',
+                    'height': text_height,
+                    'insert': (current_x, y_start)
+                }
+            )
+            current_x += col_widths[key]
+        y_start -= line_height
+    entities_added += len(holes) * len(keys)
+    
+    return entities_added
+
 def add_hole_annotations_from_csv(msp, input_file):
     """Read a CSV file with the same name as the input DXF and add hole annotations."""
     csv_file = os.path.splitext(input_file)[0] + ".csv"
     annotations_added = 0
+    holes = []
     if not os.path.exists(csv_file):
         print(f"No annotation file found at: {csv_file}")
-        return annotations_added
+        return annotations_added, holes
 
     print(f"Found annotation file: {csv_file}")
     with open(csv_file, mode='r', newline='') as f:
@@ -22,13 +96,23 @@ def add_hole_annotations_from_csv(msp, input_file):
         for row in reader:
             try:
                 # Unpack row data
-                panel_name, hole_name, x, y, diameter, depth = row
+                panel_name, hole_name, x, y, z, diameter, depth = row
                 
                 # Convert numeric values
                 x = float(x)
                 y = float(y)
+                z = float(z)
                 diameter = float(diameter)
                 depth = float(depth)
+
+                holes.append({
+                    "name": hole_name,
+                    "x": round(x, 2),
+                    "y": round(y, 2),
+                    "z": round(z, 2),
+                    "diameter": diameter,
+                    "depth": depth
+                })
                 
                 # Create annotation text
                 text = f"d{diameter} h{depth}"
@@ -46,7 +130,7 @@ def add_hole_annotations_from_csv(msp, input_file):
                 annotations_added += 1
             except (ValueError, KeyError) as e:
                 print(f"  - Warning: Skipping invalid row in CSV: {row} ({e})")
-    return annotations_added
+    return annotations_added, holes
 
 def is_small_slot(poly):
     """Return True if polyline is closed and small enough to be considered a drill/slot."""
@@ -311,7 +395,7 @@ def split_layers(input_file, output_file):
         doc.linetypes.new("CONTINUOUS")
 
     # Add hole annotations from CSV file
-    annotations_added = add_hole_annotations_from_csv(msp, input_file)
+    annotations_added, holes = add_hole_annotations_from_csv(msp, input_file)
     
     allowed = {"LWPOLYLINE", "POLYLINE", "LINE", "ARC", "CIRCLE", "TEXT", "MTEXT"}
     print(f"Processing file: {input_file}")
@@ -357,6 +441,11 @@ def split_layers(input_file, output_file):
     
     print(f"Created {entities_created} entities")
     
+    # Add hole table
+    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
+    table_pos = (max_x + 20, max_y)
+    table_entities_added = add_hole_table(msp, holes, table_pos)
+    
     # Verify entities were created
     cut_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "CUT")
     drill_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "DRILL")
@@ -367,8 +456,8 @@ def split_layers(input_file, output_file):
     print(f"Entities on ANNOTATION layer: {annotation_count}")
     
     # FAIL EARLY: Verify all entities were properly created
-    if cut_count + drill_count + annotation_count != entities_created + annotations_added:
-        raise RuntimeError(f"Entity creation failed: created {entities_created + annotations_added} but only {cut_count + drill_count + annotation_count} were assigned to layers")
+    if cut_count + drill_count + annotation_count != entities_created + annotations_added + table_entities_added:
+        raise RuntimeError(f"Entity creation failed: created {entities_created + annotations_added + table_entities_added} but only {cut_count + drill_count + annotation_count} were assigned to layers")
     
     # Debug: Check entities before saving
     print("Before saving - checking entities:")
@@ -399,7 +488,7 @@ def split_layers(input_file, output_file):
         for e in saved_entities:
             print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
         
-        if total_entities != entities_created + annotations_added + 4: # 4 legend lines
+        if total_entities != entities_created + annotations_added + table_entities_added + 4: # 4 legend lines
             # Additional debugging
             all_doc_entities = []
             for layout in verify_doc.layouts:
@@ -407,7 +496,7 @@ def split_layers(input_file, output_file):
                 print(f"Layout '{layout.dxf.name}': {len(layout_entities)} entities")
                 all_doc_entities.extend(layout_entities)
             
-            raise RuntimeError(f"File save verification failed: expected {entities_created + annotations_added + 4} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
+            raise RuntimeError(f"File save verification failed: expected {entities_created + annotations_added + table_entities_added + 4} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
         
         # Verify layers exist in saved file
         for layer_name in ["CUT", "DRILL", "ANNOTATION"]:

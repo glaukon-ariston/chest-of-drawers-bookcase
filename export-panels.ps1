@@ -76,7 +76,7 @@ foreach ($panelName in $panelNames) {
         $holeMetadata = Get-Content $consoleLogPath | Where-Object { $_.StartsWith('ECHO: "Hole,') } | ForEach-Object { $_.Substring(6).Trim('"') }
         if ($holeMetadata.Count -gt 0) {
             $csvFile = Join-Path $exportDir "$safePanelName.csv"
-            $csvContent = @("PanelName,HoleName,X,Y,Diameter,Depth")
+            $csvContent = @("PanelName,HoleName,X,Y,Z,Diameter,Depth")
             $holeMetadata | ForEach-Object {
                 $line = $_ -replace 'Hole,', ''
                 $csvContent += $line

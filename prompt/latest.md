@@ -1,1 +1,1 @@
-Modify *_metadata() functions so they use `export_panel_name` global variable instead of fixed string for the panel name. Some code is shared, e.g. between left and right panels.
+The exported hole locations are not correct. They seem reflected across Y axis. See this screenshot ![DrawerSideLeft.png](@artifacts/screenshot/DrawerSideLeft.png)taken from LibreCAD for DrawerSideLeft panel. The hole location seems correct in the Y direction but seem reflected around Y axis in the X direction.

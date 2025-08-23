@@ -208,3 +208,83 @@ To address this, I performed the following actions:
 2.  **Removed `*_annotations()` code:** I removed all `*_annotations()` modules and related code from `model.scad`, as the annotations are now handled externally by the `split_layers.py` script.
 3.  **Fixed `split_layers.py`:** I fixed several errors in the `split_layers.py` script, including issues with entity counting, attribute errors, and unicode encoding.
 4.  **Improved Logging:** I refactored the logging of the DXF processing scripts. I created a new `run-split-layers.ps1` script to execute the main processing script and pipe the output to a log file using `Tee-Object`, which allows the output to be displayed in the console and saved to a file simultaneously. I also modified the `split-layers-dxf.ps1` script to use `Write-Output` instead of `Write-Host` to ensure all output is captured.
+
+---
+
+### User:
+
+> The exported hole locations are not correct. They seem reflected across Y axis.
+
+### Model:
+
+The user reported that the exported hole locations were incorrect for some panels. I identified that the coordinate transformation logic in the `get_*_hole_2d_coords` functions in `model.scad` was flawed. I corrected the logic for `get_corpus_side_hole_2d_coords` and `get_drawer_side_hole_2d_coords` to fix the issue.
+
+### User:
+
+> The PedestalSide annotation location seems wrong.
+
+### Model:
+
+The user reported another issue with the annotation location for the `PedestalSide` panel. I identified a similar coordinate transformation issue in the `get_pedestal_side_hole_2d_coords` function and corrected it.
+
+### User:
+
+> Modify @split_layers.py to include a table showing hole name, diameter, coordinates, and depth in the annotation layer.
+
+### Model:
+
+The user requested to add a hole schedule table to the DXF annotations. I modified the `split_layers.py` script to:
+*   Read the hole metadata from the CSV file.
+*   Create a new `add_hole_table` function to draw a table with hole name, coordinates, diameter, and depth.
+*   The table is placed to the right of the panel in the DXF file.
+
+### User:
+
+> Make the all the projection panel coordinates start at the origin (0,0) and extend in the positive direction.
+
+### Model:
+
+The user requested that all exported panels should start at the origin (0,0). I modified the `export_panel` module in `model.scad` to add the necessary translations to each panel's projection.
+
+### User:
+
+> The annotation locations need update now.
+
+### Model:
+
+The user pointed out that the annotation locations were incorrect after moving the panels to the origin. I updated the `get_*_hole_2d_coords` functions in `model.scad` to apply the same translations to the hole coordinates.
+
+### User:
+
+> Include the z coordinate in the hole table.
+
+### Model:
+
+The user requested to include the `z` coordinate in the hole table. I performed the following actions:
+*   Modified the `*_hole_metadata` modules in `model.scad` to output the `z` coordinate.
+*   Updated the `export-panels.ps1` script to include the `Z` column in the CSV header.
+*   Updated the `split_layers.py` script to read the new CSV format and include the `z` coordinate in the hole table.
+
+### User:
+
+> The z coordinate should be zero all holes that go through the panel (perpendiculary), except for those that are dilled into the side of the panel (their z coordinate needs to be half of panel thickness).
+
+### Model:
+
+The user provided a more precise definition for the `z` coordinate. I updated the `*_hole_metadata` modules in `model.scad` to set the `z` coordinate to `0` for perpendicular holes and to half the panel thickness for side holes.
+
+### User:
+
+> The three through holes on DrawerBack panel for the DrawerBotttom panel need to have z coordinates set to zero.
+
+### Model:
+
+The user identified an error in my previous change. I corrected the `drawer_back_hole_metadata` module in `model.scad` to set the `z` coordinate for the bottom panel holes to `0`.
+
+### User:
+
+> Update the documentation and prepare a commit message.
+
+### Model:
+
+The user asked me to update the project documentation and prepare a commit message for all the recent changes. I updated `prompt/model-v2.md`, `GEMINI.md`, and `README.md` to reflect the new features and fixes. I also created a commit message and saved it to `prompt/commit.md`.

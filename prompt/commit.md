@@ -1,14 +1,11 @@
-feat: Refactor hole metadata and DXF export workflow
+feat: Improve CNC export and hole metadata
 
-Refactored the OpenSCAD model to simplify hole metadata generation and improve the DXF export process.
+This commit introduces several improvements to the CNC export workflow and the hole metadata generation.
 
-- Updated `*_metadata()` functions in `model.scad` to dynamically use `export_panel_name`, enhancing code reusability.
-- Removed all in-model `*_annotations()` modules and related code from `model.scad`, as annotations are now handled externally by `split_layers.py`, improving OpenSCAD export performance.
-- Addressed several issues in `split_layers.py`, including:
-    - Corrected entity counting logic during DXF layering.
-    - Resolved `AttributeError` related to `get_extents` by using `ezdxf.bbox.extents`.
-    - Fixed `UnicodeEncodeError` by removing problematic characters from success messages.
-- Streamlined the DXF processing script logging:
-    - Introduced `run-split-layers.ps1` to orchestrate the DXF layering process.
-    - Implemented `Tee-Object` for simultaneous console output and log file recording.
-    - Replaced `Write-Host` with `Write-Output` in `split-layers-dxf.ps1` to ensure comprehensive logging.
+- **Corrected Hole Coordinates:** The 2D hole coordinate calculation for DXF export has been fixed to resolve issues with reflected coordinates across different panels.
+
+- **Panel Projections at Origin:** All exported 2D panels are now translated to start at the (0,0) origin and extend into the positive quadrant. This ensures consistency and predictability in the exported DXF files.
+
+- **Hole Table in DXF:** The `split_layers.py` script now adds a detailed "Hole Schedule" table to the `ANNOTATION` layer of the DXF files. This table includes the hole name, diameter, depth, and its X, Y, and Z coordinates, providing comprehensive manufacturing data directly in the DXF file.
+
+- **Corrected Z-Coordinate Representation:** The Z-coordinate in the hole metadata now correctly distinguishes between holes drilled perpendicularly into the panel face (z=0) and those drilled into the edge (z=half panel thickness). This provides more accurate information for CNC machining.
