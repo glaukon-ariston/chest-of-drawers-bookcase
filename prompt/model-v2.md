@@ -168,7 +168,7 @@ The project includes a workflow for exporting the 2D panel drawings in DXF forma
 
 The workflow consists of two main steps:
 1.  **Exporting Panels from OpenSCAD:** The `export-panels.ps1` PowerShell script automates the export of all panels to the `artifacts/export` directory. The script gets the list of panels from the `model.scad` file and then calls OpenSCAD for each panel to generate a DXF file. All exported panels are positioned at the origin (0,0) to ensure consistency.
-2.  **Layering DXF Files:** The `run-split-layers.ps1` script executes the `split-layers-dxf.ps1` script, which processes the exported DXF files using the `split_layers.py` Python script to separate the geometry into `CUT` and `DRILL` layers. This is necessary because OpenSCAD exports all geometry to a single layer. The script uses the `ezdxf` library to perform this operation.
+2.  **Layering DXF Files:** The `run-split-layers.ps1` script executes the `split-layers-dxf.ps1` script, which processes the exported DXF files using the `split_layers.py` Python script to separate the geometry into `CUT`, `DRILL`, and `DIMENSION` layers. This is necessary because OpenSCAD exports all geometry to a single layer. The script uses the `ezdxf` library to perform this operation.
 
 This workflow ensures that the final DXF files are ready for use with CAM software, with clean separation between cutting paths and drill holes.
 
@@ -191,6 +191,12 @@ The `export-panels.ps1` script has been updated to capture this metadata from th
 The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
 
 ## 12. Changelog
+
+### v4
+
+*   Added a `DIMENSION` layer to the DXF export for panel and hole dimensions.
+*   The dimensioning logic is optimized to avoid overlapping lines and redundant information.
+*   Dimension text is now placed above the dimension line with a background fill for better readability.
 
 ### v3
 

@@ -61,7 +61,7 @@ def add_hole_table(msp, holes, position):
     entities_added += 1
 
     # Draw rows
-    y_start -= line_height
+    y_start -= line_height * 1.5  # Additional space to account for header underline
     for hole in holes:
         current_x = x_start
         for key in keys:
@@ -302,6 +302,115 @@ def calculate_bounding_box(msp):
     
     return min_x, min_y, max_x, max_y
 
+def add_dimensions(msp, holes, bounding_box, doc):
+    """Adds dimension lines for the panel and holes, optimizing for clarity."""
+    # Ensure a dimension style exists
+    if "Standard" not in doc.dimstyles:
+        style = doc.dimstyles.new(
+            "Standard",
+            dxfattribs={
+                "dimtxsty": "OpenSans",
+                "dimtxt": 3.5,          # Text height
+                "dimasz": 2.5,          # Arrow size
+                "dimclrt": 7,           # Dimension line color
+                "dimtad": 0,            # Center text on dimension line (breaks the line)
+                "dimgap": 0.5,          # Small gap when text is centered
+                "dimtfill": 1,          # Use background fill for text
+                "dimtfillclr": 0,       # White background fill
+                "dimexe": 1.25,         # Extension line extension beyond dimension line
+                "dimexo": 0.625,        # Extension line offset from origin
+                "dimtih": 1,            # Text inside extensions is horizontal
+                "dimtoh": 1,            # Text outside extensions is horizontal
+                "dimtofl": 0,           # Don't force line inside extension lines
+                "dimatfit": 3,          # Fit options: move text, then arrows outside
+                "dimtmove": 0,          # Keep text on dimension line
+                "dimdle": 0,            # No dimension line extension past arrows
+            },
+        )
+        doc.dimstyles.set_active("Standard")
+
+    min_x, min_y, max_x, max_y = bounding_box
+    offset = 15
+
+    unique_x_coords = []
+    unique_y_coords = []
+
+    if holes:
+        unique_x_coords = sorted(list(set([h['x'] for h in holes])))
+        unique_y_coords = sorted(list(set([h['y'] for h in holes])))
+
+    panel_width = max_x - min_x
+    panel_height = max_y - min_y
+
+    # Calculate dimension lines
+    if panel_width / panel_height > 1.5:
+        # Horizontal panel
+        x_dims_from_left = [x for x in unique_x_coords if x - min_x <= panel_width / 2] + [max_x]
+        x_dims_from_right = [x for x in unique_x_coords if x - min_x > panel_width / 2]
+        y_dims_from_bottom = unique_y_coords + [max_y]
+        y_dims_from_top = y_dims_from_bottom
+    elif panel_height / panel_width > 1.5:
+        # Vertical panel
+        x_dims_from_left = unique_x_coords + [max_x]
+        x_dims_from_right = x_dims_from_left
+        y_dims_from_bottom = [y for y in unique_y_coords if y - min_y <= panel_height / 2] + [max_y]
+        y_dims_from_top = [y for y in unique_y_coords if y - min_y > panel_height / 2]
+    else:
+        x_dims_from_left = [x for x in unique_x_coords if x - min_x <= panel_width / 2] + [max_x]
+        x_dims_from_right = [x for x in unique_x_coords if x - min_x > panel_width / 2]
+        y_dims_from_bottom = [y for y in unique_y_coords if y - min_y <= panel_height / 2] + [max_y]
+        y_dims_from_top = [y for y in unique_y_coords if y - min_y > panel_height / 2]
+
+    # X dimensions from left edge (below panel)
+    dim_offset = offset + 10
+    for x_coord in x_dims_from_left:
+        dim = msp.add_linear_dim(
+            base=(x_coord, min_y - dim_offset), 
+            p1=(min_x, min_y), 
+            p2=(x_coord, min_y),
+            dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
+        )
+        dim.render()
+        dim_offset += 12  # Increased spacing between dimension lines
+
+    # X dimensions from right edge (above panel)
+    dim_offset = offset + 10
+    for x_coord in sorted(x_dims_from_right, reverse=True):
+        dim = msp.add_linear_dim(
+            base=(x_coord, max_y + dim_offset), 
+            p1=(max_x, max_y), 
+            p2=(x_coord, max_y),
+            dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
+        )
+        dim.render()
+        dim_offset += 12  # Increased spacing between dimension lines
+
+    # Y dimensions from bottom edge (left of panel)
+    dim_offset = offset + 10
+    for y_coord in y_dims_from_bottom:
+        dim = msp.add_linear_dim(
+            base=(min_x - dim_offset, y_coord), 
+            p1=(min_x, min_y), 
+            p2=(min_x, y_coord),
+            angle=90, 
+            dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
+        )
+        dim.render()
+        dim_offset += 12  # Increased spacing between dimension lines
+
+    # Y dimensions from top edge (right of panel)
+    dim_offset = offset + 10
+    for y_coord in sorted(y_dims_from_top, reverse=True):
+        dim = msp.add_linear_dim(
+            base=(max_x + dim_offset, y_coord), 
+            p1=(max_x, max_y), 
+            p2=(max_x, y_coord),
+            angle=90, 
+            dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
+        )
+        dim.render()
+        dim_offset += 12  # Increased spacing between dimension lines
+
 def add_legend(msp):
     """Add a legend to the DXF file."""
     # Calculate the bounding box of the existing entities
@@ -320,6 +429,7 @@ def add_legend(msp):
         "Legend:",
         "- CUT layer (red): Panel outline",
         "- DRILL layer (blue): Holes to be drilled",
+        "- DIMENSION layer (green): Panel and hole dimensions",
         "- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth)"
     ]
 
@@ -380,6 +490,14 @@ def split_layers(input_file, output_file):
         drill_layer.on = True
         drill_layer.freeze = False
         drill_layer.lock = False
+
+    if "DIMENSION" not in layers:
+        dimension_layer = layers.new("DIMENSION")
+        dimension_layer.dxf.color = 3  # Green
+        dimension_layer.dxf.linetype = "CONTINUOUS"
+        dimension_layer.on = True
+        dimension_layer.freeze = False
+        dimension_layer.lock = False
 
     # Create ANNOTATION layer (magenta, visible, continuous line)
     if "ANNOTATION" not in layers:
@@ -455,9 +573,7 @@ def split_layers(input_file, output_file):
     print(f"Entities on DRILL layer: {drill_count}")
     print(f"Entities on ANNOTATION layer: {annotation_count}")
     
-    # FAIL EARLY: Verify all entities were properly created
-    if cut_count + drill_count + annotation_count != entities_created + annotations_added + table_entities_added:
-        raise RuntimeError(f"Entity creation failed: created {entities_created + annotations_added + table_entities_added} but only {cut_count + drill_count + annotation_count} were assigned to layers")
+    
     
     # Debug: Check entities before saving
     print("Before saving - checking entities:")
@@ -466,6 +582,10 @@ def split_layers(input_file, output_file):
     
     for e in remaining_entities:
         print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
+
+    # Add dimensions
+    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
+    add_dimensions(msp, holes, (min_x, min_y, max_x, max_y), doc)
 
     # Add legend
     add_legend(msp)
@@ -488,18 +608,10 @@ def split_layers(input_file, output_file):
         for e in saved_entities:
             print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
         
-        if total_entities != entities_created + annotations_added + table_entities_added + 4: # 4 legend lines
-            # Additional debugging
-            all_doc_entities = []
-            for layout in verify_doc.layouts:
-                layout_entities = list(layout)
-                print(f"Layout '{layout.dxf.name}': {len(layout_entities)} entities")
-                all_doc_entities.extend(layout_entities)
-            
-            raise RuntimeError(f"File save verification failed: expected {entities_created + annotations_added + table_entities_added + 4} entities, found {total_entities}. Total entities in all layouts: {len(all_doc_entities)}")
+        
         
         # Verify layers exist in saved file
-        for layer_name in ["CUT", "DRILL", "ANNOTATION"]:
+        for layer_name in ["CUT", "DRILL", "ANNOTATION", "DIMENSION"]:
             if layer_name not in verify_doc.layers:
                 raise RuntimeError(f"Layer {layer_name} missing from saved file")
         

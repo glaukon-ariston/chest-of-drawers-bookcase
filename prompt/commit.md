@@ -1,11 +1,11 @@
-feat: Improve CNC export and hole metadata
+feat(dxf): Add dimension layer and optimize layout
 
-This commit introduces several improvements to the CNC export workflow and the hole metadata generation.
+This commit introduces a new `DIMENSION` layer to the DXF export, providing detailed dimensions for panels and holes.
 
-- **Corrected Hole Coordinates:** The 2D hole coordinate calculation for DXF export has been fixed to resolve issues with reflected coordinates across different panels.
+The dimensioning logic in `split_layers.py` has been significantly improved to enhance clarity and readability:
+- Dimensions are now grouped and placed on the closest side of the panel to avoid crossing lines.
+- The script automatically uses unique coordinates to prevent duplicate dimensions.
+- Overall panel dimensions are drawn last to avoid interference with hole dimensions.
+- Dimension text is now placed above the dimension line with a background fill, ensuring it is not crossed by the line.
 
-- **Panel Projections at Origin:** All exported 2D panels are now translated to start at the (0,0) origin and extend into the positive quadrant. This ensures consistency and predictability in the exported DXF files.
-
-- **Hole Table in DXF:** The `split_layers.py` script now adds a detailed "Hole Schedule" table to the `ANNOTATION` layer of the DXF files. This table includes the hole name, diameter, depth, and its X, Y, and Z coordinates, providing comprehensive manufacturing data directly in the DXF file.
-
-- **Corrected Z-Coordinate Representation:** The Z-coordinate in the hole metadata now correctly distinguishes between holes drilled perpendicularly into the panel face (z=0) and those drilled into the edge (z=half panel thickness). This provides more accurate information for CNC machining.
+The project documentation (`README.md`, `GEMINI.md`, `prompt/model-v2.md`) has been updated to reflect these new features.

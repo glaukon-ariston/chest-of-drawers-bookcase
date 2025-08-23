@@ -1,1 +1,1 @@
-The exported hole locations are not correct. They seem reflected across Y axis. See this screenshot ![DrawerSideLeft.png](@artifacts/screenshot/DrawerSideLeft.png)taken from LibreCAD for DrawerSideLeft panel. The hole location seems correct in the Y direction but seem reflected around Y axis in the X direction.
+Add a DIMENSION layer to DXF file to hold panel dimensional information and hole positions for both through holes and side holes. The lines with arrows with a dimension value above the line.
