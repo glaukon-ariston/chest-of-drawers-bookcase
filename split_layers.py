@@ -79,6 +79,7 @@ def add_hole_table(msp, holes, position):
     
     return entities_added
 
+
 def add_hole_annotations_from_csv(msp, input_file):
     """Read a CSV file with the same name as the input DXF and add hole annotations."""
     csv_file = os.path.splitext(input_file)[0] + ".csv"
@@ -114,8 +115,35 @@ def add_hole_annotations_from_csv(msp, input_file):
                     "depth": depth
                 })
                 
+                if z != 0:
+                    # Draw a small cross at the hole's (x,y) location
+                    indicator_size = 6.0 # Length of each arm of the cross
+                    
+                    # Horizontal line
+                    msp.add_line(
+                        start=(x - indicator_size / 2, y),
+                        end=(x + indicator_size / 2, y),
+                        dxfattribs={
+                            'layer': 'DRILL',
+                            'color': 5 # Blue color for drill layer
+                        }
+                    )
+                    # Vertical line
+                    msp.add_line(
+                        start=(x, y - indicator_size / 2),
+                        end=(x, y + indicator_size / 2),
+                        dxfattribs={
+                            'layer': 'DRILL',
+                            'color': 5 # Blue color for drill layer
+                        }
+                    )
+                    print(f"  - Added side hole indicator: d{diameter} h{depth} z{z} at ({x}, {y})")
+
                 # Create annotation text
-                text = f"d{diameter} h{depth}"
+                if z != 0:
+                    text = f"d{diameter} h{depth} z{z}"
+                else:
+                    text = f"d{diameter} h{depth}"
                 
                 # Add text to the ANNOTATION layer
                 msp.add_text(
@@ -132,6 +160,7 @@ def add_hole_annotations_from_csv(msp, input_file):
                 print(f"  - Warning: Skipping invalid row in CSV: {row} ({e})")
     return annotations_added, holes
 
+
 def is_small_slot(poly):
     """Return True if polyline is closed and small enough to be considered a drill/slot."""
     if not poly.closed:
@@ -142,6 +171,7 @@ def is_small_slot(poly):
     width = max(xs) - min(xs)
     height = max(ys) - min(ys)
     return width <= SLOT_MAX_SIZE and height <= SLOT_MAX_SIZE
+
 
 def extract_entity_data(entity):
     """Extract all necessary data from an entity before it's deleted."""
@@ -182,6 +212,7 @@ def extract_entity_data(entity):
         data['color'] = entity.dxf.color
     
     return data
+
 
 def create_new_entity(msp, data, target_layer):
     """Create a new entity from extracted data."""
@@ -236,6 +267,7 @@ def create_new_entity(msp, data, target_layer):
         new_entity.dxf.color = data['color']
     
     return new_entity
+
 
 def calculate_bounding_box(msp):
     """Calculate the bounding box of all entities in modelspace."""
@@ -302,6 +334,7 @@ def calculate_bounding_box(msp):
     
     return min_x, min_y, max_x, max_y
 
+
 def add_dimensions(msp, holes, bounding_box, doc):
     """Adds dimension lines for the panel and holes, optimizing for clarity."""
     # Ensure a dimension style exists
@@ -342,6 +375,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
     panel_width = max_x - min_x
     panel_height = max_y - min_y
 
+    """
     # Calculate dimension lines
     if panel_width / panel_height > 1.5:
         # Horizontal panel
@@ -360,6 +394,13 @@ def add_dimensions(msp, holes, bounding_box, doc):
         x_dims_from_right = [x for x in unique_x_coords if x - min_x > panel_width / 2]
         y_dims_from_bottom = [y for y in unique_y_coords if y - min_y <= panel_height / 2] + [max_y]
         y_dims_from_top = [y for y in unique_y_coords if y - min_y > panel_height / 2]
+    """
+
+    # Calculate dimension lines -- show them all on all sides
+    x_dims_from_left = unique_x_coords + [max_x]
+    x_dims_from_right = x_dims_from_left
+    y_dims_from_bottom = unique_y_coords + [max_y]
+    y_dims_from_top = y_dims_from_bottom
 
     # X dimensions from left edge (below panel)
     dim_offset = offset + 10
@@ -411,6 +452,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
         dim.render()
         dim_offset += 12  # Increased spacing between dimension lines
 
+
 def add_legend(msp):
     """Add a legend to the DXF file."""
     # Calculate the bounding box of the existing entities
@@ -442,6 +484,7 @@ def add_legend(msp):
                 'insert': (legend_x, legend_y - i * 10)
             }
         )
+
 
 def split_layers(input_file, output_file):
     doc = ezdxf.readfile(input_file)
@@ -573,8 +616,6 @@ def split_layers(input_file, output_file):
     print(f"Entities on DRILL layer: {drill_count}")
     print(f"Entities on ANNOTATION layer: {annotation_count}")
     
-    
-    
     # Debug: Check entities before saving
     print("Before saving - checking entities:")
     remaining_entities = list(msp)
@@ -608,8 +649,6 @@ def split_layers(input_file, output_file):
         for e in saved_entities:
             print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
         
-        
-        
         # Verify layers exist in saved file
         for layer_name in ["CUT", "DRILL", "ANNOTATION", "DIMENSION"]:
             if layer_name not in verify_doc.layers:
@@ -623,6 +662,7 @@ def split_layers(input_file, output_file):
         raise RuntimeError(f"Saved file verification failed: {e}")
     
     print(f"Layered DXF saved as {output_file}")
+
 
 def main():
     if len(sys.argv) != 3:

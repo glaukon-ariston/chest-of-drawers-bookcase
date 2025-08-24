@@ -5,6 +5,8 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 ## Coding Guidelines
 
 * Do not use magic constants. Instead, give the value a descriptive name and define a constant.
+* Do not delete items from @TODO.md.
+* When writing Python code, separate functions with two empty lines.
 
 ## Files
 
@@ -92,6 +94,12 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, and adds annotations for holes. The exported panels are positioned at the origin (0,0) to ensure consistency. The annotations include a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates.
 
 ## Changelog
+
+### v5
+
+*   **Enhanced Hole Visualization in DXF Export:**
+    *   The `split_layers.py` script now includes the Z-coordinate in the text annotations for side-drilled holes (holes where the Z-coordinate is non-zero), providing clearer manufacturing information.
+    *   A small cross symbol is now added at the (X,Y) location of side-drilled holes on the `DRILL` layer in 2D panel projections, serving as a visual indicator to distinguish them from through-holes or face-drilled holes.
 
 ### v4
 

@@ -1,1 +1,1 @@
-Add a DIMENSION layer to DXF file to hold panel dimensional information and hole positions for both through holes and side holes. The lines with arrows with a dimension value above the line.
+For side holes change annotation to include its z coordinate.
