@@ -89,7 +89,7 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 
 ### CNC Export
 
-The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, and adds annotations for holes.
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, adds enhanced annotations for holes (including Z-coordinates for side-drilled holes and visual markers), and converts the layered DXF files to DWG format.
 
 ## Changelog
 

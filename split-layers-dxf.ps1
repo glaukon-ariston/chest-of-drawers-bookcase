@@ -46,7 +46,7 @@ foreach ($file in $dxfFiles) {
         Write-Output "OK"
     } else {
         Write-Output "FAILED"
-        Write-Error "Failed to process '$($file.Name)'."
+        Write-Error "Failed to process '$($file.Name)'. Please check the split_layers.py script."
         exit 1
     }
 }

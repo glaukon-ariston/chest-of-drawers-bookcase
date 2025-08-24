@@ -172,6 +172,10 @@ The workflow consists of two main steps:
 
 This workflow ensures that the final DXF files are ready for use with CAM software, with clean separation between cutting paths and drill holes.
 
+### 9.3. DXF to DWG Conversion
+
+The `split-layers-dxf.ps1` script has been enhanced to automatically convert the layered DXF files to DWG format using the ODA File Converter. This conversion is performed in batch mode, ensuring a silent and efficient process. The converted DWG files are saved in the `artifacts/export/dwg-layered` directory.
+
 ## 10. DXF Analysis
 
 To verify that the DXF files have been correctly layered, the `analyze_dxf.py` script is provided. This script takes a directory as input and analyzes all the DXF files in that directory, printing a summary of the layers and the number of entities on each layer.
@@ -188,7 +192,7 @@ This is achieved through a series of new functions and modules:
 
 The `export-panels.ps1` script has been updated to capture this metadata from the console output and save it to a CSV file named after the panel (e.g., `CorpusSideLeft.csv`) in the `artifacts/export/dxf` directory.
 
-The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
+The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. For side-drilled holes (where Z is non-zero), the Z-coordinate is included in the annotation (e.g., `d10 h20 z5`), and a blue cross symbol is added on the `DRILL` layer at the hole's (X,Y) location as a visual indicator. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
 
 ## 12. Changelog
 

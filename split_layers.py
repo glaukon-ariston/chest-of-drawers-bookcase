@@ -472,7 +472,9 @@ def add_legend(msp):
         "- CUT layer (red): Panel outline",
         "- DRILL layer (blue): Holes to be drilled",
         "- DIMENSION layer (green): Panel and hole dimensions",
-        "- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth)"
+        "- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth).",
+        "- For side-drilled holes, Z-coordinate is included (e.g., d10 h20 z9.5).",
+        "- Side-drilled holes are also marked with a blue cross on the DRILL layer."
     ]
 
     for i, text in enumerate(legend_text):

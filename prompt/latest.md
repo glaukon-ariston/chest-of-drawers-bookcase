@@ -1,1 +1,1 @@
-For side holes change annotation to include its z coordinate.
+Make a plan how to convert the layered DXF files to DWG format using freely available tools and libraries. Focus on the command line friendly solution.

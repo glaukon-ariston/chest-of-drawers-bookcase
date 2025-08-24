@@ -445,7 +445,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2460912.323310185
+2460912.4402893516
   9
 $TDUCREATE
  40
@@ -453,7 +453,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2460912.323310185
+2460912.4402893516
   9
 $TDUUPDATE
  40
@@ -505,7 +505,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-130
+132
   9
 $SURFTAB1
  70
@@ -885,11 +885,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{588C081D-302D-45AA-8C42-9181B549CAD4}
+{C187CE94-EE35-4822-8D3F-9B5F72030448}
   9
 $VERSIONGUID
   2
-{60F5FE3B-A0EF-4AB3-B039-B25F6E206AA3}
+{5440E761-542C-468B-970D-043008CDED85}
   9
 $EXTNAMES
 290
@@ -1551,7 +1551,7 @@ ACAD
   0
 APPID
   5
-12D
+12F
 330
 3
 100
@@ -1565,7 +1565,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-12E
+130
 330
 3
 100
@@ -7225,7 +7225,55 @@ AcDbText
  40
 5.0
   1
-- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth)
+- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth).
+100
+AcDbText
+  0
+TEXT
+  5
+12D
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-70.0
+ 30
+0.0
+ 40
+5.0
+  1
+- For side-drilled holes, Z-coordinate is included (e.g., d10 h20 z9.5).
+100
+AcDbText
+  0
+TEXT
+  5
+12E
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+0.0
+ 20
+-80.0
+ 30
+0.0
+ 40
+5.0
+  1
+- Side-drilled holes are also marked with a blue cross on the DRILL layer.
 100
 AcDbText
   0
@@ -8219,7 +8267,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-12F
+131
   0
 DICTIONARYVAR
   5
@@ -8231,11 +8279,11 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-24T05:45:34.805774+00:00
+1.4.2 @ 2025-08-24T08:34:01.220461+00:00
   0
 DICTIONARYVAR
   5
-12F
+131
 330
 2D
 100
@@ -8243,7 +8291,7 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-08-24T05:45:34.829211+00:00
+1.4.2 @ 2025-08-24T08:34:01.243509+00:00
   0
 ENDSEC
   0

@@ -7,6 +7,8 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 * Do not use magic constants. Instead, give the value a descriptive name and define a constant.
 * Do not delete items from @TODO.md.
 * When writing Python code, separate functions with two empty lines.
+* Do not silently change code that I have manually changed.
+* Use `Write-Output` instead of `Write-Host` in PowerShell programming. 
 
 ## Files
 
@@ -94,6 +96,11 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, and adds annotations for holes. The exported panels are positioned at the origin (0,0) to ensure consistency. The annotations include a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates.
 
 ## Changelog
+
+### v6
+
+*   **DXF to DWG Conversion:**
+    *   The `split-layers-dxf.ps1` script has been enhanced to automatically convert layered DXF files to DWG format using the ODA File Converter in batch mode. This ensures silent and efficient conversion.
 
 ### v5
 
