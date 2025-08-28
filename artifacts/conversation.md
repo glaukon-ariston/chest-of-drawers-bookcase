@@ -409,3 +409,21 @@ I sincerely apologized for overwriting your manual correction. I reverted the `s
 ### Model:
 
 I updated the `split_layers.py` file to include information about side hole annotation format (Z-coordinate) and the cross symbol location marker in the annotation legend.
+
+---
+
+### User:
+
+> Fix error @prompt/error.md
+
+(The user reported an error with the `convert-dxf-to-pdf.ps1` script.)
+
+### Model:
+
+I identified that the script was failing and went through a series of debugging steps to isolate the problem.
+
+1.  **Initial Analysis:** I first suspected the way PowerShell was handling file paths with wildcards and modified the script to explicitly list each file. This fixed the initial file discovery issue but the conversion still failed.
+2.  **Argument Simplification:** I then simplified the command-line arguments passed to LibreCAD's `dxf2pdf` tool, removing all formatting options to see if a basic conversion would work. This also failed.
+3.  **Alternative Tool Suggestion:** Suspecting a fundamental issue with the LibreCAD tool itself, I suggested switching to the ODA File Converter, which was already used in the project for DWG conversion. The user rejected this and asked to continue with LibreCAD.
+4.  **Root Cause Discovery:** After restoring the original script at the user's request and suggesting a manual command-line test, the user provided the key insight: the PDF files were being created successfully, but LibreCAD was always returning an exit code of `1`, causing the script to report a failure.
+5.  **Final Solution:** Armed with this new information, I modified the script to no longer check the unreliable exit code. Instead, it now verifies success by checking if the output PDF file was actually created. This resolved the issue.

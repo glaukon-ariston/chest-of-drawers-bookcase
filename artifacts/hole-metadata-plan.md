@@ -9,7 +9,7 @@
 2.  **`export-panels.ps1` - Capture and Persist Metadata**
     *   The script will be updated to capture the console output from OpenSCAD during the DXF export process.
     *   It will parse this output to extract the hole metadata table.
-    *   For each panel, a corresponding CSV file (e.g., `CorpusSideLeft.csv`) will be created in the `artifacts/export/dxf` directory. This file will contain the hole metadata for that specific panel.
+    *   For each panel, a corresponding CSV file (e.g., `CorpusSideLeft.csv`) will be created in the `artifacts/export/dxf-raw` directory. This file will contain the hole metadata for that specific panel.
 
 3.  **`split_layers.py` - Generate DXF Annotations**
     *   The Python script will be modified to look for a companion CSV file for each DXF file it processes.

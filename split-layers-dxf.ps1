@@ -1,8 +1,8 @@
 # split-layers-dxf.ps1
 #
-# This script processes DXF files from the artifacts/export/dxf directory
+# This script processes DXF files from the artifacts/export/dxf-raw directory
 # using the split_layers.py script to separate geometry into CUT and DRILL layers.
-# The processed files are saved in the artifacts/export/dxf-layered directory.
+# The processed files are saved in the artifacts/export/dxf directory.
 
 # --- Configuration ---
 
@@ -13,8 +13,8 @@ $pythonPath = "python"
 # --- Script ---
 
 $scriptDir = $PSScriptRoot
-$inputDir = Join-Path $scriptDir "artifacts/export/dxf"
-$outputDir = Join-Path $scriptDir "artifacts/export/dxf-layered"
+$inputDir = Join-Path $scriptDir "artifacts/export/dxf-raw"
+$outputDir = Join-Path $scriptDir "artifacts/export/dxf"
 $splitLayersScript = Join-Path $scriptDir "split_layers.py"
 
 # Create output directory if it doesn't exist

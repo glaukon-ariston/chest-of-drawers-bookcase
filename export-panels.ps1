@@ -29,7 +29,11 @@ $consoleLogPath = "artifacts\openscad-console.log"
 # Project paths
 $scriptDir = $PSScriptRoot
 $modelFile = Join-Path $scriptDir "model.scad"
-$exportDir = Join-Path $scriptDir "artifacts/export/$exportType"
+if ($exportType -eq "dxf") {
+    $exportDir = Join-Path $scriptDir "artifacts/export/dxf-raw"
+} else {
+    $exportDir = Join-Path $scriptDir "artifacts/export/$exportType"
+}
 
 # Create export directory if it doesn't exist
 if (-not (Test-Path $exportDir)) {
@@ -85,7 +89,7 @@ foreach ($panelName in $panelNames) {
             Write-Host "  -> Created hole metadata file: $csvFile"
         }
     } else {
-        Write-Host "FAILED" -ForegroundColor Red
+        Write-Host "FAILED with exit code $LASTEXITCODE" -ForegroundColor Red
         Write-Error "OpenSCAD failed to export '$panelName'."
         # Read the console log file and process it
         $openscadOutput = Get-Content $consoleLogPath

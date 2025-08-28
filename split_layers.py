@@ -2,9 +2,11 @@ import ezdxf
 import sys
 import csv
 import os
+import ezdxf.units
 
 # Threshold for slot detection (in DXF units, e.g., mm)
 SLOT_MAX_SIZE = 10.0
+
 
 def add_hole_table(msp, holes, position):
     """Adds a table of hole information to the DXF."""
@@ -343,8 +345,8 @@ def add_dimensions(msp, holes, bounding_box, doc):
             "Standard",
             dxfattribs={
                 "dimtxsty": "OpenSans",
-                "dimtxt": 3.5,          # Text height
-                "dimasz": 2.5,          # Arrow size
+                "dimtxt": 9,          # Text height
+                "dimasz": 5,          # Arrow size
                 "dimclrt": 7,           # Dimension line color
                 "dimtad": 0,            # Center text on dimension line (breaks the line)
                 "dimgap": 0.5,          # Small gap when text is centered
@@ -412,7 +414,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
             dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
         )
         dim.render()
-        dim_offset += 12  # Increased spacing between dimension lines
+        dim_offset += 8  # Increased spacing between dimension lines
 
     # X dimensions from right edge (above panel)
     dim_offset = offset + 10
@@ -424,7 +426,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
             dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
         )
         dim.render()
-        dim_offset += 12  # Increased spacing between dimension lines
+        dim_offset += 8  # Increased spacing between dimension lines
 
     # Y dimensions from bottom edge (left of panel)
     dim_offset = offset + 10
@@ -437,7 +439,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
             dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
         )
         dim.render()
-        dim_offset += 12  # Increased spacing between dimension lines
+        dim_offset += 8  # Increased spacing between dimension lines
 
     # Y dimensions from top edge (right of panel)
     dim_offset = offset + 10
@@ -450,7 +452,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
             dxfattribs={"layer": "DIMENSION", "dimstyle": "Standard"}
         )
         dim.render()
-        dim_offset += 12  # Increased spacing between dimension lines
+        dim_offset += 8  # Increased spacing between dimension lines
 
 
 def add_legend(msp):
@@ -515,6 +517,9 @@ def split_layers(input_file, output_file):
         for entity in entities_to_delete:
             msp.delete_entity(entity)
     
+    # Set units to millimeters
+    doc.header['$INSUNITS'] = ezdxf.units.MM
+
     # Create layers with proper visibility settings
     layers = doc.layers
     
@@ -633,6 +638,50 @@ def split_layers(input_file, output_file):
     # Add legend
     add_legend(msp)
     
+    # Create A4 landscape layout
+    layout = doc.layouts.new('A4 landscape')
+    layout.page_setup(
+        size=(297, 210),  # A4 landscape paper size in mm
+        margins=(10, 10, 10, 10),  # 10mm margins
+        units='mm'
+    )
+
+    # Add a viewport to the layout
+    # The viewport is centered on the page
+    # The size of the viewport is the paper size minus the margins
+    viewport = layout.add_viewport(
+        center=(297 / 2, 210 / 2),
+        size=(297 - 20, 210 - 20),
+        view_center_point=(0, 0),  # Initial view center
+        view_height=100  # Initial view height
+    )
+    
+    # Fit the viewport to the modelspace extents
+    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
+    if min_x != float('inf'):
+        # get viewport size in paper space
+        vp_width = viewport.dxf.width
+        vp_height = viewport.dxf.height
+
+        # get modelspace extents
+        center = ((min_x + max_x) / 2, (min_y + max_y) / 2)
+        width = max_x - min_x
+        height = max_y - min_y
+
+        # set the view center
+        viewport.dxf.view_center_point = center
+
+        # calculate the view height to fit the modelspace extents
+        if width == 0 or height == 0:
+            view_height = 100 # default value
+        elif width / height > vp_width / vp_height:
+            view_height = width * vp_height / vp_width
+        else:
+            view_height = height
+        
+        # set the view height, add a 10% margin
+        viewport.dxf.view_height = view_height * 1.1
+
     # Save the file
     try:
         doc.saveas(output_file)

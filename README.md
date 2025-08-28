@@ -89,9 +89,14 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 
 ### CNC Export
 
-The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, adds enhanced annotations for holes (including Z-coordinates for side-drilled holes and visual markers), and converts the layered DXF files to DWG format.
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, adds enhanced annotations for holes (including Z-coordinates for side-drilled holes and visual markers), and converts the layered DXF files to DWG format. Additionally, the `convert-dxf-to-pdf.ps1` script allows for the conversion of these DXF files into PDF documents.
 
 ## Changelog
+
+### v6
+
+*   **DXF to DWG Conversion:** The `split-layers-dxf.ps1` script now automatically converts layered DXF files to DWG format.
+*   **DXF to PDF Conversion:** Added a `convert-dxf-to-pdf.ps1` script to generate PDF files from the DXF drawings using LibreCAD.
 
 ### v5
 
