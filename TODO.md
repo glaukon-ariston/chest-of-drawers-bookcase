@@ -1,17 +1,17 @@
-[x] Corpus
-[x] Shelves
-[x] Corpus joinery (panels + shelves)
-[x] Drawers
-[x] Drawer fronts
-[x] Drawers joinery (box + fronts)
-[x] Handles joinery
-[x] Glass door
-[] Glass door joinery
-[x] Slides
-[x] Slides joinery
-[] Cabinet's pedestal (base)
-[] Create cutting list (CSV)
-[x] Add a DIMENSION layer to DXF file to hold panel dimensional information and hole positions for both through holes and side holes. The lines with arrows with a dimension value above the line.
-[] Make side holes visible in the DXF file.
-[] Export DWG file for all panels needing CNC operation (drill holes)
-[] Convert DWG files to PDF files using LibreCAD in batch mode 
+- [x] Corpus
+- [x] Shelves
+- [x] Corpus joinery (panels + shelves)
+- [x] Drawers
+- [x] Drawer fronts
+- [x] Drawers joinery (box + fronts)
+- [x] Handles joinery
+- [x] Glass door
+- [] Glass door joinery
+- [x] Slides
+- [x] Slides joinery
+- [x] Cabinet's pedestal (base)
+- [x] Create cutting list (CSV)
+- [x] Add a DIMENSION layer to DXF file to hold panel dimensional information and hole positions for both through holes and side holes. The lines with arrows with a dimension value above the line.
+- [x] Make side holes visible in the DXF file.
+- [x] Export DWG file for all panels needing CNC operation (drill holes)
+- [x] Convert DWG files to PDF files using LibreCAD in batch mode 

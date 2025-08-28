@@ -1,3 +1,18 @@
+"""
+This script analyzes DXF files to report the number of entities on each layer within the modelspace.
+It can process a single DXF file or all DXF files within a specified directory.
+
+Usage:
+    python analyze_dxf.py <file_or_directory>
+
+Arguments:
+    <file_or_directory>: Path to a DXF file or a directory containing DXF files.
+
+Example:
+    python analyze_dxf.py my_drawing.dxf
+    python analyze_dxf.py ./dxf_files/
+"""
+
 import ezdxf
 import sys
 import os

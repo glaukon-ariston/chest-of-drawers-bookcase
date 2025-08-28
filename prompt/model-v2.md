@@ -176,6 +176,10 @@ This workflow ensures that the final DXF files are ready for use with CAM softwa
 
 The `split-layers-dxf.ps1` script has been enhanced to automatically convert the layered DXF files to DWG format using the ODA File Converter. This conversion is performed in batch mode, ensuring a silent and efficient process. The converted DWG files are saved in the `artifacts/export/dwg` directory.
 
+### 9.4. DXF to PDF Conversion
+
+A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
+
 ## 10. DXF Analysis
 
 To verify that the DXF files have been correctly layered, the `analyze_dxf.py` script is provided. This script takes a directory as input and analyzes all the DXF files in that directory, printing a summary of the layers and the number of entities on each layer.
@@ -195,6 +199,17 @@ The `export-panels.ps1` script has been updated to capture this metadata from th
 The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. For side-drilled holes (where Z is non-zero), the Z-coordinate is included in the annotation (e.g., `d10 h20 z5`), and a blue cross symbol is added on the `DRILL` layer at the hole's (X,Y) location as a visual indicator. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
 
 ## 12. Changelog
+
+### v7
+
+*   **DXF to PDF Conversion:**
+    *   Added a new PowerShell script, `convert-dxf-to-pdf.ps1`, to automate the conversion of DXF files to PDF format using LibreCAD.
+    *   The script is hardened against LibreCAD's unreliable exit code by verifying the existence of the output PDF file instead of checking the exit code.
+
+### v6
+
+*   **DXF to DWG Conversion:**
+    *   The `split-layers-dxf.ps1` script has been enhanced to automatically convert layered DXF files to DWG format using the ODA File Converter in batch mode. This ensures silent and efficient conversion.
 
 ### v5
 

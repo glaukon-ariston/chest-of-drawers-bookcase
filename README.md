@@ -89,14 +89,28 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 
 ### CNC Export
 
-The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, adds enhanced annotations for holes (including Z-coordinates for side-drilled holes and visual markers), and converts the layered DXF files to DWG format. Additionally, the `convert-dxf-to-pdf.ps1` script allows for the conversion of these DXF files into PDF documents.
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, and adds annotations for holes. The exported panels are positioned at the origin (0,0) to ensure consistency. The annotations include a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates.
+
+#### DXF to DWG Conversion
+
+The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF files to DWG format using the ODA File Converter in batch mode.
+
+#### DXF to PDF Conversion
+
+A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
 
 ## Changelog
 
+### v7
+
+*   **DXF to PDF Conversion:**
+    *   Added a new PowerShell script, `convert-dxf-to-pdf.ps1`, to automate the conversion of DXF files to PDF format using LibreCAD.
+    *   The script is hardened against LibreCAD's unreliable exit code by verifying the existence of the output PDF file instead of checking the exit code.
+
 ### v6
 
-*   **DXF to DWG Conversion:** The `split-layers-dxf.ps1` script now automatically converts layered DXF files to DWG format.
-*   **DXF to PDF Conversion:** Added a `convert-dxf-to-pdf.ps1` script to generate PDF files from the DXF drawings using LibreCAD.
+*   **DXF to DWG Conversion:**
+    *   The `split-layers-dxf.ps1` script has been enhanced to automatically convert layered DXF files to DWG format using the ODA File Converter in batch mode. This ensures silent and efficient conversion.
 
 ### v5
 
