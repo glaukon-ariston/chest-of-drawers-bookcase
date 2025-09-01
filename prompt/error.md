@@ -1,42 +1,26 @@
-PS D:\dev\boris\OpenSCAD\chest-of-drawers-bookcase> .\convert-dxf-to-pdf.ps1
-Starting batch conversion of DXF to PDF...
-LibreCAD path: D:\Program Files\LibreCAD\librecad.exe
-DXF input directory: D:\dev\boris\OpenSCAD\chest-of-drawers-bookcase\artifacts\export\dxf
-PDF output directory: D:\dev\boris\OpenSCAD\chest-of-drawers-bookcase\artifacts\export\pdf
-Found 15 DXF files to process.
-Converting 'CorpusMiddle.dxf' to 'CorpusMiddle.pdf'...
-WARNING: Failed to convert 'CorpusMiddle.dxf'.
-Converting 'CorpusSideLeft.dxf' to 'CorpusSideLeft.pdf'...
-WARNING: Failed to convert 'CorpusSideLeft.dxf'.
-Converting 'CorpusSideRight.dxf' to 'CorpusSideRight.pdf'...
-WARNING: Failed to convert 'CorpusSideRight.dxf'.
-Converting 'CorpusTopBottom.dxf' to 'CorpusTopBottom.pdf'...
-WARNING: Failed to convert 'CorpusTopBottom.dxf'.
-Converting 'DrawerBack.dxf' to 'DrawerBack.pdf'...
-WARNING: Failed to convert 'DrawerBack.dxf'.
-Converting 'DrawerBottom.dxf' to 'DrawerBottom.pdf'...
-WARNING: Failed to convert 'DrawerBottom.dxf'.
-Converting 'DrawerFrontFirst.dxf' to 'DrawerFrontFirst.pdf'...
-WARNING: Failed to convert 'DrawerFrontFirst.dxf'.
-Converting 'DrawerFrontStandard.dxf' to 'DrawerFrontStandard.pdf'...
-WARNING: Failed to convert 'DrawerFrontStandard.dxf'.
-Converting 'DrawerFrontTop.dxf' to 'DrawerFrontTop.pdf'...
-WARNING: Failed to convert 'DrawerFrontTop.dxf'.
-Converting 'DrawerSideLeft.dxf' to 'DrawerSideLeft.pdf'...
-WARNING: Failed to convert 'DrawerSideLeft.dxf'.
-Converting 'DrawerSideRight.dxf' to 'DrawerSideRight.pdf'...
-WARNING: Failed to convert 'DrawerSideRight.dxf'.
-Converting 'HDFBackPanel.dxf' to 'HDFBackPanel.pdf'...
-WARNING: Failed to convert 'HDFBackPanel.dxf'.
-Converting 'PedestalFrontBack.dxf' to 'PedestalFrontBack.pdf'...
-WARNING: Failed to convert 'PedestalFrontBack.dxf'.
-Converting 'PedestalSide.dxf' to 'PedestalSide.pdf'...
-WARNING: Failed to convert 'PedestalSide.dxf'.
-Converting 'Shelf.dxf' to 'Shelf.pdf'...
-WARNING: Failed to convert 'Shelf.dxf'.
-D:\dev\boris\OpenSCAD\chest-of-drawers-bookcase\convert-dxf-to-pdf.ps1 : One or more DXF files failed to convert to PDF.
-At line:1 char:1
-+ .\convert-dxf-to-pdf.ps1
-+ ~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
-    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,convert-dxf-to-pdf.ps1
+Resolve-Path : Cannot find path 
+'C:\Users\Tata\dev\chest-of-drawers-bookcase\export\H2300xW600xD230_Mm19_Ms12\dxf-raw\CorpusSideLeft.dxf' because it   
+does not exist.
+At C:\Users\Tata\dev\chest-of-drawers-bookcase\ps-modules\CommonFunctions.psm1:45 char:24
++     $resolvedTarget = (Resolve-Path -Path $TargetPath).ProviderPath
++                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\Tata\d...pusSideLeft.dxf:String) [Resolve-Path], ItemNotFound  
+   Exception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.ResolvePathCommand
+
+Exception calling "MakeRelativeUri" with "1" argument(s): "Value cannot be null.
+Parameter name: uri"
+At C:\Users\Tata\dev\chest-of-drawers-bookcase\ps-modules\CommonFunctions.psm1:57 char:5
++     $relativePathUri = $baseUri.MakeRelativeUri($targetUri)
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : ArgumentNullException
+
+You cannot call a method on a null-valued expression.
+At C:\Users\Tata\dev\chest-of-drawers-bookcase\ps-modules\CommonFunctions.psm1:58 char:5
++     $relativePath = [System.Uri]::UnescapeDataString($relativePathUri ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+
+Exporting 

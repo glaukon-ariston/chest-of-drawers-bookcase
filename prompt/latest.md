@@ -1,5 +1,12 @@
-Modify @split_layers.py so that it creates a DXF with:
-- model space in mm
-- an A4 landscape layout
-- 10 mm margins
-- a viewport showing the whole drawing
+Add the following installation requirements to the documentation, e.g. @README.md, @GEMINI.md:
+- https://git-scm.com/downloads/win
+- https://nodejs.org/en/download/
+- https://www.opendesign.com/guestfiles/oda_file_Converter
+- https://github.com/LibreCAD/LibreCAD/releases
+- https://openscad.org/downloads.html#snapshots
+- https://github.com/google-gemini/gemini-cli
+- VS Code Extrension
+    - Gemini Code Assist
+    - Gemini CLI Companion
+    - OpenSCAD
+    - 

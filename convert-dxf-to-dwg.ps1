@@ -4,11 +4,22 @@
 # It expects the DXF files to be in a specific input directory and outputs
 # the converted DWG files to a designated output directory.
 
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$exportDir = "export/default"
+)
+
+if ($exportDir -eq "export/default") {
+    Write-Error "You have to specify an export directory with the -exportDir parameter."
+    exit 1    
+}
+
 # DXF to DWG Conversion
 $scriptDir = $PSScriptRoot
-$odaFileConverterPath = "D:\Program Files\ODA\ODAFileConverter26.7.0\ODAFileConverter.exe"
-$dxfInputDir = Join-Path $scriptDir "artifacts/export/dxf"
-$dwgOutputDir = Join-Path $scriptDir "artifacts/export/dwg"
+# $odaFileConverterPath = "D:\Program Files\ODA\ODAFileConverter26.7.0\ODAFileConverter.exe"
+$odaFileConverterPath = "ODAFileConverter"
+$dxfInputDir = Join-Path $scriptDir $exportDir "dxf"
+$dwgOutputDir = Join-Path $scriptDir $exportDir "dwg"
 
 # --- Batch Convert Layered DXF to DWG using ODA File Converter ---
 if (-not (Test-Path $dwgOutputDir)) {

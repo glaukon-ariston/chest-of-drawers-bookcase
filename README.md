@@ -2,6 +2,19 @@
 
 This project contains the OpenSCAD code for a chest of drawers with an integrated bookcase.
 
+## Installation
+
+- [Git](https://git-scm.com/downloads/win)
+- [Node.js](https://nodejs.org/en/download/)
+- [ODA File Converter](https://www.opendesign.com/guestfiles/oda_file_Converter)
+- [LibreCAD](https://github.com/LibreCAD/LibreCAD/releases)
+- [OpenSCAD](https://openscad.org/downloads.html#snapshots)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- VS Code Extrension
+    - Gemini Code Assist
+    - Gemini CLI Companion
+    - OpenSCAD
+
 ## Coding Guidelines
 
 * Do not use magic constants. Instead, give the value a descriptive name and define a constant.
@@ -21,7 +34,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 
 *   **Corpus:**
     *   corpus_height = 2300
-    *   corpus_width = 800
+    *   corpus_width = 600
     *   corpus_depth = 230
 *   **Melanine material thickness:**
     *   melanine_thickness_main = 19
@@ -100,6 +113,14 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
 
 ## Changelog
+
+### v8
+
+*   **Model Parameterization:**
+    *   The `corpus_width` has been changed from 800mm to 600mm, making the model more compact.
+*   **Workflow Automation:**
+    *   Added a new PowerShell script, `workflow.ps1`, to automate the entire export and conversion process, including CSV cut list generation, DXF/STL/SVG export, DXF layering, and DXF to DWG/PDF conversion.
+    *   The export directory is now dynamically created based on the model's dimensions, allowing for multiple model configurations to coexist.
 
 ### v7
 

@@ -1,5 +1,6 @@
 @echo off
-set OPENSCAD=C:\Program Files\OpenSCAD\openscad.exe
+: set OPENSCAD=C:\Program Files\OpenSCAD\openscad.exe
+set OPENSCAD=openscad
 set TEMP_CSV=artifacts\temp_cut_list.csv
 set FINAL_CSV=artifacts\cut_list.csv
 

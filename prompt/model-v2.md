@@ -14,7 +14,7 @@ The model is driven by a set of global parameters defined at the beginning of th
 
 *   **Corpus:**
     *   corpus_height = 2300
-    *   corpus_width = 800
+    *   corpus_width = 600
     *   corpus_depth = 230
 *   **Melanine material thickness:**
     *   melanine_thickness_main = 19
@@ -198,7 +198,24 @@ The `export-panels.ps1` script has been updated to capture this metadata from th
 
 The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. For side-drilled holes (where Z is non-zero), the Z-coordinate is included in the annotation (e.g., `d10 h20 z5`), and a blue cross symbol is added on the `DRILL` layer at the hole's (X,Y) location as a visual indicator. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
 
-## 12. Changelog
+## 12. Workflow Automation
+
+The `workflow.ps1` script has been added to automate the entire export and conversion process. This script performs the following steps:
+1.  Generates the CSV cut list.
+2.  Exports all panels to DXF, STL, and SVG formats.
+3.  Splits the DXF files into layers.
+4.  Converts the layered DXF files to DWG.
+5.  Converts the layered DXF files to PDF.
+
+## 13. Changelog
+
+### v8
+
+*   **Model Parameterization:**
+    *   The `corpus_width` has been changed from 800mm to 600mm, making the model more compact.
+*   **Workflow Automation:**
+    *   Added a new PowerShell script, `workflow.ps1`, to automate the entire export and conversion process, including CSV cut list generation, DXF/STL/SVG export, DXF layering, and DXF to DWG/PDF conversion.
+    *   The export directory is now dynamically created based on the model's dimensions, allowing for multiple model configurations to coexist.
 
 ### v7
 

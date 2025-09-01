@@ -1,45 +1,107 @@
 # "C:\Program Files\OpenSCAD\openscad.exe" -o "artifacts/model.png" --imgsize=1920,1080 -D generate_cut_list_csv=true  model.scad
-$openscadPath = 'C:\Program Files\OpenSCAD\openscad.exe'
-$outputCsvPath = "artifacts\cut_list.csv"
-$outputTempCsvPath = "artifacts\temp_cut_list.csv"
-$outputImagePath = "artifacts\model.png"
+# openscad -o "artifacts/dummy.png" --imgsize=1,1 -D generate_model_identifier=true  model.scad
+
+param(
+    [string]$exportDir = "export/default"
+)
+
+# Exit immediately if a command exits with a non-zero status.
+$ErrorActionPreference = "Stop"
+
+# Project paths
+$scriptDir = $PSScriptRoot
+$modelFile = Join-Path $scriptDir "model.scad"
+
+# $openscadPath = 'C:\Program Files\OpenSCAD\openscad.exe'
+$openscadPath = 'openscad'
+$outputCsv = "cut_list.csv"
 $modelPath = "model.scad"
 
 # Check if files exist
-if (!(Test-Path $openscadPath)) {
-    Write-Error "OpenSCAD not found at: $openscadPath"
-    exit 1
-}
+#if (!(Test-Path $openscadPath)) {
+#    Write-Error "OpenSCAD not found at: $openscadPath"
+#    exit 1
+#}
 
 if (!(Test-Path $modelPath)) {
     Write-Error "Model file not found: $modelPath"
     exit 1
 }
 
-# Create output directory
-$artifactsDir = Split-Path $outputCsvPath -Parent
-if (!(Test-Path $artifactsDir)) {
-    New-Item -ItemType Directory -Path $artifactsDir -Force
+function Get-ModelIdentifier {
+    param(
+        [string]$openscadPath,
+        [string]$modelFile,
+        [string]$logFile
+    )
+
+    & $openscadPath -o "artifacts/dummy.png" --imgsize="1,1" -D "generate_model_identifier=true" "$modelFile" 2>&1 | Out-File -FilePath $logFile -Encoding utf8
+
+    # Read the console log file and process it
+    $output = Get-Content $logFile
+    $modelIdentifier = $output | Where-Object { $_.StartsWith("ECHO:") } | ForEach-Object { $_.Substring(6).Trim().Trim('"') }
+
+    if ($modelIdentifier.Count -eq 0) {
+        Write-Error "Error: Could not get model identifier from '$modelFile'."
+        Write-Error "Please check the 'generate_model_identifier' functionality in the OpenSCAD script."
+        exit 1
+    }
+    Write-Information "Model identifier: $modelIdentifier"
+    return $modelIdentifier
 }
+
+function Initialize-LogFile {
+    param(
+        [string]$logFile
+    )
+
+    # Create the log directory if it doesn't exist
+    $logDir = Split-Path $logFile
+    if (-not (Test-Path $logDir)) {
+        Write-Information "Creating log directory at '$logDir'"
+        New-Item -ItemType Directory -Path $logDir | Out-Null
+    }
+
+    # Clear the log file
+    if (Test-Path $logFile) {
+        Clear-Content $logFile
+    }
+} 
+ 
+if ($exportDir -eq "export/default") {
+    $logFile = "artifacts\openscad-console.log"
+    $modelIdentifier = Get-ModelIdentifier -openscadPath $openscadPath -modelFile $modelFile -logFile $logFile
+    $exportDir = Join-Path $scriptDir "export/$modelIdentifier"
+}
+Write-Output "Export directory: $exportDir"
+
+# Create the export directory if it doesn't exist
+if (-not (Test-Path $exportDir)) {
+    Write-Output "Creating export directory at '$exportDir'"
+    New-Item -ItemType Directory -Path $exportDir | Out-Null
+}
+$logFile = Join-Path $exportDir "log\openscad-console.log"
+Initialize-LogFile -logFile $logFile
+
 
 # Execute OpenSCAD and save all output to temp file first
 # $tempFile = [System.IO.Path]::GetTempFileName()
-$tempFile = $outputTempCsvPath
+$outputCsvPath = Join-Path $exportDir $outputCsv
 try {
-    & $openscadPath -o $outputImagePath --imgsize="1920,1080" -D generate_cut_list_csv=true $modelPath 2>&1 | Out-File -FilePath $tempFile -Encoding utf8
+    & $openscadPath -o "artifacts/dummy.png" --imgsize="1,1" -D generate_cut_list_csv=true $modelPath 2>&1 | Out-File -FilePath $logFile -Encoding utf8
     
     # Read the temp file and process it
-    $allLines = Get-Content $tempFile
+    $allLines = Get-Content $logFile
     $csvData = $allLines | Where-Object { $_ -match '^ECHO: "' } | ForEach-Object { 
         $_ -replace '^ECHO: "', '' -replace '"$', '' 
     }
     
     if ($csvData.Count -gt 0) {
-        Write-Host "Found $($csvData.Count) CSV lines"
+        Write-Output "Found $($csvData.Count) CSV lines"
         $header = "material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description"
         # Combine header and data, then convert to CSV format and save to file.
         ($header, $csvData) | ConvertFrom-Csv | Export-Csv -NoTypeInformation -Path $outputCsvPath
-        Write-Host "Cut list saved to: $outputCsvPath ($($csvData.Count) lines)"
+        Write-Output "Cut list saved to: $outputCsvPath ($($csvData.Count) lines)"
     }
     else {
         Write-Warning "No ECHO lines found in output"
@@ -47,5 +109,5 @@ try {
     }
 }
 finally {
-    # Remove-Item $tempFile -ErrorAction SilentlyContinue
+    # Remove-Item $logFile -ErrorAction SilentlyContinue
 }

@@ -1,0 +1,11 @@
+﻿PanelName,HoleName,X,Y,Z,Diameter,Depth
+DrawerFrontStandard,left_side_1,42.5,50,0,6,10
+DrawerFrontStandard,left_side_2,42.5,157,0,6,10
+DrawerFrontStandard,right_side_1,554.5,50,0,6,10
+DrawerFrontStandard,right_side_2,554.5,157,0,6,10
+DrawerFrontStandard,bottom_panel_1,92.5,6,0,6,10
+DrawerFrontStandard,bottom_panel_2,504.5,6,0,6,10
+DrawerFrontStandard,bottom_panel_3,229.833,6,0,6,10
+DrawerFrontStandard,bottom_panel_4,367.167,6,0,6,10
+DrawerFrontStandard,handle_1,218.5,103,0,4,19
+DrawerFrontStandard,handle_2,378.5,103,0,4,19

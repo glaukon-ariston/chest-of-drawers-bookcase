@@ -2,8 +2,25 @@
 #
 # This script executes the split-layers-dxf.ps1 script and logs the output.
 
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$exportDir = "export/default"
+)
+
+if ($exportDir -eq "export/default") {
+    Write-Error "You have to specify an export directory with the -exportDir parameter."
+    exit 1    
+}
+
 $scriptDir = $PSScriptRoot
-$logFile = Join-Path $scriptDir "artifacts/split-layers-dxf.log"
+$exportDir = Join-Path $scriptDir $exportDir
+$logFile = Join-Path $exportDir "log/split-layers-dxf.log"
+# Create the log directory if it doesn't exist
+$logDir = Split-Path $logFile
+if (-not (Test-Path $logDir)) {
+    Write-Output "Creating log directory at '$logDir'"
+    New-Item -ItemType Directory -Path $logDir | Out-Null
+}
 
 # Clear the log file
 if (Test-Path $logFile) {

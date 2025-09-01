@@ -5,11 +5,22 @@
 # the converted PDF files to a designated output directory.
 # https://docs.librecad.org/en/latest/guides/console-tool.html#dxf2pdf-tool
 
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$exportDir = "export/default"
+)
+
+if ($exportDir -eq "export/default") {
+    Write-Error "You have to specify an export directory with the -exportDir parameter."
+    exit 1    
+}
+
 # DXF to PDF Conversion
 $scriptDir = $PSScriptRoot
-$librecadPath = "D:\Program Files\LibreCAD\librecad.exe"
-$dxfInputFiles = Join-Path $scriptDir "artifacts\export\dxf\*.dxf"
-$pdfOutputDir = Join-Path $scriptDir "artifacts\export\pdf"
+# $librecadPath = "D:\Program Files\LibreCAD\librecad.exe"
+$librecadPath = "librecad"
+$dxfInputFiles = Join-Path $scriptDir $exportDir "dxf\*.dxf"
+$pdfOutputDir = Join-Path $scriptDir $exportDir "pdf"
 
 # --- Batch Convert Layered DXF to PDF using LibreCAD ---
 if (-not (Test-Path $pdfOutputDir)) {

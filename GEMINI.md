@@ -10,6 +10,19 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 * Do not silently change code that I have manually changed.
 * Use `Write-Output` instead of `Write-Host` in PowerShell programming. 
 
+## Installation
+
+- [Git](https://git-scm.com/downloads/win)
+- [Node.js](https://nodejs.org/en/download/)
+- [ODA File Converter](https://www.opendesign.com/guestfiles/oda_file_Converter)
+- [LibreCAD](https://github.com/LibreCAD/LibreCAD/releases)
+- [OpenSCAD](https://openscad.org/downloads.html#snapshots)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- VS Code Extrension
+    - Gemini Code Assist
+    - Gemini CLI Companion
+    - OpenSCAD
+
 ## Files
 
 *   `model.scad`: The main OpenSCAD file containing the 3D model of the furniture.
@@ -25,7 +38,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 
 *   **Corpus:**
     *   corpus_height = 2300
-    *   corpus_width = 800
+    *   corpus_width = 600
     *   corpus_depth = 230
 *   **Melanine material thickness:**
     *   melanine_thickness_main = 19
@@ -93,7 +106,7 @@ The model can generate a CSV cut list for all panels. This is controlled by the 
 
 ### CNC Export
 
-The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, and adds annotations for holes. The exported panels are positioned at the origin (0,0) to ensure consistency. The annotations include a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates.
+The project includes a workflow for exporting 2D panel drawings in DXF format, suitable for CNC cutting services. The `workflow.ps1` script automates the entire export process. It dynamically creates a unique export directory for each model configuration based on its dimensions (e.g., `export/H2300xW600xD230_Mm19_Ms12`). The `export-panels.ps1` script automates the export of all panels, and the `run-split-layers.ps1` script (which calls `split-layers-dxf.ps1` and `split_layers.py`) post-processes the DXF files to separate geometry into `CUT`, `DRILL`, and `DIMENSION` layers, and adds annotations for holes. The exported panels are positioned at the origin (0,0) to ensure consistency. The annotations include a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates.
 
 #### DXF to DWG Conversion
 
@@ -104,6 +117,14 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
 
 ## Changelog
+
+### v8
+
+*   **Model Parameterization:**
+    *   The `corpus_width` has been changed from 800mm to 600mm, making the model more compact.
+*   **Workflow Automation:**
+    *   Added a new PowerShell script, `workflow.ps1`, to automate the entire export and conversion process, including CSV cut list generation, DXF/STL/SVG export, DXF layering, and DXF to DWG/PDF conversion.
+    *   The export directory is now dynamically created based on the model's dimensions, allowing for multiple model configurations to coexist.
 
 ### v7
 

@@ -9,10 +9,11 @@ FN = 16;
 show_trace = false;
 
 // Cut List Generation
+generate_model_identifier = false;
 generate_cut_list_csv = false;
 generate_panel_names_list = false;
 
-// DXF Export: Set to a panel name to export, e.g., "Corpus Side Left"
+// DXF Export: Set the panel name to export, e.g., "CorpusSideLeft"
 // Panel selector (via -D name="...")
 // See the 'export_panel' module for a list of all panel names.
 export_panel_name = "CorpusSideLeft";
@@ -25,13 +26,13 @@ part_alpha = 0.4;
 
 // Debugging flags
 show_corpus = true;
-show_corpus_sides = false;
+show_corpus_sides = true;
 show_drawers = true;
-show_fronts = false;
-show_slides = false;
-show_shelves = false;
-show_glass_doors = false;
-show_hdf_back_panel = false;
+show_fronts = true;
+show_slides = true;
+show_shelves = true;
+show_glass_doors = true;
+show_hdf_back_panel = true;
 show_pedestal = true;
 
 
@@ -43,12 +44,14 @@ explosion_factor = 2; // Scale factor for explosion distance
 
 // Corpus
 corpus_height = 2300;
-corpus_width = 800;
+corpus_width = 600;
 corpus_depth = 230;
 
 // Melanine material thickness
 melanine_thickness_main = 19;
 melanine_thickness_secondary = 12;
+
+model_identifier = str("H",corpus_height,"xW",corpus_width,"xD",corpus_depth,"_Mm",melanine_thickness_main,"_Ms",melanine_thickness_secondary);
 
 // HDF Back Panel
 hdf_thickness = 3;
@@ -175,8 +178,6 @@ color_annotation = "Magenta";
 
 CUT = "red";
 DRILL = "blue";
-
-
 
 
 module dxf_layer(layer_name) {
@@ -411,6 +412,8 @@ module echo_hole_metadata() {
     }
 }
 
+
+
 module corpus_side_cut() {
     cube([melanine_thickness_main, corpus_depth, corpus_height]);
 }
@@ -448,8 +451,6 @@ module corpus_side_drill(is_left = true) {
     }
 }
 
-
-
 module corpus_side(is_left = true) {
     difference() {
         union() {
@@ -480,6 +481,8 @@ module corpus() {
     translate([melanine_thickness_main, 0, middle_plate_z]) shelf();
 }
 
+
+
 module drawer_side_cut() {
     cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
 }
@@ -507,8 +510,6 @@ module drawer_side_drill(is_left = true) {
         }
     }
 }
-
-
 
 module drawer_side(is_left = true) {
     difference() {
@@ -579,8 +580,6 @@ module drawer_bottom_drill() {
     }
 }
 
-
-
 module drawer_bottom() {
     difference() {
         union() {
@@ -609,6 +608,8 @@ module drawer() {
     drawer_back();
 }
 
+
+
 module drawer_front_cut(height) {
     cube([front_width, melanine_thickness_main, height]);
 }
@@ -636,8 +637,6 @@ module drawer_front_drill(height, handle_z) {
     translate([front_width/2 + handle_hole_spacing/2, melanine_thickness_main/2, handle_z]) rotate(ROT_X_90) handle_hole();
 }
 
-
-
 module drawer_front(height, handle_z) {
     difference() {
         union() {
@@ -648,10 +647,14 @@ module drawer_front(height, handle_z) {
     }
 }
 
+
+
 module slide() {
     color(color_slides, part_alpha)
     cube([slide_depth, slide_width, slide_height]);
 }
+
+
 
 module shelf_cut() {
     cube([shelf_width, shelf_depth, melanine_thickness_main]);
@@ -667,8 +670,6 @@ module shelf_drill() {
     translate([shelf_width, shelf_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2]) rotate(ROT_Y_NEG_90) confirmat_hole_plate();
 }
 
-
-
 module shelf() {
     difference() {
         union() {
@@ -679,10 +680,14 @@ module shelf() {
     }
 }
 
+
+
 module glass_door() {
     color(color_glass, 0.5)
     cube([bookcase_glass_door_width, bookcase_glass_door_tickness, bookcase_glass_door_height]);
 }
+
+
 
 module hdf_back_panel_cut() {
     cube([corpus_width, hdf_thickness, corpus_height]);
@@ -692,6 +697,8 @@ module hdf_back_panel() {
     color(color_hdf_panel, part_alpha)
     dxf_layer(CUT) hdf_back_panel_cut();
 }
+
+
 
 module pedestal_front_back_cut() {
     cube([shelf_width, melanine_thickness_main, pedestal_height]);
@@ -704,8 +711,6 @@ module pedestal_front_back_drill() {
     // Holes for right side
     translate([shelf_width, melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_NEG_90) confirmat_hole_plate();
 }
-
-
 
 module pedestal_front_back() {
     difference() {
@@ -727,8 +732,6 @@ module pedestal_side_drill() {
     // Hole for back panel
     translate([melanine_thickness_main/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
 }
-
-
 
 module pedestal_side() {
     difference() {
@@ -758,6 +761,8 @@ module pedestal() {
         pedestal_side();
     }
 }
+
+
 
 module draw_pedestal() {
     if (show_pedestal) {
@@ -843,12 +848,14 @@ module draw_hdf_back_panel() {
     }
 }
 
+
+
 module generate_cut_list() {
     echo("material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc comments");
 
     // Corpus
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideLeft,Vertical side panel of the main body,Face 4mm confirmat screw holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideRight,Vertical side panel of the main body,Face 4mm confirmat screw holes"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,1,1,1,CorpusSideLeft,Vertical side panel of the main body,Face 4mm confirmat screw holes"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,1,1,1,CorpusSideRight,Vertical side panel of the main body,Face 4mm confirmat screw holes"));
     echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,CorpusTopBottom,Horizontal top and bottom panels,Edge 4mm confirmat screw holes"));
     echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",1,1,0,0,0,CorpusMiddle,Horizontal shelf separating drawers and bookcase,Edge 4mm confirmat screw holes"));
 
@@ -946,10 +953,16 @@ module export_panel(panel_name) {
     }
 }
 
-if (generate_panel_names_list) {
+// ----------------------------------------- main
+
+if (generate_model_identifier) {
+    echo(model_identifier);
+} else if (generate_panel_names_list) {
     for (p = panel_names) {
         echo(p);
     }
+} else if (generate_cut_list_csv) {
+    generate_cut_list();
 } else if (export_panel_name != "") {
     if (is_valid_panel_name(export_panel_name)) {
         echo_hole_metadata();
@@ -984,8 +997,5 @@ if (generate_panel_names_list) {
     }
 }
 
-if (generate_cut_list_csv) {
-    generate_cut_list();
-}
 
 

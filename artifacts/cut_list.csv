@@ -1,14 +1,63 @@
 "material code","material thickness","dimension A (along wood grain)","dimension B","count","edge banding A-1","edge banding A-2","edge banding B-1","edge banding B-2","panel name","panel description"
-"MEL-19","19","2300","230","2","1","1","1","0","Corpus Side","Vertical side panel of the main body"
-"MEL-19","19","762","230","2","1","0","0","0","Corpus Top/Bottom","Horizontal top and bottom panels"
-"MEL-19","19","762","230","1","1","0","0","0","Corpus Middle","Horizontal shelf separating drawers and bookcase"
-"MEL-12","12","200","225","12","1","1","0","1","Drawer Side","Vertical side panel of a drawer"
-"MEL-12","12","712","200","6","1","1","0","0","Drawer Back","Vertical back panel of a drawer"
-"MEL-12","12","712","213","6","0","0","0","0","Drawer Bottom","Bottom panel of a drawer"
-"MEL-19","19","797","233","1","1","1","1","1","Drawer Front (First)","Front panel for the bottom drawer"
-"MEL-19","19","797","207","4","1","1","1","1","Drawer Front (Standard)","Front panel for the middle 4 drawers"
-"MEL-19","19","797","216","1","1","1","1","1","Drawer Front (Top)","Front panel for the top drawer"
-"MEL-19","19","762","230","2","1","0","0","0","Shelf","Shelf in the bookcase section"
-"MEL-19","19","762","30","2","1","0","0","0","Pedestal Front/Back","Front and back panels of the pedestal"
-"MEL-19","19","230","30","2","1","0","0","0","Pedestal Side","Side panels of the pedestal"
-"HDF-3","3","2300","800","1","0","0","0","0","HDF Back Panel","The back panel of the entire unit"
+"Hole","CorpusSideLeft","confirmat_bottom_1","2290.5","50","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_bottom_2","2290.5","180","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_top_1","9.5","50","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_top_2","9.5","180","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_middle_1","1001.5","50","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_middle_2","1001.5","180","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_shelf_0_1","670.833","50","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_shelf_0_2","670.833","180","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_shelf_1_1","340.167","50","0","4","19",,,
+"Hole","CorpusSideLeft","confirmat_shelf_1_2","340.167","180","0","4","19",,,
+"Hole","CorpusSideLeft","slide_pilot_0_0","2198.5","6.5","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_0_1","2198.5","35","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_0_2","2198.5","51","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_0_3","2198.5","76","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_0_4","2198.5","99","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_0_5","2198.5","115","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_1_0","1988.5","6.5","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_1_1","1988.5","35","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_1_2","1988.5","51","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_1_3","1988.5","76","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_1_4","1988.5","99","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_1_5","1988.5","115","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_2_0","1778.5","6.5","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_2_1","1778.5","35","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_2_2","1778.5","51","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_2_3","1778.5","76","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_2_4","1778.5","99","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_2_5","1778.5","115","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_3_0","1568.5","6.5","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_3_1","1568.5","35","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_3_2","1568.5","51","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_3_3","1568.5","76","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_3_4","1568.5","99","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_3_5","1568.5","115","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_4_0","1358.5","6.5","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_4_1","1358.5","35","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_4_2","1358.5","51","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_4_3","1358.5","76","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_4_4","1358.5","99","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_4_5","1358.5","115","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_5_0","1148.5","6.5","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_5_1","1148.5","35","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_5_2","1148.5","51","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_5_3","1148.5","76","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_5_4","1148.5","99","0","2.5","2",,,
+"Hole","CorpusSideLeft","slide_pilot_5_5","1148.5","115","0","2.5","2",,,
+"material code","material thickness","dimension A (along wood grain)","dimension B","count","edge banding A-1","edge banding A-2","edge banding B-1","edge banding B-2","panel name","panel description"
+"MEL-19","19","2300","230","1","1","1","1","1","CorpusSideLeft","Vertical side panel of the main body"
+"MEL-19","19","2300","230","1","1","1","1","1","CorpusSideRight","Vertical side panel of the main body"
+"MEL-19","19","562","230","2","1","0","0","0","CorpusTopBottom","Horizontal top and bottom panels"
+"MEL-19","19","562","230","1","1","0","0","0","CorpusMiddle","Horizontal shelf separating drawers and bookcase"
+"MEL-12","12","200","225","6","1","1","0","1","DrawerSideLeft","Vertical side panel of a drawer"
+"MEL-12","12","200","225","6","1","1","0","1","DrawerSideRight","Vertical side panel of a drawer"
+"MEL-12","12","512","200","6","1","1","0","0","DrawerBack","Vertical back panel of a drawer"
+"MEL-12","12","512","213","6","0","0","0","0","DrawerBottom","Bottom panel of a drawer"
+"MEL-19","19","597","233","1","1","1","1","1","DrawerFrontFirst","Front panel for the bottom drawer"
+"MEL-19","19","597","207","4","1","1","1","1","DrawerFrontStandard","Front panel for the middle 4 drawers"
+"MEL-19","19","597","216","1","1","1","1","1","DrawerFrontTop","Front panel for the top drawer"
+"MEL-19","19","562","230","2","1","0","0","0","Shelf","Shelf in the bookcase section"
+"MEL-19","19","562","30","2","1","0","0","0","PedestalFrontBack","Front and back panels of the pedestal"
+"MEL-19","19","230","30","2","1","0","1","1","PedestalSide","Side panels of the pedestal"
+"HDF-3","3","2300","600","1","0","0","0","0","HDFBackPanel","The back panel of the entire unit"

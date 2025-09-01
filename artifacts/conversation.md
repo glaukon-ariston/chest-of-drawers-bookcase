@@ -447,3 +447,22 @@ To fulfill this request, I performed the following actions:
 3.  **Updated `prompt/model-v2.md`:** I added a "DXF to PDF Conversion" section and updated the changelog to v7.
 4.  **Updated `artifacts/conversation.md`:** I appended a summary of this interaction to the conversation log.
 5.  **Prepared a commit message:** I created a commit message that summarizes the documentation updates and saved it to `prompt/commit.md`.
+
+---
+
+### User:
+
+> @prompt/update.md
+
+### Model:
+
+The user requested to update the project documentation based on the recent changes.
+
+To fulfill this request, I performed the following actions:
+
+1.  **Analyzed the git history:** I used `git log` to understand the recent changes, which included the addition of the `workflow.ps1` script.
+2.  **Updated `prompt/model-v2.md`:** I added a "Workflow Automation" section and updated the changelog to v8.
+3.  **Updated `GEMINI.md`:** I updated the changelog to v8.
+4.  **Updated `README.md`:** I updated the changelog to v8.
+5.  **Updated `artifacts/conversation.md`:** I appended a summary of this interaction to the conversation log.
+6.  **Prepared a commit message:** I created a commit message that summarizes the documentation updates and saved it to `prompt/commit.md`.
