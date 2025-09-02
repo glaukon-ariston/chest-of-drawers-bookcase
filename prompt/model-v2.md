@@ -198,7 +198,7 @@ The `export-panels.ps1` script has been updated to capture this metadata from th
 
 The `split_layers.py` script has also been updated to read these CSV files and add text annotations to the DXF files on a new `ANNOTATION` layer. This includes a detailed "Hole Schedule" table with the hole name, diameter, depth, and its X, Y, and Z coordinates. For side-drilled holes (where Z is non-zero), the Z-coordinate is included in the annotation (e.g., `d10 h20 z5`), and a blue cross symbol is added on the `DRILL` layer at the hole's (X,Y) location as a visual indicator. This provides a fully automated workflow for generating richly annotated DXF files ready for manufacturing.
 
-## 12. Workflow Automation
+## 13. Workflow Automation
 
 The `workflow.ps1` script has been added to automate the entire export and conversion process. This script performs the following steps:
 1.  Generates the CSV cut list.
@@ -207,7 +207,23 @@ The `workflow.ps1` script has been added to automate the entire export and conve
 4.  Converts the layered DXF files to DWG.
 5.  Converts the layered DXF files to PDF.
 
-## 13. Changelog
+## 14. Known Issues
+
+*   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
+
+## 15. Changelog
+
+### v9
+
+*   **Model Parameterization:**
+    *   The `corpus_width` has been changed from 800mm to 600mm, making the model more compact.
+*   **Workflow Automation:**
+    *   The `workflow.ps1` script has been enhanced to automate the entire export and conversion process.
+    *   The export directory is now dynamically created based on the model's dimensions.
+*   **Script Refactoring:**
+    *   All PowerShell scripts have been refactored to use a new `CommonFunctions.psm1` module.
+*   **Bug Fixes:**
+    *   Fixed a bug in the bounding box calculation in `split_layers.py` for `ARC` entities.
 
 ### v8
 

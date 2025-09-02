@@ -3,6 +3,7 @@ import sys
 import csv
 import os
 import ezdxf.units
+import math
 
 # Threshold for slot detection (in DXF units, e.g., mm)
 SLOT_MAX_SIZE = 10.0
@@ -17,7 +18,7 @@ def add_hole_table(msp, holes, position):
     text_height = 2.5
     line_height = text_height * 1.5
     col_widths = {
-        "name": 40,
+        "name": 50,
         "x": 20,
         "y": 20,
         "z": 20,
@@ -271,69 +272,149 @@ def create_new_entity(msp, data, target_layer):
     return new_entity
 
 
-def calculate_bounding_box(msp):
-    """Calculate the bounding box of all entities in modelspace."""
+def get_entity_bounds(entity):
+    """Get the bounding box of a single entity."""
+    dtype = entity.dxftype()
+    
+    if dtype == "CIRCLE":
+        cx, cy = entity.dxf.center.x, entity.dxf.center.y
+        r = entity.dxf.radius
+        return cx - r, cy - r, cx + r, cy + r
+        
+    elif dtype == "LINE":
+        x1, y1 = entity.dxf.start.x, entity.dxf.start.y
+        x2, y2 = entity.dxf.end.x, entity.dxf.end.y
+        return min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)
+        
+    elif dtype == "ARC":
+        # For arcs, we need to calculate the actual bounds considering the arc sweep
+        cx, cy = entity.dxf.center.x, entity.dxf.center.y
+        r = entity.dxf.radius
+        start_angle = math.radians(entity.dxf.start_angle)
+        end_angle = math.radians(entity.dxf.end_angle)
+        
+        # Start with the arc endpoints
+        x1 = cx + r * math.cos(start_angle)
+        y1 = cy + r * math.sin(start_angle)
+        x2 = cx + r * math.cos(end_angle)
+        y2 = cy + r * math.sin(end_angle)
+        
+        min_x = min(x1, x2)
+        min_y = min(y1, y2)
+        max_x = max(x1, x2)
+        max_y = max(y1, y2)
+        
+        # Check if arc crosses any axis-aligned extremes
+        # Normalize angles to 0-360 range
+        start_norm = start_angle % (2 * math.pi)
+        end_norm = end_angle % (2 * math.pi)
+        
+        # Handle the case where arc crosses 0 degrees
+        if start_norm > end_norm:
+            end_norm += 2 * math.pi
+        
+        # Check for crossings of 0°, 90°, 180°, 270°
+        for test_angle in [0, math.pi/2, math.pi, 3*math.pi/2]:
+            if start_norm <= test_angle <= end_norm or start_norm <= test_angle + 2*math.pi <= end_norm:
+                test_x = cx + r * math.cos(test_angle)
+                test_y = cy + r * math.sin(test_angle)
+                min_x = min(min_x, test_x)
+                min_y = min(min_y, test_y)
+                max_x = max(max_x, test_x)
+                max_y = max(max_y, test_y)
+        
+        return min_x, min_y, max_x, max_y
+        
+    elif dtype in ["LWPOLYLINE", "POLYLINE"]:
+        points = list(entity.get_points())
+        if not points:
+            raise ValueError(f"Polyline entity has no points")
+        
+        xs = [p[0] for p in points]
+        ys = [p[1] for p in points]
+        return min(xs), min(ys), max(xs), max(ys)
+        
+    elif dtype in ["TEXT", "MTEXT"]:
+        # For text, we'll use the insertion point and estimate bounds
+        x, y = entity.dxf.insert.x, entity.dxf.insert.y
+        
+        if dtype == "TEXT":
+            height = entity.dxf.height
+            text = entity.dxf.text
+        else:  # MTEXT
+            height = entity.dxf.char_height
+            text = entity.dxf.text
+        
+        # Rough estimation: assume average character width is 0.7 * height
+        width = len(str(text)) * height * 0.7
+        
+        return x, y, x + width, y + height
+        
+    elif dtype == "DIMENSION":
+        # For dimension entities, try the generic bbox method first
+        if hasattr(entity, 'bbox') and callable(entity.bbox):
+            bbox = entity.bbox()
+            if bbox and bbox.extmin and bbox.extmax:
+                return bbox.extmin.x, bbox.extmin.y, bbox.extmax.x, bbox.extmax.y
+        
+        # Fallback: use dimension definition points if bbox is not available
+        # Most dimensions have defpoint, defpoint2, etc.
+        points = []
+        for attr in ['defpoint', 'defpoint2', 'defpoint3', 'text_midpoint']:
+            if hasattr(entity.dxf, attr):
+                point = getattr(entity.dxf, attr)
+                if point:
+                    points.append((point.x, point.y))
+        
+        if points:
+            xs = [p[0] for p in points]
+            ys = [p[1] for p in points]
+            return min(xs), min(ys), max(xs), max(ys)
+        
+        # If no definition points found, dimension might be empty/invalid
+        raise ValueError(f"DIMENSION entity has no valid definition points")
+        
+    else:
+        # For any other types, try the generic bbox method
+        if hasattr(entity, 'bbox') and callable(entity.bbox):
+            bbox = entity.bbox()
+            if bbox and bbox.extmin and bbox.extmax:
+                return bbox.extmin.x, bbox.extmin.y, bbox.extmax.x, bbox.extmax.y
+        
+        # Fail early for truly unsupported entity types
+        raise ValueError(f"Unsupported entity type for bounding box calculation: {dtype}")
+
+
+def calculate_bounding_box(msp, layer_filter=None):
+    """Calculate the bounding box of entities in modelspace, optionally filtered by layer."""
     min_x = min_y = float('inf')
     max_x = max_y = float('-inf')
+    entity_count = 0
     
     for entity in msp:
-        try:
-            # Get entity's bounding box if available
-            if hasattr(entity, 'bbox') and callable(entity.bbox):
-                bbox = entity.bbox()
-                if bbox:
-                    min_x = min(min_x, bbox.extmin.x)
-                    min_y = min(min_y, bbox.extmin.y)
-                    max_x = max(max_x, bbox.extmax.x)
-                    max_y = max(max_y, bbox.extmax.y)
-                    continue
+        # Apply layer filter if specified
+        if layer_filter is not None:
+            if not hasattr(entity.dxf, 'layer') or entity.dxf.layer not in layer_filter:
+                continue
+        
+        bounds = get_entity_bounds(entity)
+        if bounds and len(bounds) == 4:
+            ent_min_x, ent_min_y, ent_max_x, ent_max_y = bounds
             
-            # Fallback: extract coordinates based on entity type
-            dtype = entity.dxftype()
-            if dtype == "CIRCLE":
-                cx, cy = entity.dxf.center[:2]
-                r = entity.dxf.radius
-                min_x = min(min_x, cx - r)
-                min_y = min(min_y, cy - r)
-                max_x = max(max_x, cx + r)
-                max_y = max(max_y, cy + r)
-            elif dtype == "LINE":
-                x1, y1 = entity.dxf.start[:2]
-                x2, y2 = entity.dxf.end[:2]
-                min_x = min(min_x, x1, x2)
-                min_y = min(min_y, y1, y2)
-                max_x = max(max_x, x1, x2)
-                max_y = max(max_y, y1, y2)
-            elif dtype == "ARC":
-                # Simplified: use center +/- radius (not exact for arcs)
-                cx, cy = entity.dxf.center[:2]
-                r = entity.dxf.radius
-                min_x = min(min_x, cx - r)
-                min_y = min(min_y, cy - r)
-                max_x = max(max_x, cx + r)
-                max_y = max(max_y, cy + r)
-            elif dtype in ["LWPOLYLINE", "POLYLINE"]:
-                points = list(entity.get_points())
-                for point in points:
-                    x, y = point[:2]
-                    min_x = min(min_x, x)
-                    min_y = min(min_y, y)
-                    max_x = max(max_x, x)
-                    max_y = max(max_y, y)
-            elif dtype in ["TEXT", "MTEXT"]:
-                x, y = entity.dxf.insert[:2]
-                min_x = min(min_x, x)
-                min_y = min(min_y, y)
-                max_x = max(max_x, x)
-                max_y = max(max_y, y)
-        except Exception:
-            # Skip entities that can't be processed
-            continue
+            # Only update if we got valid bounds (not all zeros or invalid)
+            if not (ent_min_x == ent_max_x == ent_min_y == ent_max_y == 0):
+                min_x = min(min_x, ent_min_x)
+                min_y = min(min_y, ent_min_y)
+                max_x = max(max_x, ent_max_x)
+                max_y = max(max_y, ent_max_y)
+                entity_count += 1
     
-    if min_x == float('inf'):
-        # No entities found, return default
-        return 0, 0, 0, 0
+    if entity_count == 0 or min_x == float('inf'):
+        layer_info = f" for layers {layer_filter}" if layer_filter else ""
+        raise RuntimeError(f"No valid entities found for bounding box calculation{layer_info} - cannot proceed without valid geometry")
     
+    layer_info = f" from layers {layer_filter}" if layer_filter else ""
+    print(f"Bounding box calculated from {entity_count} entities{layer_info}: ({min_x:.2f}, {min_y:.2f}) to ({max_x:.2f}, {max_y:.2f})")
     return min_x, min_y, max_x, max_y
 
 
@@ -367,42 +448,21 @@ def add_dimensions(msp, holes, bounding_box, doc):
     min_x, min_y, max_x, max_y = bounding_box
     offset = 15
 
-    unique_x_coords = []
-    unique_y_coords = []
+    x_coords = []
+    y_coords = []
 
     if holes:
-        unique_x_coords = sorted(list(set([h['x'] for h in holes])))
-        unique_y_coords = sorted(list(set([h['y'] for h in holes])))
+        x_coords = [h['x'] for h in holes]
+        y_coords = [h['y'] for h in holes]
 
     panel_width = max_x - min_x
     panel_height = max_y - min_y
 
-    """
-    # Calculate dimension lines
-    if panel_width / panel_height > 1.5:
-        # Horizontal panel
-        x_dims_from_left = [x for x in unique_x_coords if x - min_x <= panel_width / 2] + [max_x]
-        x_dims_from_right = [x for x in unique_x_coords if x - min_x > panel_width / 2]
-        y_dims_from_bottom = unique_y_coords + [max_y]
-        y_dims_from_top = y_dims_from_bottom
-    elif panel_height / panel_width > 1.5:
-        # Vertical panel
-        x_dims_from_left = unique_x_coords + [max_x]
-        x_dims_from_right = x_dims_from_left
-        y_dims_from_bottom = [y for y in unique_y_coords if y - min_y <= panel_height / 2] + [max_y]
-        y_dims_from_top = [y for y in unique_y_coords if y - min_y > panel_height / 2]
-    else:
-        x_dims_from_left = [x for x in unique_x_coords if x - min_x <= panel_width / 2] + [max_x]
-        x_dims_from_right = [x for x in unique_x_coords if x - min_x > panel_width / 2]
-        y_dims_from_bottom = [y for y in unique_y_coords if y - min_y <= panel_height / 2] + [max_y]
-        y_dims_from_top = [y for y in unique_y_coords if y - min_y > panel_height / 2]
-    """
-
     # Calculate dimension lines -- show them all on all sides
-    x_dims_from_left = unique_x_coords + [max_x]
-    x_dims_from_right = x_dims_from_left
-    y_dims_from_bottom = unique_y_coords + [max_y]
-    y_dims_from_top = y_dims_from_bottom
+    x_dims_from_left = sorted(list(set([x for x in x_coords + [max_x] if x != 0])))
+    x_dims_from_right = sorted(list(set([x for x in x_coords + [max_x] if x != max_x])))
+    y_dims_from_bottom = sorted(list(set([y for y in y_coords + [max_y] if y != 0])))
+    y_dims_from_top = sorted(list(set([y for y in y_coords + [max_y] if y != max_y])))
 
     # X dimensions from left edge (below panel)
     dim_offset = offset + 10
@@ -463,11 +523,6 @@ def add_legend(msp):
     # Place legend below the drawing
     legend_x = min_x
     legend_y = min_y - 20  # Place legend 20 units below the drawing
-    
-    # If no entities were found, place legend at origin
-    if min_x == max_x == min_y == max_y == 0:
-        legend_x = 0
-        legend_y = 0
 
     legend_text = [
         "Legend:",
@@ -609,7 +664,14 @@ def split_layers(input_file, output_file):
     
     print(f"Created {entities_created} entities")
     
-    # Add hole table
+    # Add dimensions using the CUT and DRILL layer geometry bounding box only
+    geometry_bbox = calculate_bounding_box(msp, layer_filter=['CUT'])
+    add_dimensions(msp, holes, geometry_bbox, doc)
+
+    # Add legend
+    add_legend(msp)
+    
+    # Add hole table - calculate bounding box from CUT and DRILL layers only
     min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
     table_pos = (max_x + 20, max_y)
     table_entities_added = add_hole_table(msp, holes, table_pos)
@@ -618,10 +680,12 @@ def split_layers(input_file, output_file):
     cut_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "CUT")
     drill_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "DRILL")
     annotation_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "ANNOTATION")
+    dimension_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "DIMENSION")
     
     print(f"Entities on CUT layer: {cut_count}")
     print(f"Entities on DRILL layer: {drill_count}")
     print(f"Entities on ANNOTATION layer: {annotation_count}")
+    print(f"Entities on DIMENSION layer: {dimension_count}")
     
     # Debug: Check entities before saving
     print("Before saving - checking entities:")
@@ -631,12 +695,8 @@ def split_layers(input_file, output_file):
     for e in remaining_entities:
         print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
 
-    # Add dimensions
-    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
-    add_dimensions(msp, holes, (min_x, min_y, max_x, max_y), doc)
-
-    # Add legend
-    add_legend(msp)
+    # Calculate final bounding box for layout viewport
+    final_min_x, final_min_y, final_max_x, final_max_y = calculate_bounding_box(msp)
     
     # Create A4 landscape layout
     layout = doc.layouts.new('A4 landscape')
@@ -657,23 +717,22 @@ def split_layers(input_file, output_file):
     )
     
     # Fit the viewport to the modelspace extents
-    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
-    if min_x != float('inf'):
+    if final_min_x != final_max_x or final_min_y != final_max_y:
         # get viewport size in paper space
         vp_width = viewport.dxf.width
         vp_height = viewport.dxf.height
 
         # get modelspace extents
-        center = ((min_x + max_x) / 2, (min_y + max_y) / 2)
-        width = max_x - min_x
-        height = max_y - min_y
+        center = ((final_min_x + final_max_x) / 2, (final_min_y + final_max_y) / 2)
+        width = final_max_x - final_min_x
+        height = final_max_y - final_min_y
 
         # set the view center
         viewport.dxf.view_center_point = center
 
         # calculate the view height to fit the modelspace extents
         if width == 0 or height == 0:
-            view_height = 100 # default value
+            view_height = 100  # default value
         elif width / height > vp_width / vp_height:
             view_height = width * vp_height / vp_width
         else:
@@ -681,6 +740,8 @@ def split_layers(input_file, output_file):
         
         # set the view height, add a 10% margin
         viewport.dxf.view_height = view_height * 1.1
+    else:
+        raise RuntimeError("Invalid final bounding box - cannot set viewport")
 
     # Save the file
     try:

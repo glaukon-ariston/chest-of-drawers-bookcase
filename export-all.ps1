@@ -21,7 +21,6 @@ $ErrorActionPreference = "Stop"
 # Import common functions
 $scriptDir = $PSScriptRoot
 Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
-Write-Information "Importing common functions..."
 
 # Project paths
 $modelFile = Join-Path $scriptDir "model.scad"

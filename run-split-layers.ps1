@@ -7,25 +7,20 @@ param(
     [string]$exportDir = "export/default"
 )
 
-if ($exportDir -eq "export/default") {
-    Write-Error "You have to specify an export directory with the -exportDir parameter."
-    exit 1    
-}
+# Exit immediately if a command exits with a non-zero status.
+$ErrorActionPreference = "Stop"
+
+# Import common functions
+$scriptDir = $PSScriptRoot
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+
+# Validate parameters
+Test-ExportDirectory -ExportDir $exportDir
 
 $scriptDir = $PSScriptRoot
-$exportDir = Join-Path $scriptDir $exportDir
 $logFile = Join-Path $exportDir "log/split-layers-dxf.log"
-# Create the log directory if it doesn't exist
-$logDir = Split-Path $logFile
-if (-not (Test-Path $logDir)) {
-    Write-Output "Creating log directory at '$logDir'"
-    New-Item -ItemType Directory -Path $logDir | Out-Null
-}
 
-# Clear the log file
-if (Test-Path $logFile) {
-    Clear-Content $logFile
-}
+Initialize-LogFile -LogFile $logFile
 
 # Execute the script and tee the output to the log file
-& (Join-Path $scriptDir "split-layers-dxf.ps1") 2>&1 | Tee-Object -FilePath $logFile -Append
+& (Join-Path $scriptDir "split-layers-dxf.ps1") -ExportDir $exportDir 2>&1 | Tee-Object -FilePath $logFile -Append

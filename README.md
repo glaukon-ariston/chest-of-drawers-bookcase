@@ -24,6 +24,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 *   `model.scad`: The main OpenSCAD file containing the 3D model of the furniture.
 *   `prompt/model.md`: The detailed instructions and dimensions used to generate the `model.scad` file.
 *   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
+*   `ps-modules/CommonFunctions.psm1`: A PowerShell module containing common functions used by the other scripts.
 *   `artifacts/conversation.md`: A log of the conversation with the user.
 
 ## Model Description
@@ -113,6 +114,18 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
 
 ## Changelog
+
+### v9
+
+*   **Model Parameterization:**
+    *   The `corpus_width` has been changed from 800mm to 600mm, making the model more compact.
+*   **Workflow Automation:**
+    *   The `workflow.ps1` script has been enhanced to automate the entire export and conversion process.
+    *   The export directory is now dynamically created based on the model's dimensions.
+*   **Script Refactoring:**
+    *   All PowerShell scripts have been refactored to use a new `CommonFunctions.psm1` module.
+*   **Bug Fixes:**
+    *   Fixed a bug in the bounding box calculation in `split_layers.py` for `ARC` entities.
 
 ### v8
 

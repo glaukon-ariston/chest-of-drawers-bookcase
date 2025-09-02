@@ -9,13 +9,15 @@ param(
     [string]$exportDir = "export/default"
 )
 
-if ($exportDir -eq "export/default") {
-    Write-Error "You have to specify an export directory with the -exportDir parameter."
-    exit 1    
-}
+# Exit immediately if a command exits with a non-zero status.
+$ErrorActionPreference = "Stop"
 
+# Import common functions
 $scriptDir = $PSScriptRoot
-$exportDir = Join-Path $scriptDir $exportDir
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+
+# Validate parameters
+Test-ExportDirectory -ExportDir $exportDir
 
 # --- Configuration ---
 
@@ -25,15 +27,16 @@ $pythonPath = "python"
 
 # --- Script ---
 
-$inputDir = Join-Path $exportDir "export/dxf-raw"
-$outputDir = Join-Path $exportDir "export/dxf"
+$inputDir = Join-Path $exportDir "dxf-raw"
+$outputDir = Join-Path $exportDir "dxf"
 $splitLayersScript = Join-Path $scriptDir "split_layers.py"
 
+Write-Host "Input directory: $inputDir"
+Write-Host "Output directory: $outputDir"
+Write-Host "Python script: $splitLayersScript"
+
 # Create output directory if it doesn't exist
-if (-not (Test-Path $outputDir)) {
-    Write-Output "Creating output directory at '$outputDir'"
-    New-Item -ItemType Directory -Path $outputDir | Out-Null
-}
+Assert-DirectoryExists -Path $outputDir
 
 # Get all DXF files from the input directory
 $dxfFiles = Get-ChildItem -Path $inputDir -Filter *.dxf -Recurse
@@ -49,15 +52,13 @@ Write-Output "Found $($dxfFiles.Count) DXF files to process."
 foreach ($file in $dxfFiles) {
     $inputFile = $file.FullName
     $outputFile = Join-Path $outputDir $file.Name
-    [System.Console]::Write("Processing '$($file.Name)' ... ")
+    Write-Output "Processing '$($file.Name)' ... "
 
     # Execute the python script
-    & $pythonPath $splitLayersScript $inputFile $outputFile
+    # Write-Output "$pythonPath $splitLayersScript $inputFile $outputFile 2>&1"
+    & $pythonPath $splitLayersScript $inputFile $outputFile 2>&1
 
-    if ($LASTEXITCODE -eq 0) {
-        Write-Output "OK"
-    } else {
-        Write-Output "FAILED"
+    if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to process '$($file.Name)'. Please check the split_layers.py script."
         exit 1
     }

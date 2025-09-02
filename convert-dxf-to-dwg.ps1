@@ -9,23 +9,24 @@ param(
     [string]$exportDir = "export/default"
 )
 
-if ($exportDir -eq "export/default") {
-    Write-Error "You have to specify an export directory with the -exportDir parameter."
-    exit 1    
-}
+# Exit immediately if a command exits with a non-zero status.
+$ErrorActionPreference = "Stop"
+
+# Import common functions
+$scriptDir = $PSScriptRoot
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+
+# Validate parameters
+Test-ExportDirectory -ExportDir $exportDir
 
 # DXF to DWG Conversion
-$scriptDir = $PSScriptRoot
 # $odaFileConverterPath = "D:\Program Files\ODA\ODAFileConverter26.7.0\ODAFileConverter.exe"
 $odaFileConverterPath = "ODAFileConverter"
-$dxfInputDir = Join-Path $scriptDir $exportDir "dxf"
-$dwgOutputDir = Join-Path $scriptDir $exportDir "dwg"
+$dxfInputDir = Join-Path $exportDir "dxf"
+$dwgOutputDir = Join-Path $exportDir "dwg"
 
 # --- Batch Convert Layered DXF to DWG using ODA File Converter ---
-if (-not (Test-Path $dwgOutputDir)) {
-    Write-Output "Creating DWG output directory at '$dwgOutputDir'"
-    New-Item -ItemType Directory -Path $dwgOutputDir | Out-Null
-}
+Assert-DirectoryExists -Path $dwgOutputDir
 
 Write-Output "Starting batch conversion of DXF to DWG..."
 $inputFileFilter = "*.dxf"

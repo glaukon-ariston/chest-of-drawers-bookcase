@@ -10,6 +10,9 @@ The main changes are:
 
 - **Script Refactoring:** All PowerShell scripts have been refactored to use a new `CommonFunctions.psm1` module, which contains shared functions for logging, directory management, and interacting with OpenSCAD. This improves code reuse and maintainability.
 
+- **Bug Fixes:**
+    - Fixed a bug in the bounding box calculation in `split_layers.py` for `ARC` entities.
+
 ### File-specific changes:
 
 - **`model.scad`**:
@@ -58,6 +61,26 @@ The main changes are:
 - **`generate-csv.bat`**:
     - Uses `openscad` from the PATH, instead of a hardcoded path.
 
+- **`split_layers.py`**:
+    - **Bounding Box Calculation:**
+        - The `calculate_bounding_box` function has been completely refactored for better accuracy and robustness.
+        - A new `get_entity_bounds` helper function has been introduced to calculate the bounding box of individual entities.
+        - The new implementation provides a more accurate bounding box for `ARC` entities and a rough estimation for `TEXT` and `MTEXT` entities.
+        - The function now accepts an optional `layer_filter` to calculate the bounding box for specific layers.
+        - It raises a `RuntimeError` if no valid entities are found, preventing further processing with an invalid bounding box.
+    - **Dimensioning:**
+        - The `add_dimensions` function now uses the new `calculate_bounding_box` function with a layer filter to only consider the `CUT` layer for placing dimensions.
+    - **Legend and Hole Table Placement:**
+        - The placement logic for the legend and hole table has been updated to use the new bounding box calculation.
+    - **Viewport Fitting:**
+        - The logic for fitting the viewport to the modelspace extents has been improved.
+
+- **`ps-modules/CommonFunctions.psm1`**:
+    - Added `Get-ModelIdentifier` function.
+
 - **`GEMINI.md`**, **`README.md`**, **`prompt/model-v2.md`**:
     - Updated to reflect the `corpus_width` change and the new dynamic export directory structure.
-    - Updated changelogs to v8.
+    - Updated changelogs to v9.
+    - Added `ps-modules/CommonFunctions.psm1` to the file list.
+    - Added a "Workflow" section to describe the new `workflow.ps1` script.
+    - Added a "Known Issues" section to mention the inaccurate bounding box calculation for text entities.

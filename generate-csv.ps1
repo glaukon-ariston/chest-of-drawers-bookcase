@@ -2,14 +2,18 @@
 # openscad -o "artifacts/dummy.png" --imgsize=1,1 -D generate_model_identifier=true  model.scad
 
 param(
+    [Parameter(Mandatory = $false)]
     [string]$exportDir = "export/default"
 )
 
 # Exit immediately if a command exits with a non-zero status.
 $ErrorActionPreference = "Stop"
 
-# Project paths
+# Import common functions
 $scriptDir = $PSScriptRoot
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+
+# Project paths
 $modelFile = Join-Path $scriptDir "model.scad"
 
 # $openscadPath = 'C:\Program Files\OpenSCAD\openscad.exe'
@@ -28,46 +32,6 @@ if (!(Test-Path $modelPath)) {
     exit 1
 }
 
-function Get-ModelIdentifier {
-    param(
-        [string]$openscadPath,
-        [string]$modelFile,
-        [string]$logFile
-    )
-
-    & $openscadPath -o "artifacts/dummy.png" --imgsize="1,1" -D "generate_model_identifier=true" "$modelFile" 2>&1 | Out-File -FilePath $logFile -Encoding utf8
-
-    # Read the console log file and process it
-    $output = Get-Content $logFile
-    $modelIdentifier = $output | Where-Object { $_.StartsWith("ECHO:") } | ForEach-Object { $_.Substring(6).Trim().Trim('"') }
-
-    if ($modelIdentifier.Count -eq 0) {
-        Write-Error "Error: Could not get model identifier from '$modelFile'."
-        Write-Error "Please check the 'generate_model_identifier' functionality in the OpenSCAD script."
-        exit 1
-    }
-    Write-Information "Model identifier: $modelIdentifier"
-    return $modelIdentifier
-}
-
-function Initialize-LogFile {
-    param(
-        [string]$logFile
-    )
-
-    # Create the log directory if it doesn't exist
-    $logDir = Split-Path $logFile
-    if (-not (Test-Path $logDir)) {
-        Write-Information "Creating log directory at '$logDir'"
-        New-Item -ItemType Directory -Path $logDir | Out-Null
-    }
-
-    # Clear the log file
-    if (Test-Path $logFile) {
-        Clear-Content $logFile
-    }
-} 
- 
 if ($exportDir -eq "export/default") {
     $logFile = "artifacts\openscad-console.log"
     $modelIdentifier = Get-ModelIdentifier -openscadPath $openscadPath -modelFile $modelFile -logFile $logFile
@@ -76,10 +40,8 @@ if ($exportDir -eq "export/default") {
 Write-Output "Export directory: $exportDir"
 
 # Create the export directory if it doesn't exist
-if (-not (Test-Path $exportDir)) {
-    Write-Output "Creating export directory at '$exportDir'"
-    New-Item -ItemType Directory -Path $exportDir | Out-Null
-}
+Assert-DirectoryExists -Path $exportDir
+
 $logFile = Join-Path $exportDir "log\openscad-console.log"
 Initialize-LogFile -logFile $logFile
 

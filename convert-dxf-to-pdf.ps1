@@ -10,30 +10,48 @@ param(
     [string]$exportDir = "export/default"
 )
 
-if ($exportDir -eq "export/default") {
-    Write-Error "You have to specify an export directory with the -exportDir parameter."
-    exit 1    
-}
+# Exit immediately if a command exits with a non-zero status.
+$ErrorActionPreference = "Stop"
+
+# Import common functions
+$scriptDir = $PSScriptRoot
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+
+# Validate parameters
+Test-ExportDirectory -ExportDir $exportDir
 
 # DXF to PDF Conversion
-$scriptDir = $PSScriptRoot
 # $librecadPath = "D:\Program Files\LibreCAD\librecad.exe"
 $librecadPath = "librecad"
-$dxfInputFiles = Join-Path $scriptDir $exportDir "dxf\*.dxf"
-$pdfOutputDir = Join-Path $scriptDir $exportDir "pdf"
+$dxfInputDir = Join-Path $exportDir "dxf"
+$pdfOutputDir = Join-Path $exportDir "pdf"
 
 # --- Batch Convert Layered DXF to PDF using LibreCAD ---
-if (-not (Test-Path $pdfOutputDir)) {
-    Write-Output "Creating PDF output directory at '$pdfOutputDir'"
-    New-Item -ItemType Directory -Path $pdfOutputDir | Out-Null
-}
+Assert-DirectoryExists -Path $pdfOutputDir
 
 Write-Output "Starting batch conversion of DXF to PDF..."
-# librecad.exe dxf2pdf --version --fit --paper 297x210 --margins 10,10,10,10 --pages 1x1 --directory artifacts/export/pdf artifacts/export/dxf/DrawerSideLeft.dxf
-Write-Output "LibreCAD path: $librecadPath"
-Write-Output "DXF input files: $dxfInputFiles"
-Write-Output "PDF output directory: $pdfOutputDir"
-& $librecadPath dxf2pdf --fit --paper 297x210 --margins 10,10,10,10 --pages 1x1 --directory "$pdfOutputDir" "$dxfInputFiles"
+# librecad.exe dxf2pdf --fit --paper 297x210 --margins 10,10,10,10 --pages 1x1 --directory artifacts/export/pdf artifacts/export/dxf/DrawerSideLeft.dxf
+# librecad.exe dxf2pdf --fit --paper 297x210 --margins 10,10,10,10 --pages 1x1 --directory artifacts/export/pdf artifacts/export/dxf/*.dxf
+# librecad.exe dxf2pdf --fit --paper 297x210 --margins 10,10,10,10 --pages 1x1 --directory "C:\Users\Tata\dev\chest-of-drawers-bookcase\export\H2300xW600xD230_Mm19_Ms12\pdf" "C:\Users\Tata\dev\chest-of-drawers-bookcase\export\H2300xW600xD230_Mm19_Ms12\dxf\*.dxf"
 
-Write-Output "Batch DXF to PDF conversion completed with exit code $LASTEXITCODE."
-Write-Output "Please check the output directory for the converted PDF files."
+$dxfFiles = Get-ChildItem -Path $dxfInputDir -Filter "*.dxf"
+if ($dxfFiles.Count -eq 0) {
+    Write-Warning "No DXF files found in '$dxfInputDir' to convert."
+    exit 0
+}
+
+foreach ($dxfFile in $dxfFiles) {
+    $dxfFilePath = $dxfFile.FullName
+    $pdfFileName = [System.IO.Path]::ChangeExtension($dxfFile.Name, ".pdf")
+    $pdfFilePath = Join-Path $pdfOutputDir $pdfFileName
+
+    Write-Output "Converting '$($dxfFile.Name)' to PDF..."
+
+    # We don't check the exit code because LibreCAD's dxf2pdf tool is known to return 1 on success.
+    # Cannot check if the output file was created either because it gets created asynchronously.
+    Write-Output "DXF input file: $dxfFilePath"
+    Write-Output "PDF file: $pdfFilePath"
+    & $librecadPath dxf2pdf --fit --paper 297x210 --margins 10,10,10,10 --pages 1x1 --outfile "$pdfFilePath" "$dxfFilePath"
+}
+
+Write-Output "All DXF files processed. Check the output directory for PDF files: $pdfOutputDir"
