@@ -1,8 +1,8 @@
-# Gemini Project: Chest of Drawers Bookcase
+# Vibe Coding Furniture: Chest of Drawers Bookcase
 
 This project contains the OpenSCAD code for a chest of drawers with an integrated bookcase.
 
-## Installation
+## Prerequisites
 
 - [Git](https://git-scm.com/downloads/win)
 - [Node.js](https://nodejs.org/en/download/)
@@ -14,10 +14,6 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
     - Gemini Code Assist
     - Gemini CLI Companion
     - OpenSCAD
-
-## Coding Guidelines
-
-* Do not use magic constants. Instead, give the value a descriptive name and define a constant.
 
 ## Files
 
@@ -121,7 +117,7 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 
 #### DXF to PDF Conversion
 
-A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
+A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD.
 
 ## Changelog
 
