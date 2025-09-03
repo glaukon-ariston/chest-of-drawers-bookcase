@@ -17,6 +17,10 @@ $modelFile = Join-Path $scriptDir "model.scad"
 $openscadPath = "openscad"
 $consoleLogPath = "artifacts\openscad-console.log"
 
+# Generate model image to be included in README.md
+# openscad -o "artifacts/model.png" --imgsize=1080,1920 -D generate_cut_list_csv=false -D  export_panel_name='\"\"' -D generate_model_identifier=false -D generate_panel_names_list=false model.scad
+& $openscadPath -o "artifacts/model.png" --imgsize=1080,1920 -D generate_cut_list_csv=false -D  export_panel_name='\"\"' -D generate_model_identifier=false -D generate_panel_names_list=false $modelPath
+
 $modelIdentifier = Get-ModelIdentifier -openscadPath $openscadPath -modelFile $modelFile -logFile $consoleLogPath
 $exportDir = Join-Path $scriptDir "export/$modelIdentifier"
 

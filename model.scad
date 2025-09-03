@@ -16,7 +16,7 @@ generate_panel_names_list = false;
 // DXF Export: Set the panel name to export, e.g., "CorpusSideLeft"
 // Panel selector (via -D name="...")
 // See the 'export_panel' module for a list of all panel names.
-export_panel_name = "CorpusSideLeft";
+export_panel_name = "";
 export_type = "dxf";  // "dxf"|"stl"|"svg"
 
 panel_names = ["CorpusSideLeft", "CorpusSideRight", "CorpusTopBottom", "CorpusMiddle", "DrawerSideLeft", "DrawerSideRight", "DrawerBack", "DrawerBottom", "DrawerFrontFirst", "DrawerFrontStandard", "DrawerFrontTop", "Shelf", "PedestalFrontBack", "PedestalSide", "HDFBackPanel"];

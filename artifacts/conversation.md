@@ -498,3 +498,41 @@ I believe the issue with the bounding box calculation is now resolved. I will no
 ### Model:
 
 I have restored the comments in the `calculate_bounding_box` function and added a new one to clarify the limitation of the text bounding box calculation. I believe I have addressed the user's concern. I will now wait for the user's feedback.
+
+---
+
+### User:
+
+> Include @artifacts/model.png in @README.md
+
+### Model:
+
+I have updated the `README.md` file to include the `artifacts/model.png` image in the `Model Description` section.
+
+---
+
+### User:
+
+> Expand the Files section in @README.md and @GEMINI.md to other source files...
+
+### Model:
+
+I have expanded the `Files` section in both `README.md` and `GEMINI.md` to include the list of PowerShell and Python scripts with a brief description of each.
+
+---
+
+### User:
+
+> @prompt/update.md
+
+### Model:
+
+The user requested to update the project documentation based on the recent changes.
+
+To fulfill this request, I performed the following actions:
+
+1.  **Analyzed the git history:** I used `git status` and `git diff` to get a comprehensive overview of all local changes.
+2.  **Updated `prompt/model-v2.md`:** I added a new changelog entry for v10.
+3.  **Updated `GEMINI.md`:** I added a new changelog entry for v10.
+4.  **Updated `README.md`:** I added a new changelog entry for v10.
+5.  **Prepared a commit message:** I am creating a commit message that summarizes the documentation updates and will save it to `prompt/commit.md`.

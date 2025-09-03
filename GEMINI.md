@@ -30,6 +30,14 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 *   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
 *   `ps-modules/CommonFunctions.psm1`: A PowerShell module containing common functions used by the other scripts.
 *   `artifacts/conversation.md`: A log of the conversation with the user.
+*   `workflow.ps1`: Orchestrates the entire workflow for generating various outputs from the OpenSCAD model.
+*   `generate-csv.ps1`: Generates a CSV file with panel information.
+*   `export-all.ps1`: Automates the export of all panels to various formats.
+*   `export-panels.ps1`: Exports panels to a specific format (STL, DXF, SVG).
+*   `run-split-layers.ps1`: Executes the `split-layers-dxf.ps1` script and logs the output.
+*   `split_layers.py`: Python script to split DXF layers and add annotations.
+*   `convert-dxf-to-dwg.ps1`: Converts DXF files to DWG format using the ODA File Converter.
+*   `convert-dxf-to-pdf.ps1`: Converts DXF files to PDF format using LibreCAD.
 
 ## Model Description
 
@@ -132,6 +140,17 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v10
+
+*   **Documentation:**
+    *   The `README.md` and `GEMINI.md` files have been updated to include a comprehensive list of all source files.
+    *   An image of the model is now included in `README.md`.
+*   **Workflow:**
+    *   The `workflow.ps1` script now automatically generates the `artifacts/model.png` image used in the documentation.
+*   **Model:**
+    *   The `export_panel_name` variable in `model.scad` is now empty by default to prevent accidental exports.
+
 
 ### v9
 

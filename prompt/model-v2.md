@@ -213,6 +213,17 @@ The `workflow.ps1` script has been added to automate the entire export and conve
 
 ## 15. Changelog
 
+### v10
+
+*   **Documentation:**
+    *   The `README.md` and `GEMINI.md` files have been updated to include a comprehensive list of all source files.
+    *   An image of the model is now included in `README.md`.
+*   **Workflow:**
+    *   The `workflow.ps1` script now automatically generates the `artifacts/model.png` image used in the documentation.
+*   **Model:**
+    *   The `export_panel_name` variable in `model.scad` is now empty by default to prevent accidental exports.
+
+
 ### v9
 
 *   **Model Parameterization:**

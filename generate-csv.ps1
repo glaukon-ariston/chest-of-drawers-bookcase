@@ -45,7 +45,6 @@ Assert-DirectoryExists -Path $exportDir
 $logFile = Join-Path $exportDir "log\openscad-console.log"
 Initialize-LogFile -logFile $logFile
 
-
 # Execute OpenSCAD and save all output to temp file first
 # $tempFile = [System.IO.Path]::GetTempFileName()
 $outputCsvPath = Join-Path $exportDir $outputCsv

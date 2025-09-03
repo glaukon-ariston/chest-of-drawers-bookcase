@@ -26,8 +26,18 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 *   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
 *   `ps-modules/CommonFunctions.psm1`: A PowerShell module containing common functions used by the other scripts.
 *   `artifacts/conversation.md`: A log of the conversation with the user.
+*   `workflow.ps1`: Orchestrates the entire workflow for generating various outputs from the OpenSCAD model.
+*   `generate-csv.ps1`: Generates a CSV file with panel information.
+*   `export-all.ps1`: Automates the export of all panels to various formats.
+*   `export-panels.ps1`: Exports panels to a specific format (STL, DXF, SVG).
+*   `run-split-layers.ps1`: Executes the `split-layers-dxf.ps1` script and logs the output.
+*   `split_layers.py`: Python script to split DXF layers and add annotations.
+*   `convert-dxf-to-dwg.ps1`: Converts DXF files to DWG format using the ODA File Converter.
+*   `convert-dxf-to-pdf.ps1`: Converts DXF files to PDF format using LibreCAD.
 
 ## Model Description
+
+![Model](artifacts/model.png)
 
 The 3D model is a chest of drawers with an integrated bookcase. The design is parametric and all dimensions are derived from the main dimensions.
 
@@ -114,6 +124,17 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
 
 ## Changelog
+
+### v10
+
+*   **Documentation:**
+    *   The `README.md` and `GEMINI.md` files have been updated to include a comprehensive list of all source files.
+    *   An image of the model is now included in `README.md`.
+*   **Workflow:**
+    *   The `workflow.ps1` script now automatically generates the `artifacts/model.png` image used in the documentation.
+*   **Model:**
+    *   The `export_panel_name` variable in `model.scad` is now empty by default to prevent accidental exports.
+
 
 ### v9
 
