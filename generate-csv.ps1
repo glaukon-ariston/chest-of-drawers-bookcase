@@ -59,10 +59,12 @@ try {
     
     if ($csvData.Count -gt 0) {
         Write-Output "Found $($csvData.Count) CSV lines"
-        $header = "material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description"
+        # Split the lines into header and data. Assume the first line is the header.
+        $header = $csvData | Select-Object -First 1
+        $data = $csvData | Select-Object -Skip 1
         # Combine header and data, then convert to CSV format and save to file.
-        ($header, $csvData) | ConvertFrom-Csv | Export-Csv -NoTypeInformation -Path $outputCsvPath
-        Write-Output "Cut list saved to: $outputCsvPath ($($csvData.Count) lines)"
+        ($header, $data) | ConvertFrom-Csv | Export-Csv -NoTypeInformation -Path $outputCsvPath
+        Write-Output "Cut list saved to: $outputCsvPath ($($data.Count) lines)"
     }
     else {
         Write-Warning "No ECHO lines found in output"

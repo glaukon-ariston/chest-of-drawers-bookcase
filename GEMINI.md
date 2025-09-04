@@ -8,7 +8,8 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 * Do not delete items from @TODO.md.
 * When writing Python code, separate functions with two empty lines.
 * Do not silently change code that I have manually changed.
-* Use `Write-Output` instead of `Write-Host` in PowerShell programming. 
+* Use `Write-Output` instead of `Write-Host` in PowerShell programming.
+* Avoid catching exceptions. Prefer propagating exceptions and making program fail as soon as possible.
 
 ## Installation
 
@@ -30,6 +31,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 *   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
 *   `ps-modules/CommonFunctions.psm1`: A PowerShell module containing common functions used by the other scripts.
 *   `artifacts/conversation.md`: A log of the conversation with the user.
+*   `create_order.py`: A Python script to generate an order document for the Iverpan cutting service.
 *   `workflow.ps1`: Orchestrates the entire workflow for generating various outputs from the OpenSCAD model.
 *   `generate-csv.ps1`: Generates a CSV file with panel information.
 *   `export-all.ps1`: Automates the export of all panels to various formats.
@@ -124,6 +126,10 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 #### DXF to PDF Conversion
 
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
+
+## Iverpan Order Generation
+
+A Python script, `create_order.py`, is provided to automate the creation of an order document for the Iverpan cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
 
 ## Workflow
 

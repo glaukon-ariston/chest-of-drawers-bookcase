@@ -6,6 +6,8 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 
 - [Git](https://git-scm.com/downloads/win)
 - [Node.js](https://nodejs.org/en/download/)
+- [ezdxf](https://pypi.org/project/ezdxf/)
+- [openpyxl](https://pypi.org/project/openpyxl/)
 - [ODA File Converter](https://www.opendesign.com/guestfiles/oda_file_Converter)
 - [LibreCAD](https://github.com/LibreCAD/LibreCAD/releases)
 - [OpenSCAD](https://openscad.org/downloads.html#snapshots)
@@ -30,6 +32,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 *   `split_layers.py`: Python script to split DXF layers and add annotations.
 *   `convert-dxf-to-dwg.ps1`: Converts DXF files to DWG format using the ODA File Converter.
 *   `convert-dxf-to-pdf.ps1`: Converts DXF files to PDF format using LibreCAD.
+*   `create_order.py`: A Python script to generate an order document for the Iverpan cutting service.
 
 ## Model Description
 
@@ -106,6 +109,10 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 ### Cut List Generation
 
 The model can generate a CSV cut list for all panels. This is controlled by the `generate_cut_list_csv` variable in `model.scad`. A PowerShell script, `generate-csv.ps1`, is provided to automate the process of generating the `artifacts/cut_list.csv` file.
+
+### Iverpan Order Generation
+
+A Python script, `create_order.py`, is provided to automate the creation of an order document for the Iverpan cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
 
 ### CNC Export
 

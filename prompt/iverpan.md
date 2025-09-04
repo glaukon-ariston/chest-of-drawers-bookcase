@@ -1,4 +1,4 @@
-Use the cutting list in @export/H2300xW600xD230_Mm19_Ms12/cut_list.csv to create an order document for Iverpan cutting service. The first line in the CSV file is header, the rest is data. 
+Use the cutting list in @export/H2300xW600xD230_Mm19_Ms12/cut_list.csv to create an order document for Iverpan cutting service. The first line in the CSV file is the header, the rest is data. 
 
 The order template is the following Excel @template/iverpan_tablica_za_narudzbu.xlsx file. The newly created order document should be placed in the @order directory. The template file has the following structure:
 - There are three worksheets: `Narudžba`, `Dekori` and `Primjer`.
@@ -24,7 +24,4 @@ The order template is the following Excel @template/iverpan_tablica_za_narudzbu.
     - The column A (R.b) is readonly.
     - The data should be entered starting from the row 14.
 
-
-
-
-Ask me if you have any questions.
+Ask me if you have any questions. Also let me know if I forgot to mention something.

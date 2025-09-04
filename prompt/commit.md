@@ -1,22 +1,19 @@
-feat: Improve documentation and workflow
+feat: Add Iverpan order generation script
 
-This commit introduces several improvements to the project's documentation and workflow.
+This commit introduces a new feature to generate an order document for the Iverpan cutting service directly from the project's cut list.
 
-- **README.md:**
-  - Added an image of the model to the "Model Description" section for better visualization.
-  - Expanded the "Files" section to include all relevant scripts, providing a more complete overview of the project structure.
+A new Python script, `create_order.py`, has been added to automate this process. The script takes a model identifier, an Excel template, and an output directory as input, and generates a date-stamped Excel order file.
 
-- **GEMINI.md:**
-  - Expanded the "Files" section to align with `README.md`.
+The following files have been added:
+- `create_order.py`: The main script for generating the Iverpan order.
+- `prompt/iverpan.md`: The user prompt describing the Iverpan order generation task.
+- `template/iverpan_tablica_za_narudzbu.xlsx`: The Excel template for the Iverpan order.
 
-- **prompt/model-v2.md:**
-  - Added a changelog entry for v10 to track the recent updates.
+The documentation has been updated to reflect these changes:
+- `README.md`: Added `create_order.py` to the file list and a new section for "Iverpan Order Generation". Also added `ezdxf` and `openpyxl` to the installation requirements.
+- `GEMINI.md`: Added `create_order.py` to the file list and a new section for "Iverpan Order Generation". Also added a new coding guideline to avoid catching exceptions.
+- `prompt/model-v2.md`: Added a new section for "Iverpan Order Generation".
 
-- **workflow.ps1:**
-  - The script now automatically generates `artifacts/model.png`, ensuring the documentation image is always up-to-date with the latest model version.
-
-- **model.scad:**
-  - The `export_panel_name` variable is now empty by default. This prevents the accidental export of a default panel and improves the user experience.
-
-- **generate-csv.ps1:**
-  - Minor code cleanup (removed a blank line).
+Other changes include:
+- `generate-csv.ps1`: The script has been updated to handle the CSV header and data separately.
+- `export/H2300xW600xD230_Mm19_Ms12/cut_list.csv`: The cut list now includes a "cnc comments" column.

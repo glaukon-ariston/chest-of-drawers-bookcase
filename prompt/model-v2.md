@@ -211,6 +211,20 @@ The `workflow.ps1` script has been added to automate the entire export and conve
 
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
+## 16. Iverpan Order Generation
+
+A Python script, `create_order.py`, is provided to automate the creation of an order document for the Iverpan cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
+
+### Usage
+
+```bash
+python create_order.py --model-id <model_identifier> --template <template_file> --output-dir <output_directory>
+```
+
+- `--model-id`: The identifier of the model (e.g., `H2300xW600xD230_Mm19_Ms12`).
+- `--template`: The path to the Iverpan Excel template file.
+- `--output-dir`: The directory where the generated order file will be saved.
+
 ## 15. Changelog
 
 ### v10
