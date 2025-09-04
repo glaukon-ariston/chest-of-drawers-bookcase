@@ -218,12 +218,11 @@ A Python script, `create_order.py`, is provided to automate the creation of an o
 ### Usage
 
 ```bash
-python create_order.py --model-id <model_identifier> --template <template_file> --output-dir <output_directory>
+python create_order.py --model-id <model_identifier> --template <template_file>
 ```
 
 - `--model-id`: The identifier of the model (e.g., `H2300xW600xD230_Mm19_Ms12`).
 - `--template`: The path to the Iverpan Excel template file.
-- `--output-dir`: The directory where the generated order file will be saved.
 
 ## 15. Changelog
 

@@ -521,18 +521,26 @@ I have expanded the `Files` section in both `README.md` and `GEMINI.md` to inclu
 
 ---
 
+
+
 ### User:
 
-> @prompt/update.md
+> @prompt/iverpan.md
 
 ### Model:
 
-The user requested to update the project documentation based on the recent changes.
+The user requested to create a Python script to generate an Excel order document for the Iverpan cutting service from a CSV cut list and an Excel template.
 
 To fulfill this request, I performed the following actions:
 
-1.  **Analyzed the git history:** I used `git status` and `git diff` to get a comprehensive overview of all local changes.
-2.  **Updated `prompt/model-v2.md`:** I added a new changelog entry for v10.
-3.  **Updated `GEMINI.md`:** I added a new changelog entry for v10.
-4.  **Updated `README.md`:** I added a new changelog entry for v10.
-5.  **Prepared a commit message:** I am creating a commit message that summarizes the documentation updates and will save it to `prompt/commit.md`.
+1.  **Created `create_order.py`:** I created a Python script that reads the CSV cut list, loads the Excel template, and populates the order sheet with the data.
+2.  **Refactored the script:** The script was refactored multiple times to:
+    *   Remove exception handling to allow for faster failures.
+    *   Accept command-line arguments for file paths to make it more flexible.
+    *   Include a docstring with an example of how to call it.
+    *   Handle the "Napomena" (notes) columns, first by concatenating several CSV columns, and then by placing them in separate columns as requested by the user.
+    *   Add a header check to verify the structure of the Excel template.
+    *   Adapt the header check to the actual header found in the template file.
+    *   Use a model identifier to construct the input CSV path and to create a date-stamped output file name.
+3.  **Updated Documentation:** I updated `prompt/model-v2.md`, `GEMINI.md`, and `README.md` to document the new script and the Iverpan order generation process.
+4.  **Prepared a commit:** I prepared a commit message summarizing all the changes and committed them to the repository.
