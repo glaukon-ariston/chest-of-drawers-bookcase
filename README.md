@@ -10,9 +10,11 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 - [openpyxl](https://pypi.org/project/openpyxl/)
 - [ODA File Converter](https://www.opendesign.com/guestfiles/oda_file_Converter)
 - [LibreCAD](https://github.com/LibreCAD/LibreCAD/releases)
-- [OpenSCAD](https://openscad.org/downloads.html#snapshots)
+- [OpenSCAD](https://openscad.org/downloads.html#windows)
+- [OpenSCAD (Nightly Build)](https://openscad.org/downloads.html#snapshots)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
-- VS Code Extrension
+- [Visual Studio Code](https://code.visualstudio.com/)
+- VS Code Extensions
     - Gemini Code Assist
     - Gemini CLI Companion
     - OpenSCAD
