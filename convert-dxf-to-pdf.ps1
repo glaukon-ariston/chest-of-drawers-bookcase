@@ -4,6 +4,9 @@
 # It expects the DXF files to be in a specific input directory and outputs
 # the converted PDF files to a designated output directory.
 # https://docs.librecad.org/en/latest/guides/console-tool.html#dxf2pdf-tool
+#
+# e.g.
+# .\convert-dxf-to-pdf.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12
 
 param(
     [Parameter(Mandatory = $true)]

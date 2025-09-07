@@ -147,6 +147,12 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
+### v11
+
+*   **DXF Export:**
+    *   A title with the panel name is now added to the top of each DXF drawing.
+    *   The hole name is now included in the hole annotations for easier identification.
+
 ### v10
 
 *   **Documentation:**

@@ -226,6 +226,12 @@ python create_order.py --model-id <model_identifier> --template <template_file>
 
 ## 15. Changelog
 
+### v11
+
+*   **DXF Export:**
+    *   A title with the panel name is now added to the top of each DXF drawing.
+    *   The hole name is now included in the hole annotations for easier identification.
+
 ### v10
 
 *   **Documentation:**

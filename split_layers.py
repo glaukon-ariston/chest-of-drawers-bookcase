@@ -143,22 +143,33 @@ def add_hole_annotations_from_csv(msp, input_file):
                     print(f"  - Added side hole indicator: d{diameter} h{depth} z{z} at ({x}, {y})")
 
                 # Create annotation text
+                hole_name_text = hole_name
                 if z != 0:
-                    text = f"d{diameter} h{depth} z{z}"
+                    dimension_text = f"d{diameter} h{depth} z{z}"
                 else:
-                    text = f"d{diameter} h{depth}"
-                
-                # Add text to the ANNOTATION layer
+                    dimension_text = f"d{diameter} h{depth}"
+
+                # Add hole name to the ANNOTATION layer
                 msp.add_text(
-                    text,
+                    hole_name_text,
                     dxfattribs={
                         'layer': 'ANNOTATION',
-                        'height': 2.5,  # Adjust height as needed
-                        'insert': (x, y + 5)  # Offset Y for visibility
+                        'height': 2.5,
+                        'insert': (x, y + 10)
                     }
                 )
-                print(f"  - Added annotation: {text} at ({x}, {y})")
-                annotations_added += 1
+                
+                # Add dimension text to the ANNOTATION layer
+                msp.add_text(
+                    dimension_text,
+                    dxfattribs={
+                        'layer': 'ANNOTATION',
+                        'height': 2.5,
+                        'insert': (x, y + 5)
+                    }
+                )
+                print(f"  - Added annotation: {hole_name_text} / {dimension_text} at ({x}, {y})")
+                annotations_added += 2
             except (ValueError, KeyError) as e:
                 print(f"  - Warning: Skipping invalid row in CSV: {row} ({e})")
     return annotations_added, holes
@@ -545,6 +556,35 @@ def add_legend(msp):
         )
 
 
+def add_title(msp, panel_name, bounding_box):
+    """Adds a title with the panel name to the DXF."""
+    if not panel_name:
+        return
+
+    # Import the alignment enum
+    from ezdxf.enums import TextEntityAlignment
+
+    min_x, min_y, max_x, max_y = bounding_box
+    
+    # Position the title at the top center
+    title_x = (min_x + max_x) / 2
+    title_y = max_y + 20  # 20 units above the top of the panel
+
+    # Create the text entity first, then set its placement
+    title_text = msp.add_text(
+        panel_name,
+        dxfattribs={
+            'layer': 'ANNOTATION',
+            'style': 'Title',
+            'height': 10,  # Larger height for the title
+        }
+    )
+    
+    # Use set_placement to properly center the text
+    # MIDDLE_CENTER centers both horizontally and vertically at the insertion point
+    title_text.set_placement((title_x, title_y), align=TextEntityAlignment.MIDDLE_CENTER)
+
+
 def split_layers(input_file, output_file):
     doc = ezdxf.readfile(input_file)
     
@@ -676,6 +716,15 @@ def split_layers(input_file, output_file):
     table_pos = (max_x + 20, max_y)
     table_entities_added = add_hole_table(msp, holes, table_pos)
     
+    # Create a text style for the title
+    if "Title" not in doc.styles:
+        doc.styles.new("Title", dxfattribs={"font": "ISOCPEUR.ttf"})
+
+    # Add title
+    panel_name = os.path.basename(os.path.splitext(input_file)[0])
+    final_bbox_before_title = calculate_bounding_box(msp)
+    add_title(msp, panel_name, final_bbox_before_title)
+
     # Verify entities were created
     cut_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "CUT")
     drill_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "DRILL")

@@ -25,13 +25,13 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 *   `prompt/model.md`: The detailed instructions and dimensions used to generate the `model.scad` file.
 *   `prompt/model-v2.md`: The updated instructions and dimensions for the v2 model.
 *   `ps-modules/CommonFunctions.psm1`: A PowerShell module containing common functions used by the other scripts.
-*   `artifacts/conversation.md`: A log of the conversation with the user.
+*   `artifacts/conversation.md`: A log of the conversation with Gemini CLI.
 *   `workflow.ps1`: Orchestrates the entire workflow for generating various outputs from the OpenSCAD model.
 *   `generate-csv.ps1`: Generates a CSV file with panel information.
 *   `export-all.ps1`: Automates the export of all panels to various formats.
 *   `export-panels.ps1`: Exports panels to a specific format (STL, DXF, SVG).
 *   `run-split-layers.ps1`: Executes the `split-layers-dxf.ps1` script and logs the output.
-*   `split_layers.py`: Python script to split DXF layers and add annotations.
+*   `split_layers.py`: Python script to split DXF layers, add a title, annotations, a legend, a hole schedule and dimensions.
 *   `convert-dxf-to-dwg.ps1`: Converts DXF files to DWG format using the ODA File Converter.
 *   `convert-dxf-to-pdf.ps1`: Converts DXF files to PDF format using LibreCAD.
 *   `create_order.py`: A Python script to generate an order document for the Iverpan cutting service.

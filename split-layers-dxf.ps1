@@ -55,7 +55,7 @@ foreach ($file in $dxfFiles) {
     Write-Output "Processing '$($file.Name)' ... "
 
     # Execute the python script
-    # Write-Output "$pythonPath $splitLayersScript $inputFile $outputFile 2>&1"
+    Write-Output "$pythonPath $splitLayersScript $inputFile $outputFile 2>&1"
     & $pythonPath $splitLayersScript $inputFile $outputFile 2>&1
 
     if ($LASTEXITCODE -ne 0) {

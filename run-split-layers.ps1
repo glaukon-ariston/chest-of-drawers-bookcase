@@ -1,6 +1,9 @@
 # run-split-layers.ps1
 #
 # This script executes the split-layers-dxf.ps1 script and logs the output.
+#
+# e.g.
+# .\run-split-layers.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12
 
 param(
     [Parameter(Mandatory = $true)]
