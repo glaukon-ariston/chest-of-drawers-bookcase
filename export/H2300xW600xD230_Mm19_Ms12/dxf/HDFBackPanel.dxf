@@ -445,7 +445,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2460921.7565162037
+2460925.9391435185
   9
 $TDUCREATE
  40
@@ -453,7 +453,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2460921.7565162037
+2460925.9391435185
   9
 $TDUUPDATE
  40
@@ -505,7 +505,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-6B
+6D
   9
 $SURFTAB1
  70
@@ -885,11 +885,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{24969CA6-0EC2-49C4-AA25-A380436A9728}
+{FCA95F15-7745-46BD-8FC9-E0636D8E1C09}
   9
 $VERSIONGUID
   2
-{931ECFDE-DC8C-4672-AE0D-F2F95A8ED077}
+{64F70657-4A2B-4F32-B7C1-603AA1261FD7}
   9
 $EXTNAMES
 290
@@ -1463,7 +1463,7 @@ STYLE
 100
 AcDbSymbolTable
  70
-1
+2
   0
 STYLE
   5
@@ -1490,6 +1490,34 @@ Standard
 2.5
   3
 txt
+  4
+
+  0
+STYLE
+  5
+62
+330
+5
+100
+AcDbSymbolTableRecord
+100
+AcDbTextStyleTableRecord
+  2
+Title
+ 70
+0
+ 40
+0.0
+ 41
+1.0
+ 50
+0.0
+ 71
+0
+ 42
+2.5
+  3
+ISOCPEUR.ttf
   4
 
   0
@@ -1551,7 +1579,7 @@ ACAD
   0
 APPID
   5
-68
+6A
 330
 3
 100
@@ -1565,7 +1593,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-69
+6B
 330
 3
 100
@@ -1811,7 +1839,7 @@ AcDbBlockTableRecord
   0
 BLOCK_RECORD
   5
-62
+64
 330
 9
 100
@@ -1821,7 +1849,7 @@ AcDbBlockTableRecord
   2
 *Paper_Space0
 340
-65
+67
   0
 ENDTAB
   0
@@ -2515,9 +2543,9 @@ AcDbBlockEnd
   0
 BLOCK
   5
-63
+65
 330
-62
+64
 100
 AcDbEntity
   8
@@ -2541,9 +2569,9 @@ AcDbBlockBegin
   0
 VIEWPORT
   5
-66
+68
 330
-62
+64
 100
 AcDbEntity
  67
@@ -2643,9 +2671,9 @@ AcDbViewport
   0
 VIEWPORT
   5
-67
+69
 330
-62
+64
 100
 AcDbEntity
  67
@@ -2671,7 +2699,7 @@ AcDbViewport
  12
 287.5
  22
-1097.5
+1112.5
  13
 0.0
  23
@@ -2703,7 +2731,7 @@ AcDbViewport
  44
 0.0
  45
-2645.5
+2678.5
  50
 0.0
  51
@@ -2745,9 +2773,9 @@ AcDbViewport
   0
 ENDBLK
   5
-64
+66
 330
-62
+64
 100
 AcDbEntity
   8
@@ -3129,6 +3157,42 @@ AcDbText
 100
 AcDbText
   0
+TEXT
+  5
+63
+330
+17
+100
+AcDbEntity
+  8
+ANNOTATION
+100
+AcDbText
+ 10
+287.5
+ 20
+2320.0
+ 30
+0.0
+ 40
+10.0
+  1
+HDFBackPanel
+  7
+Title
+ 72
+1
+ 11
+287.5
+ 21
+2320.0
+ 31
+0.0
+100
+AcDbText
+ 73
+2
+  0
 ENDSEC
   0
 SECTION
@@ -3233,7 +3297,7 @@ Layout1
   3
 A4 landscape
 350
-65
+67
   0
 DICTIONARY
   5
@@ -4123,7 +4187,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-6A
+6C
   0
 DICTIONARYVAR
   5
@@ -4135,11 +4199,11 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-09-02T16:09:23.482794+00:00
+1.4.2 @ 2025-09-06T20:32:22.238711+00:00
   0
 LAYOUT
   5
-65
+67
 330
 D
 100
@@ -4261,13 +4325,13 @@ A4 landscape
  76
 1
 330
-62
+64
 331
-66
+68
   0
 DICTIONARYVAR
   5
-6A
+6C
 330
 2D
 100
@@ -4275,7 +4339,7 @@ DictionaryVariables
 280
 0
   1
-1.4.2 @ 2025-09-02T16:09:23.492916+00:00
+1.4.2 @ 2025-09-06T20:32:22.246407+00:00
   0
 ENDSEC
   0

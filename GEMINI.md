@@ -10,6 +10,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 * Do not silently change code that I have manually changed.
 * Use `Write-Output` instead of `Write-Host` in PowerShell programming.
 * Avoid catching exceptions. Prefer propagating exceptions and making program fail as soon as possible.
+* Do not use `git add` and `git commit` without user's permision.
 
 ## Installation
 
