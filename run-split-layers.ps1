@@ -26,4 +26,5 @@ $logFile = Join-Path $exportDir "log/split-layers-dxf.log"
 Initialize-LogFile -LogFile $logFile
 
 # Execute the script and tee the output to the log file
+Write-Output "Executing split-layers-dxf.ps1 ..."
 & (Join-Path $scriptDir "split-layers-dxf.ps1") -ExportDir $exportDir 2>&1 | Tee-Object -FilePath $logFile -Append

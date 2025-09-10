@@ -35,7 +35,7 @@ if ($exportDir -eq "export/default") {
 
 Assert-DirectoryExists -Path $exportDir
 
-Write-Host "Exporting all panels to STL, DXF and SVG to export/$modelIdentifier directory..."
+Write-Output "Exporting all panels to STL, DXF and SVG to export/$modelIdentifier directory..."
 
 # Export to STL
 .\export-panels.ps1 -exportDir $exportDir -exportType stl
@@ -46,4 +46,4 @@ Write-Host "Exporting all panels to STL, DXF and SVG to export/$modelIdentifier 
 # Export to SVG
 .\export-panels.ps1 -exportDir $exportDir -exportType svg
 
-Write-Host "All panels exported successfully to export/$modelIdentifier directory."
+Write-Output "All panels exported successfully to export/$modelIdentifier directory."

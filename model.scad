@@ -851,34 +851,34 @@ module draw_hdf_back_panel() {
 
 
 module generate_cut_list() {
-    echo("material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc comments");
+    echo("material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc face holes,cnc side holes");
 
     // Corpus
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,1,1,1,CorpusSideLeft,Vertical side panel of the main body,Face 4mm confirmat screw holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,1,1,1,CorpusSideRight,Vertical side panel of the main body,Face 4mm confirmat screw holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,CorpusTopBottom,Horizontal top and bottom panels,Edge 4mm confirmat screw holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",1,1,0,0,0,CorpusMiddle,Horizontal shelf separating drawers and bookcase,Edge 4mm confirmat screw holes"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideLeft,Vertical side panel of the main body,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideRight,Vertical side panel of the main body,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,CorpusTopBottom,Horizontal top and bottom panels,,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",1,1,0,0,0,CorpusMiddle,Horizontal shelf separating drawers and bookcase,,cnc: rubne rupe fi4mm za konfirmat"));
 
     // Drawers
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",6,1,1,0,1,DrawerSideLeft,Vertical side panel of a drawer,Face 4mm confirmat screw holes + Edge 6mm dowel holes"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",6,1,1,0,1,DrawerSideRight,Vertical side panel of a drawer,Face 4mm confirmat screw holes + Edge 6mm dowel holes"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",6,1,1,0,0,DrawerBack,Vertical back panel of a drawer,Face 4mm confirmat screw holes + Edge 4mm confirmat screw holes"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_depth - melanine_thickness_secondary, ",6,0,0,0,0,DrawerBottom,Bottom panel of a drawer,Edge 4mm confirmat screw holes + Edge 6mm dowel holes"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",6,1,1,0,1,DrawerSideLeft,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",6,1,1,0,1,DrawerSideRight,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",6,1,1,0,0,DrawerBack,Vertical back panel of a drawer,cnc: rupe fi4mm za konfirmat,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_depth - melanine_thickness_secondary, ",6,0,0,0,0,DrawerBottom,Bottom panel of a drawer,,cnc: rubne rupe fi4mm za konfirmat + fi6mm za tiple"));
 
     // Drawer Fronts
-    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_first, ",1,1,1,1,1,DrawerFrontFirst,Front panel for the bottom drawer,Face 6mm dowel holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_standard, ",4,1,1,1,1,DrawerFrontStandard,Front panel for the middle 4 drawers,Face 6mm dowel holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_top, ",1,1,1,1,1,DrawerFrontTop,Front panel for the top drawer,Face 6mm dowel holes"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_first, ",1,1,1,1,1,DrawerFrontFirst,Front panel for the bottom drawer,cnc: rupe fi6mm D10mm tiple,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_standard, ",4,1,1,1,1,DrawerFrontStandard,Front panel for the middle 4 drawers,cnc: rupe fi6mm D10mm tiple,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_top, ",1,1,1,1,1,DrawerFrontTop,Front panel for the top drawer,cnc: rupe fi6mm D10mm tiple,"));
 
     // Bookcase
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,Shelf,Shelf in the bookcase section,Edge 4mm confirmat screw holes"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,Shelf,Shelf in the bookcase section,,cnc: rubne rupe fi4mm za konfirmat"));
 
     // Pedestal
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", pedestal_height, ",2,1,0,0,0,PedestalFrontBack,Front and back panels of the pedestal,Edge 4mm confirmat screw holes"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",2,1,0,1,1,PedestalSide,Side panels of the pedestal,Face 4mm confirmat screw holes"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", pedestal_height, ",2,1,0,0,0,PedestalFrontBack,Front and back panels of the pedestal,,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",2,1,0,1,1,PedestalSide,Side panels of the pedestal,cnc: rupe fi4mm za konfirmat,"));
 
     // Back Panel
-    echo(str("HDF-3,", hdf_thickness, ",", corpus_height, ",", corpus_width, ",1,0,0,0,0,HDFBackPanel,The back panel of the entire unit,No holes"));
+    echo(str("HDF-3,", hdf_thickness, ",", corpus_height, ",", corpus_width, ",1,0,0,0,0,HDFBackPanel,The back panel of the entire unit,,"));
 }
 
 

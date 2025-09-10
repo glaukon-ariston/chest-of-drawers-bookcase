@@ -5,7 +5,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 ## Coding Guidelines
 
 * Do not use magic constants. Instead, give the value a descriptive name and define a constant.
-* Do not delete items from @TODO.md.
+* Do not delete items from @TODO.md
 * When writing Python code, separate functions with two empty lines.
 * Do not silently change code that I have manually changed.
 * Use `Write-Output` instead of `Write-Host` in PowerShell programming.
@@ -141,12 +141,24 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 3.  **Splits the DXF files into layers.**
 4.  **Converts the layered DXF files to DWG.**
 5.  **Converts the layered DXF files to PDF.**
+6.  **Generates order files for Iverpan and Elgrad.**
 
 ## Known Issues
 
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v12
+
+*   **Order Generation:**
+    *   The `create_order.py` script has been refactored to support multiple cutting services (Iverpan and Elgrad).
+    *   The script now accepts `--service` and `--template` arguments for greater flexibility.
+    *   The output directory for orders is now `order/export/{model_id}`.
+*   **Workflow:**
+    *   The `workflow.ps1` script has been updated to automate the entire process, including the generation of order files for both Iverpan and Elgrad.
+*   **Configuration:**
+    *   The `.gitignore` file has been updated to exclude the new `order/export` directory from version control.
 
 ### v11
 

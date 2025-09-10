@@ -206,25 +206,38 @@ The `workflow.ps1` script has been added to automate the entire export and conve
 3.  Splits the DXF files into layers.
 4.  Converts the layered DXF files to DWG.
 5.  Converts the layered DXF files to PDF.
+6.  Generates order files for Iverpan and Elgrad.
 
 ## 14. Known Issues
 
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
-## 16. Iverpan Order Generation
+## 16. Order Generation
 
-A Python script, `create_order.py`, is provided to automate the creation of an order document for the Iverpan cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
+A Python script, `create_order.py`, is provided to automate the creation of an order document for a cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
 
 ### Usage
 
 ```bash
-python create_order.py --model-id <model_identifier> --template <template_file>
+python create_order.py --model-id <model_identifier> --service <service_name> --template <template_file>
 ```
 
 - `--model-id`: The identifier of the model (e.g., `H2300xW600xD230_Mm19_Ms12`).
-- `--template`: The path to the Iverpan Excel template file.
+- `--service`: The cutting service provider (e.g., `iverpan`, `elgrad`).
+- `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v12
+
+*   **Order Generation:**
+    *   The `create_order.py` script has been refactored to support multiple cutting services (Iverpan and Elgrad).
+    *   The script now accepts `--service` and `--template` arguments for greater flexibility.
+    *   The output directory for orders is now `order/export/{model_id}`.
+*   **Workflow:**
+    *   The `workflow.ps1` script has been updated to automate the entire process, including the generation of order files for both Iverpan and Elgrad.
+*   **Configuration:**
+    *   The `.gitignore` file has been updated to exclude the new `order/export` directory from version control.
 
 ### v11
 

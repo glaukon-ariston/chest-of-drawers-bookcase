@@ -1,3 +1,12 @@
+# generate-csv.ps1
+#
+# This script generates a CSV cut list from the OpenSCAD model.
+# It executes OpenSCAD with a specific parameter to output cut list data
+# to the console, then processes this output to create a CSV file.
+#
+# e.g.
+# .\generate-csv.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12
+#
 # "C:\Program Files\OpenSCAD\openscad.exe" -o "artifacts/model.png" --imgsize=1920,1080 -D generate_cut_list_csv=true  model.scad
 # openscad -o "artifacts/dummy.png" --imgsize=1,1 -D generate_model_identifier=true  model.scad
 
@@ -49,6 +58,7 @@ Initialize-LogFile -logFile $logFile
 # $tempFile = [System.IO.Path]::GetTempFileName()
 $outputCsvPath = Join-Path $exportDir $outputCsv
 try {
+    Write-Output "Generating cut list..."
     & $openscadPath -o "artifacts/dummy.png" --imgsize="1,1" -D generate_cut_list_csv=true $modelPath 2>&1 | Out-File -FilePath $logFile -Encoding utf8
     
     # Read the temp file and process it

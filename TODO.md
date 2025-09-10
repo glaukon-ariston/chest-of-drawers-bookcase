@@ -15,4 +15,4 @@
 - [x] Make side holes visible in the DXF file.
 - [x] Export DWG file for all panels needing CNC operation (drill holes)
 - [x] Convert DWG files to PDF files using LibreCAD in batch mode 
-- [] Add title to DXF drawings with the panel name and description.
+- [X] Add title to DXF drawings with the panel name and description.

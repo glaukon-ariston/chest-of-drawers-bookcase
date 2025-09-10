@@ -112,9 +112,9 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 
 The model can generate a CSV cut list for all panels. This is controlled by the `generate_cut_list_csv` variable in `model.scad`. A PowerShell script, `generate-csv.ps1`, is provided to automate the process of generating the `artifacts/cut_list.csv` file.
 
-### Iverpan Order Generation
+### Order Generation
 
-A Python script, `create_order.py`, is provided to automate the creation of an order document for the Iverpan cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
+A Python script, `create_order.py`, is provided to automate the creation of an order document for a cutting service. The script uses the generated cut list CSV file and an Excel template to create a new Excel file with the order details.
 
 ### CNC Export
 
@@ -129,6 +129,23 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD.
 
 ## Changelog
+
+### v12
+
+*   **Order Generation:**
+    *   The `create_order.py` script has been refactored to support multiple cutting services (Iverpan and Elgrad).
+    *   The script now accepts `--service` and `--template` arguments for greater flexibility.
+    *   The output directory for orders is now `order/export/{model_id}`.
+*   **Workflow:**
+    *   The `workflow.ps1` script has been updated to automate the entire process, including the generation of order files for both Iverpan and Elgrad.
+*   **Configuration:**
+    *   The `.gitignore` file has been updated to exclude the new `order/export` directory from version control.
+
+### v11
+
+*   **DXF Export:**
+    *   A title with the panel name is now added to the top of each DXF drawing.
+    *   The hole name is now included in the hole annotations for easier identification.
 
 ### v10
 

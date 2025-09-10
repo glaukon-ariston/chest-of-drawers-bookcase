@@ -1,0 +1,5 @@
+order/export/*
+order/PII.py
+__pycache__
+\#*
+*.zip
