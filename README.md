@@ -130,6 +130,22 @@ A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layere
 
 ## Changelog
 
+### v13
+
+*   **Model Parameterization:**
+    *   Changed `melanine_thickness_main` from 19 to 18.
+*   **DXF Export:**
+    *   Corrected the 2D projection for `DrawerSideLeft`, `DrawerSideRight`, and `DrawerBack` panels to ensure correct orientation and placement in the first quadrant.
+    *   Updated the hole metadata functions (`get_drawer_side_hole_2d_coords`, `get_drawer_back_hole_2d_coords`) to match the new projections.
+*   **Bug Fixes:**
+    *   Fixed an incorrect hole position in the `drawer_side_drill` and `drawer_side_hole_metadata` modules for the rear confirmat screw connecting the drawer side to the bottom panel.
+*   **Order Generation:**
+    *   Refactored `create_order.py` to support multiple materials for the Elgrad cutting service.
+*   **Documentation:**
+    *   Updated `export-panels.ps1` with more detailed comments.
+*   **DXF Processing:**
+    *   Removed debug print statements from `split_layers.py`.
+
 ### v12
 
 *   **Order Generation:**

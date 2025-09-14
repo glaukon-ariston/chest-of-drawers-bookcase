@@ -1,0 +1,16 @@
+"material code","material thickness","dimension A (along wood grain)","dimension B","count","edge banding A-1","edge banding A-2","edge banding B-1","edge banding B-2","panel name","panel description","cnc face holes","cnc side holes"
+"MEL-19","18","2300","230","1","1","0","1","1","CorpusSideLeft","Vertical side panel of the main body","cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice",
+"MEL-19","18","2300","230","1","1","0","1","1","CorpusSideRight","Vertical side panel of the main body","cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice",
+"MEL-19","18","564","230","2","1","0","0","0","CorpusTopBottom","Horizontal top and bottom panels","","cnc: rubne rupe fi4mm za konfirmat"
+"MEL-19","18","564","230","1","1","0","0","0","CorpusMiddle","Horizontal shelf separating drawers and bookcase","","cnc: rubne rupe fi4mm za konfirmat"
+"MEL-12","12","225","200","6","1","1","1","1","DrawerSideLeft","Vertical side panel of a drawer","cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice","cnc: rubne rupe fi6mm za tiple"
+"MEL-12","12","225","200","6","1","1","1","1","DrawerSideRight","Vertical side panel of a drawer","cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice","cnc: rubne rupe fi6mm za tiple"
+"MEL-12","12","514","200","6","1","1","0","0","DrawerBack","Vertical back panel of a drawer","cnc: rupe fi4mm za konfirmat","cnc: rubne rupe fi4mm za konfirmat"
+"MEL-12","12","514","213","6","0","0","0","0","DrawerBottom","Bottom panel of a drawer","","cnc: rubne rupe fi4mm za konfirmat + fi6mm za tiple"
+"MEL-19","18","597","232","1","1","1","1","1","DrawerFrontFirst","Front panel for the bottom drawer","cnc: rupe fi6mm D10mm tiple",
+"MEL-19","18","597","207","4","1","1","1","1","DrawerFrontStandard","Front panel for the middle 4 drawers","cnc: rupe fi6mm D10mm tiple",
+"MEL-19","18","597","216","1","1","1","1","1","DrawerFrontTop","Front panel for the top drawer","cnc: rupe fi6mm D10mm tiple",
+"MEL-19","18","564","230","2","1","0","0","0","Shelf","Shelf in the bookcase section","","cnc: rubne rupe fi4mm za konfirmat"
+"MEL-19","18","564","30","2","1","0","0","0","PedestalFrontBack","Front and back panels of the pedestal","","cnc: rubne rupe fi4mm za konfirmat"
+"MEL-19","18","230","30","2","1","0","1","1","PedestalSide","Side panels of the pedestal","cnc: rupe fi4mm za konfirmat",
+"HDF-3","3","2300","600","1","0","0","0","0","HDFBackPanel","The back panel of the entire unit","",

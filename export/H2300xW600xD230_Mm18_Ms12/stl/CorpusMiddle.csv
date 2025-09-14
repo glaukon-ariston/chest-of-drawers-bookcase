@@ -1,0 +1,5 @@
+﻿PanelName,HoleName,X,Y,Z,Diameter,Depth
+CorpusMiddle,left_side_1,0,50,9,4,31
+CorpusMiddle,left_side_2,0,180,9,4,31
+CorpusMiddle,right_side_1,564,50,9,4,31
+CorpusMiddle,right_side_2,564,180,9,4,31

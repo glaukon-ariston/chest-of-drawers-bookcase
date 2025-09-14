@@ -1,7 +1,21 @@
 # export-panels.ps1
 #
 # This script automates the export of all panels from the model.scad file
-# to the export/$modelIdentifier directory.
+# to the export/$modelIdentifier directory for a specified export type (DXF, STL, or SVG).
+# It iterates through a list of panel names obtained from the OpenSCAD model,
+# and for each panel, it executes OpenSCAD to generate the corresponding
+# output file. For DXF exports, it also attempts to extract hole metadata
+# from OpenSCAD's console output and save it as a separate CSV file.
+#
+# Output file formats:
+# - DXF: AutoCAD Drawing Exchange Format. Contains 2D geometry of panels,
+#        including cut lines and drill holes. For DXF exports, a companion
+#        CSV file is generated containing detailed metadata for each hole.
+# - STL: Stereolithography (Standard Tessellation Language). Represents 3D
+#        surfaces as a collection of triangular facets. Used for 3D printing
+#        or viewing 3D models.
+# - SVG: Scalable Vector Graphics. An XML-based vector image format for
+#        two-dimensional graphics.
 
 param(
     [Parameter(Mandatory = $false)]

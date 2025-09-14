@@ -667,7 +667,7 @@ def split_layers(input_file, output_file):
     entity_specs = []
     for e in original_entities:
         dtype = e.dxftype()
-        print(f" - Found entity: {dtype}")
+        # print(f" - Found entity: {dtype}")
         
         # FAIL EARLY: Don't skip unexpected entity types
         if dtype not in allowed:
@@ -697,7 +697,7 @@ def split_layers(input_file, output_file):
     for data, target_layer, dtype in entity_specs:
         try:
             new_entity = create_new_entity(msp, data, target_layer)
-            print(f" - Created {dtype} on {target_layer} layer")
+            # print(f" - Created {dtype} on {target_layer} layer")
             entities_created += 1
         except Exception as ex:
             raise RuntimeError(f"Failed to create {dtype} entity on {target_layer} layer: {ex}")
@@ -742,7 +742,8 @@ def split_layers(input_file, output_file):
     print(f"  Total entities in modelspace: {len(remaining_entities)}")
     
     for e in remaining_entities:
-        print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
+        # print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
+        pass
 
     # Calculate final bounding box for layout viewport
     final_min_x, final_min_y, final_max_x, final_max_y = calculate_bounding_box(msp)
@@ -806,9 +807,10 @@ def split_layers(input_file, output_file):
         saved_entities = list(verify_msp)
         total_entities = len(saved_entities)
         
-        print("After saving - entities found:")
+        # print("After saving - entities found:")
         for e in saved_entities:
-            print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
+            # print(f"  Entity {e.dxftype()}: layer='{e.dxf.layer}', handle='{e.dxf.handle}'")
+            pass
         
         # Verify layers exist in saved file
         for layer_name in ["CUT", "DRILL", "ANNOTATION", "DIMENSION"]:

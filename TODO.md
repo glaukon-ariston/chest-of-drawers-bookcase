@@ -16,3 +16,10 @@
 - [x] Export DWG file for all panels needing CNC operation (drill holes)
 - [x] Convert DWG files to PDF files using LibreCAD in batch mode 
 - [X] Add title to DXF drawings with the panel name and description.
+- [] Create template panels for:
+    - drilling holes for the slide mount to the corpus side panel
+    - drilling holes for the slide mount to the drawer side panel
+    - drilling holes to the drawer corpus for the drawer front panel
+    - drilling holes to the drawer back panel
+    - drilling holes for the shelves in the corpus side panels
+    - drilling holes for the top and bottom panels in the corpus side panels

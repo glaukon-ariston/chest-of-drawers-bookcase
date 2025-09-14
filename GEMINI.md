@@ -5,7 +5,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 ## Coding Guidelines
 
 * Do not use magic constants. Instead, give the value a descriptive name and define a constant.
-* Do not delete items from @TODO.md
+* Do not delete items from the TODO.md file.
 * When writing Python code, separate functions with two empty lines.
 * Do not silently change code that I have manually changed.
 * Use `Write-Output` instead of `Write-Host` in PowerShell programming.
@@ -148,6 +148,22 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v13
+
+*   **Model Parameterization:**
+    *   Changed `melanine_thickness_main` from 19 to 18.
+*   **DXF Export:**
+    *   Corrected the 2D projection for `DrawerSideLeft`, `DrawerSideRight`, and `DrawerBack` panels to ensure correct orientation and placement in the first quadrant.
+    *   Updated the hole metadata functions (`get_drawer_side_hole_2d_coords`, `get_drawer_back_hole_2d_coords`) to match the new projections.
+*   **Bug Fixes:**
+    *   Fixed an incorrect hole position in the `drawer_side_drill` and `drawer_side_hole_metadata` modules for the rear confirmat screw connecting the drawer side to the bottom panel.
+*   **Order Generation:**
+    *   Refactored `create_order.py` to support multiple materials for the Elgrad cutting service.
+*   **Documentation:**
+    *   Updated `export-panels.ps1` with more detailed comments.
+*   **DXF Processing:**
+    *   Removed debug print statements from `split_layers.py`.
 
 ### v12
 

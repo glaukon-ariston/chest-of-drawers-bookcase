@@ -1,32 +1,22 @@
-feat: Enhance workflow and order generation
+feat: Refactor and enhance CNC export and order generation
 
-This commit introduces several improvements to the project's workflow and order generation process.
+This commit introduces a series of improvements to the CNC export workflow, order generation, and overall model accuracy.
 
-**Key Changes:**
+- **Model Parameterization:** The main melamine thickness (`melanine_thickness_main`) has been adjusted from 19mm to 18mm to reflect the available material.
 
-*   **Order Generation:**
-    *   The `create_order.py` script has been refactored to support multiple cutting services (Iverpan and Elgrad).
-    *   The script now accepts `--service` and `--template` arguments for greater flexibility.
-    *   The output directory for orders is now `order/export/{model_id}`.
+- **DXF Export and Annotations:**
+    - The 2D projections for the `DrawerSideLeft`, `DrawerSideRight`, and `DrawerBack` panels have been corrected to ensure they are oriented correctly with the longer side horizontal and are placed in the first quadrant of the DXF file.
+    - The corresponding hole metadata functions (`get_drawer_side_hole_2d_coords` and `get_drawer_back_hole_2d_coords`) have been updated to match the new panel orientations, ensuring that hole annotations are accurately placed.
 
-*   **Workflow:**
-    *   The `workflow.ps1` script has been updated to automate the entire process, including the generation of order files for both Iverpan and Elgrad.
-    *   The PowerShell scripts have been improved to use a common `CommonFunctions.psm1` module and dynamic export directories.
+- **Bug Fixes:**
+    - Corrected the position of the rear confirmat screw hole on the drawer side panels, which was previously 62mm from the edge instead of the standard 50mm.
+    - Fixed the projection of the `DrawerBack` panel, which was previously upside down.
 
-*   **Configuration:**
-    *   The `.gitignore` file has been updated to exclude the new `order/export` directory from version control.
+- **Order Generation:**
+    - The `create_order.py` script has been refactored to handle multiple materials for the Elgrad cutting service. The script now iterates through the materials in the cut list and generates a separate order file for each material.
 
-*   **Documentation:**
-    *   The `README.md`, `GEMINI.md`, and `prompt/model-v2.md` files have been updated to reflect the recent changes.
-
-**File-specific Changes:**
-
-*   **`create_order.py`**: Refactored to support multiple services and moved to a more generic order generation script.
-*   **`workflow.ps1`**: Now orchestrates the entire workflow, including order generation.
-*   **`export-all.ps1`**: Updated to use the new export directory structure.
-*   **`generate-csv.ps1`**: Updated to use the new export directory structure.
-*   **`run-split-layers.ps1`**: Updated to use the new export directory structure.
-*   **`split-layers-dxf.ps1`**: Updated to use the new export directory structure.
-*   **`model.scad`**: Minor changes to support the new workflow.
-*   **`.gitignore`**: Added `order/export/` to the ignore list.
-*   **`TODO.md`**: Updated with the latest changes.
+- **Documentation and DXF Processing:**
+    - The `export-panels.ps1` script has been updated with more detailed comments.
+    - The `split_layers.py` script has been cleaned up by removing debug print statements.
+    - The `TODO.md` file has been updated with new items for future development.
+    - The `README.md`, `GEMINI.md`, and `prompt/model-v2.md` files have been updated to reflect all the recent changes.

@@ -563,3 +563,21 @@ To fulfill this request, I performed the following actions:
 4.  **Updated `GEMINI.md`:** I updated the changelog to v11.
 5.  **Updated `artifacts/conversation.md`:** I appended a summary of this interaction to the conversation log.
 6.  **Prepared a commit message:** I created a commit message that summarizes the documentation updates and saved it to `prompt/commit.md`.
+
+---
+
+### User:
+
+> In @model.scad change orientation in the 2D projection for the DrawerSideLeft and DrawerSideRight so the longer side is horizontal and the shorter one vertical, with the holes for the bottom panel running in the lower part of the panel. Currently, the exported DXF shows the panel rotated 90 degrees so it is difficult to read.
+
+### Model:
+
+The user requested to change the 2D projection of the drawer side panels. I went through a series of iterations, with the user providing feedback at each step, to correct the orientation and hole annotation coordinates for `DrawerSideLeft`, `DrawerSideRight`, and `DrawerBack` panels. The final changes ensure that the panels are correctly oriented in the 2D projection and that the hole annotations are in sync with the geometry.
+
+### User:
+
+> On both left and right drawer panels, the rear confirmat screw hole connecting sides to the bottom panel is 62mm from the edge. It should be 50mm from the edge like the rest of the holes.
+
+### Model:
+
+The user identified an error in the position of a confirmat screw hole. I corrected the `drawer_side_drill` and `drawer_side_hole_metadata` modules in `model.scad` to fix the hole position.

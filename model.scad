@@ -16,7 +16,7 @@ generate_panel_names_list = false;
 // DXF Export: Set the panel name to export, e.g., "CorpusSideLeft"
 // Panel selector (via -D name="...")
 // See the 'export_panel' module for a list of all panel names.
-export_panel_name = "";
+export_panel_name = "DrawerBack";
 export_type = "dxf";  // "dxf"|"stl"|"svg"
 
 panel_names = ["CorpusSideLeft", "CorpusSideRight", "CorpusTopBottom", "CorpusMiddle", "DrawerSideLeft", "DrawerSideRight", "DrawerBack", "DrawerBottom", "DrawerFrontFirst", "DrawerFrontStandard", "DrawerFrontTop", "Shelf", "PedestalFrontBack", "PedestalSide", "HDFBackPanel"];
@@ -48,7 +48,7 @@ corpus_width = 600;
 corpus_depth = 230;
 
 // Melanine material thickness
-melanine_thickness_main = 19;
+melanine_thickness_main = 18;
 melanine_thickness_secondary = 12;
 
 model_identifier = str("H",corpus_height,"xW",corpus_width,"xD",corpus_depth,"_Mm",melanine_thickness_main,"_Ms",melanine_thickness_secondary);
@@ -228,8 +228,8 @@ module slide_pilot_hole() {
 // --- Hole Metadata Export ---
 
 function get_corpus_side_hole_2d_coords(x, y, z, is_left) = is_left ? [-z + corpus_height, y] : [z, y];
-function get_drawer_side_hole_2d_coords(x, y, z, is_left) = is_left ? [z, y] : [-z + drawer_height, y];
-function get_drawer_back_hole_2d_coords(x, y, z) = [x, -z + drawer_height];
+function get_drawer_side_hole_2d_coords(x, y, z, is_left) = is_left ? [drawer_depth - y, z] : [y, z];
+function get_drawer_back_hole_2d_coords(x, y, z) = [x, z];
 function get_drawer_bottom_hole_2d_coords(x, y, z) = [x, y];
 function get_drawer_front_hole_2d_coords(x, y, z) = [x, z];
 function get_shelf_hole_2d_coords(x, y, z) = [x, y];
@@ -274,7 +274,7 @@ module drawer_side_hole_metadata(is_left) {
     echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
     p3 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2, is_left);
     echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
-    p4 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2, is_left);
+    p4 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2, is_left);
     echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
     p5 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, dowel_hole_edge_distance, is_left);
     echo(str("Hole,", export_panel_name, ",dowel_front_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
@@ -494,7 +494,7 @@ module drawer_side_drill(is_left = true) {
 
     // Holes for bottom panel (2 holes)
     translate([melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
-    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
+    translate([melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
 
     // Dowel holes for front panel
     translate([melanine_thickness_secondary/2, 0, dowel_hole_edge_distance]) rotate(ROT_X_90) dowel_hole(dowel_length - dowel_hole_depth_in_front);
@@ -860,8 +860,8 @@ module generate_cut_list() {
     echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",1,1,0,0,0,CorpusMiddle,Horizontal shelf separating drawers and bookcase,,cnc: rubne rupe fi4mm za konfirmat"));
 
     // Drawers
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",6,1,1,0,1,DrawerSideLeft,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_height, ",", drawer_depth, ",6,1,1,0,1,DrawerSideRight,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",6,1,1,1,1,DrawerSideLeft,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",6,1,1,1,1,DrawerSideRight,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
     echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",6,1,1,0,0,DrawerBack,Vertical back panel of a drawer,cnc: rupe fi4mm za konfirmat,cnc: rubne rupe fi4mm za konfirmat"));
     echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_depth - melanine_thickness_secondary, ",6,0,0,0,0,DrawerBottom,Bottom panel of a drawer,,cnc: rubne rupe fi4mm za konfirmat + fi6mm za tiple"));
 
@@ -909,18 +909,22 @@ module export_panel(panel_name) {
     } else if (panel_name == "CorpusTopBottom" || panel_name == "CorpusMiddle" || panel_name == "Shelf") {
         flat_projection() shelf();
     } else if (panel_name == "DrawerSideLeft") {
+        translate([drawer_depth, 0, 0])
         flat_projection() {
-            rotate(ROT_Y_90) drawer_side(is_left=true);
+            rotate(ROT_Z_90)
+            rotate(ROT_Y_90) 
+            drawer_side(is_left=true);
         }
     } else if (panel_name == "DrawerSideRight") {
-        translate([drawer_height, 0, 0])
         flat_projection() {
-            rotate(ROT_Y_NEG_90) translate([-melanine_thickness_secondary, 0, 0]) drawer_side(is_left=false);
+            rotate(ROT_Z_NEG_90)
+            rotate(ROT_Y_NEG_90) 
+            translate([-melanine_thickness_secondary, 0, 0]) 
+            drawer_side(is_left=false);
         }
     } else if (panel_name == "DrawerBack") {
-        translate([0, drawer_height, 0])
         flat_projection() {
-            rotate(ROT_X_90) drawer_back();
+            rotate(ROT_X_NEG_90) drawer_back();
         }
     } else if (panel_name == "DrawerBottom") {
         flat_projection() drawer_bottom();

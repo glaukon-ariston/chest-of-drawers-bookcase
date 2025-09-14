@@ -47,17 +47,17 @@ IVERPAN_EDGE_BANDING = {
 # 58	HRAST PRIRODNI (nova struktura)	37307AN						19				08/22      						2/28       			203837307AN
 # 58	HRAST PRIRODNI (nova struktura)	37307AN						19				081937307AN						202537307AN			203837307AN
 ELGRAD_MATERIAL = {
-    'MEL-19': '37307AN',
-    'MEL-12': '1615FH',
-    'HDF-3': 'HDF-3',
+    'MEL-19': 'H1145',      # Hrast Bardolino natur
+    'MEL-12': 'W960',       # Klasična bijela 
+    'HDF-3': 'HDF-3-Hrast',
 }
 
 # Elgrad banding
 # 											                    05/22		    1/22		    2/22	    08/28	1/28	2/28	    08/42	1/42	2/42
 # 1	BIJELI FH FUNDER	1615FH		10				19	25		B05191615FH		B10191615FH		B20191615FH	B08251615FH		B20251615FH	B08381615FH		B20381615FH
 ELGRAD_EDGE_BANDING = {
-    'MEL-19': '202537307AN',
-    'MEL-12': 'B05191615FH',
+    'MEL-19': '2',
+    'MEL-12': '2',
 }
 
 CSV_HEADER = "material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc face holes,cnc side holes".split(',')
@@ -72,9 +72,10 @@ def verify_header(header, expected_header):
     return True
 
 
-def process_elgrad_order(workbook, csv_file, output_file):
+def process_elgrad_order_with_material(material_code, thickness, workbook_file, csv_file, output_file):
     print(f"Creating order file: {output_file}")
 
+    workbook = openpyxl.load_workbook(workbook_file)
     # Select the 'Elementi' worksheet
     sheet = workbook['Elementi']
 
@@ -83,6 +84,10 @@ def process_elgrad_order(workbook, csv_file, output_file):
     header_values = [cell.value for cell in header_row]
     expected_header = ['R.B.',	'DULJINA', 'ŠIRINA', 'BR.KOM.',	'DUŽA MJERA',  'KRAĆA MJERA', 'DUŽA MJERA', 'KRAĆA MJERA', None]
     verify_header(header_values, expected_header)
+
+    sheet.cell(row=1, column=2).value = f"{ELGRAD_MATERIAL[material_code]} {thickness}mm"
+    sheet.cell(row=1, column=7).value = f"{ELGRAD_MATERIAL[material_code]}"
+    sheet.cell(row=2, column=2).value = "da" if material_code != 'HDF-3' else "ne"
 
     # Read data from CSV and populate the Excel sheet
     with open(csv_file, 'r', newline='', encoding='utf-8') as csvfile:
@@ -95,8 +100,12 @@ def process_elgrad_order(workbook, csv_file, output_file):
         # Start writing from row 14
         row_num = 4
         for row in reader:
-            material_code = row[0]
-            thickness = row[1]
+            material_code2 = row[0]
+            thickness2 = row[1]
+            if material_code != material_code2 or thickness != thickness2:
+                continue
+
+            print(f"{row_num}. material {material_code} thickness {thickness}")
             dim_A = float(row[2])
             dim_B = float(row[3])
             count = int(row[4])
@@ -116,7 +125,7 @@ def process_elgrad_order(workbook, csv_file, output_file):
             sheet.cell(row=row_num, column=6).value = None
             sheet.cell(row=row_num, column=7).value = 2 if edge_A1 == 1 and edge_A2 == 1 else 1 if edge_A1 == 1 or edge_A2 == 1 else 0
             sheet.cell(row=row_num, column=8).value = 2 if edge_B1 == 1 and edge_B2 == 1 else 1 if edge_B1 == 1 or edge_B2 == 1 else 0
-            sheet.cell(row=row_num, column=9).value = f"{panel_name}; {MATERIAL[material_code]} {thickness}mm; {panel_desc}; {cnc_face_holes}; {cnc_side_holes}"
+            sheet.cell(row=row_num, column=9).value = f"{panel_name}; {panel_desc}; {cnc_face_holes}; {cnc_side_holes}"
 
             row_num += 1
 
@@ -125,9 +134,33 @@ def process_elgrad_order(workbook, csv_file, output_file):
     print(f"Successfully created order file: {output_file}")
 
 
-def process_iverpan_order(workbook, csv_file, output_file):
-    print(f"Creating order file: {output_file}")
+def process_elgrad_order(workbook_file, csv_file, service, model_id):
+    materials = set()
+    # Read data from CSV and collect all materials and their thicknesses
+    with open(csv_file, 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        
+        # Read header row
+        header_row = next(reader)
+        verify_header(header_row, CSV_HEADER)
 
+        for row in reader:
+            material_code = row[0]
+            thickness = row[1]
+            materials.add((material_code, thickness))
+
+    for material_code, thickness in materials:
+        material = ELGRAD_MATERIAL[material_code]
+        date_str = datetime.datetime.now().strftime("%Y%m%d")
+        output_file = os.path.join(ORDER_DIR, f"{service}_{model_id}_{date_str}_{material}_{thickness}mm.xlsx")
+        process_elgrad_order_with_material(material_code, thickness, workbook_file, csv_file, output_file)
+
+
+def process_iverpan_order(workbook_file, csv_file, service, model_id):
+    date_str = datetime.datetime.now().strftime("%Y%m%d")
+    output_file = os.path.join(ORDER_DIR, f"{service}_{model_id}_{date_str}.xlsx")
+    print(f"Creating order file: {output_file}")
+    workbook = openpyxl.load_workbook(workbook_file)
     # Select the 'Narudžba' worksheet
     sheet = workbook['Narudžba']
 
@@ -191,17 +224,16 @@ def process_iverpan_order(workbook, csv_file, output_file):
 
 # Construct file paths
 csv_file = os.path.join('export', args.model_id, 'cut_list.csv')
-date_str = datetime.datetime.now().strftime("%Y%m%d")
-output_file = os.path.join(ORDER_DIR, f"{args.service}_{args.model_id}_{date_str}.xlsx")
 
 # Create the output directory if it does not exists
 if not os.path.exists(ORDER_DIR):
     os.makedirs(ORDER_DIR)
 
-# Load the Excel template
-workbook = openpyxl.load_workbook(args.template)
 if args.service == 'iverpan':
-    process_iverpan_order(workbook, csv_file, output_file)
+    process_iverpan_order(args.template, csv_file, args.service, args.model_id)
 elif args.service == 'elgrad':
-    process_elgrad_order(workbook, csv_file, output_file)
+    process_elgrad_order(args.template, csv_file, args.service, args.model_id)
+else:
+    print(f"Unknown service: {args.service}")
+    exit(1)
 

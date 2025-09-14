@@ -1,3 +1,1 @@
-Change @split_layers.py:
-- add title with the panel name at the top of the document. 
-- add hole name to each hole's annotation; make it so it is above the existing hole annotation, on a line above.
+In @model.scad change orientation in the 2D projection for the DrawerSideLeft and DrawerSideRight so the longer side is horizontal and the shorter one vertical, with the holes for the bottom panel running in the lower part of the panel. Currently, the exported DXF shows the panel rotated 90 degrees so it is difficult to read.
