@@ -1,22 +1,15 @@
-feat: Refactor and enhance CNC export and order generation
+feat(order): Add support for Furnir cutting service
 
-This commit introduces a series of improvements to the CNC export workflow, order generation, and overall model accuracy.
+Refactored the `create_order.py` script to support an additional cutting service, 'Furnir'.
 
-- **Model Parameterization:** The main melamine thickness (`melanine_thickness_main`) has been adjusted from 19mm to 18mm to reflect the available material.
+The main changes include:
 
-- **DXF Export and Annotations:**
-    - The 2D projections for the `DrawerSideLeft`, `DrawerSideRight`, and `DrawerBack` panels have been corrected to ensure they are oriented correctly with the longer side horizontal and are placed in the first quadrant of the DXF file.
-    - The corresponding hole metadata functions (`get_drawer_side_hole_2d_coords` and `get_drawer_back_hole_2d_coords`) have been updated to match the new panel orientations, ensuring that hole annotations are accurately placed.
+- **Generalized Material/Edge Banding:** The material and edge banding definitions have been restructured into a nested dictionary under the `MATERIAL` constant. This makes the code more modular and extensible for future services.
 
-- **Bug Fixes:**
-    - Corrected the position of the rear confirmat screw hole on the drawer side panels, which was previously 62mm from the edge instead of the standard 50mm.
-    - Fixed the projection of the `DrawerBack` panel, which was previously upside down.
+- **Added `process_furnir_order` function:** A new function dedicated to handling the specific format and requirements of the Furnir order template.
 
-- **Order Generation:**
-    - The `create_order.py` script has been refactored to handle multiple materials for the Elgrad cutting service. The script now iterates through the materials in the cut list and generates a separate order file for each material.
+- **Updated Main Execution Block:** The main part of the script now includes logic to call the appropriate processing function based on the `--service` argument.
 
-- **Documentation and DXF Processing:**
-    - The `export-panels.ps1` script has been updated with more detailed comments.
-    - The `split_layers.py` script has been cleaned up by removing debug print statements.
-    - The `TODO.md` file has been updated with new items for future development.
-    - The `README.md`, `GEMINI.md`, and `prompt/model-v2.md` files have been updated to reflect all the recent changes.
+- **Configuration:** Added `.vscode` to `.gitignore` to exclude editor-specific files from the repository.
+
+- **Documentation:** Updated `TODO.md` with more specific items.

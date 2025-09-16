@@ -149,6 +149,14 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
+### v14
+
+*   **Order Generation:**
+    *   Refactored `create_order.py` to support the 'Furnir' cutting service.
+    *   The material definitions are now in a nested dictionary `MATERIAL` to support multiple services.
+*   **Configuration:**
+    *   Added `.vscode` to the `.gitignore` file.
+
 ### v13
 
 *   **Model Parameterization:**

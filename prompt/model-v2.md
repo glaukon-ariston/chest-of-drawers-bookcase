@@ -223,10 +223,18 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 ```
 
 - `--model-id`: The identifier of the model (e.g., `H2300xW600xD230_Mm19_Ms12`).
-- `--service`: The cutting service provider (e.g., `iverpan`, `elgrad`).
+- `--service`: The cutting service provider (e.g., `iverpan`, `elgrad`, `furnir`).
 - `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v14
+
+*   **Order Generation:**
+    *   Refactored `create_order.py` to support the 'Furnir' cutting service.
+    *   The material definitions are now in a nested dictionary `MATERIAL` to support multiple services.
+*   **Configuration:**
+    *   Added `.vscode` to the `.gitignore` file.
 
 ### v13
 

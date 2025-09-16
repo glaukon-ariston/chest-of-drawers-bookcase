@@ -1,3 +1,4 @@
+.vscode
 order/export/*
 order/PII.py
 __pycache__
