@@ -4,3 +4,4 @@ order/PII.py
 __pycache__
 \#*
 *.zip
+export/*/*

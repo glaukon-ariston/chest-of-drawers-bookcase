@@ -1,4 +1,9 @@
-In @model.scad create additional template 2D panels that are going to be used  for drilling holes into other panels. These template panels needs to be included in the panel list. The following is the list of drilling template panels:
-- CorpusSideSlideTemplate panel. The height is the distance between drawers. The width is the width of the corpus side. It contains slide mounting pilot holes.
-- DrawerFrontTemplate panel. The height is the height of the drawer side panel. The width is the width of the drawer (left side thickness + right side thickness + drawer bottom width). It contains wooden dowels mounting holes for the front panel.
-- CorpusShelfTemplate panel. The height is the distance between shelves. The width is the width of the corpus side. It contains shelf mounting holes at the top of the panel so it can be used to drill top plate mounting holes in the corpus side by aligning the tops of the panels.
+The issue is that OpenSCAD is exporting circles as polylines. Address
+this by modifying split_layers.py to detect and convert these polylines back into
+CIRCLE entities. The plan is to add a new function, get_polyline_center_and_radius,
+which will identify closed polylines with more than 8 vertices and all points
+equidistant from a calculated center. Then, within the split_layers function, 
+add a post-processing step to iterate through the collected entities, use this new
+function to find circle-like polylines, and replace them with the proper CIRCLE
+entities on the DRILL layer. Start by reading the latest version of
+split_layers.py.

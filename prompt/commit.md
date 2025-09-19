@@ -1,15 +1,30 @@
-feat(order): Add support for Furnir cutting service
+feat: Add template panels and improve DXF export
 
-Refactored the `create_order.py` script to support an additional cutting service, 'Furnir'.
+This commit introduces several improvements to the DXF export process and adds new template panels for easier manufacturing.
 
-The main changes include:
+**New Features:**
 
-- **Generalized Material/Edge Banding:** The material and edge banding definitions have been restructured into a nested dictionary under the `MATERIAL` constant. This makes the code more modular and extensible for future services.
+- **Template Panels:** Added three new template panels to the `model.scad` file:
+    - `CorpusSideSlideTemplate`: For drilling slide mounting pilot holes.
+    - `DrawerFrontTemplate`: For drilling dowel mounting holes for the front panel.
+    - `CorpusShelfTemplate`: For drilling shelf mounting holes.
+- **Hole Metadata:** Added hole metadata export for the new template panels.
+- **DXF Statistics:** The `split_layers.py` script now generates and prints statistics about the entity types and their sizes in the source DXF file.
 
-- **Added `process_furnir_order` function:** A new function dedicated to handling the specific format and requirements of the Furnir order template.
+**Bug Fixes:**
 
-- **Updated Main Execution Block:** The main part of the script now includes logic to call the appropriate processing function based on the `--service` argument.
+- **Hole Generation:** Fixed issues where holes were not appearing on the template panels due to being created at the surface boundary.
+- **Panel Orientation:** Corrected the 2D projection of `CorpusSideSlideTemplate` and `CorpusShelfTemplate` to ensure they are in the first quadrant with the lower-left corner at the origin.
+- **Circle Export:** Implemented a workaround in `split_layers.py` to convert circle-like polylines exported by OpenSCAD into true `CIRCLE` entities in the final DXF file. This addresses the issue of holes being represented as segmented lines.
+- **ARC to DRILL:** Small `ARC` entities are now correctly classified to the `DRILL` layer.
 
-- **Configuration:** Added `.vscode` to `.gitignore` to exclude editor-specific files from the repository.
+**Refactoring:**
 
-- **Documentation:** Updated `TODO.md` with more specific items.
+- **`model.scad`:**
+    - Increased the `$FN` variable to 100 to improve the resolution of circles in the DXF export.
+- **`split_layers.py`:**
+    - Changed the `DIMENSION` layer color to grey and the `ANNOTATION` layer color to black for better visibility.
+
+**Documentation:**
+
+- Updated `README.md`, `GEMINI.md`, and `prompt/model-v2.md` to reflect the recent changes.

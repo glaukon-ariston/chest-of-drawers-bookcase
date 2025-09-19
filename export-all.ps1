@@ -38,12 +38,12 @@ Assert-DirectoryExists -Path $exportDir
 Write-Output "Exporting all panels to STL, DXF and SVG to export/$modelIdentifier directory..."
 
 # Export to STL
-.\export-panels.ps1 -exportDir $exportDir -exportType stl
+#.\export-panels.ps1 -exportDir $exportDir -exportType stl
 
 # Export to DXF
 .\export-panels.ps1 -exportDir $exportDir -exportType dxf
 
 # Export to SVG
-.\export-panels.ps1 -exportDir $exportDir -exportType svg
+#.\export-panels.ps1 -exportDir $exportDir -exportType svg
 
 Write-Output "All panels exported successfully to export/$modelIdentifier directory."

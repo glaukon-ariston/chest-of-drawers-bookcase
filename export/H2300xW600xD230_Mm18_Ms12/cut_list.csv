@@ -14,3 +14,6 @@
 "MEL-19","18","564","30","2","1","0","0","0","PedestalFrontBack","Front and back panels of the pedestal","","cnc: rubne rupe fi4mm za konfirmat"
 "MEL-19","18","230","30","2","1","0","1","1","PedestalSide","Side panels of the pedestal","cnc: rupe fi4mm za konfirmat",
 "HDF-3","3","2300","600","1","0","0","0","0","HDFBackPanel","The back panel of the entire unit","",
+"MEL-12","12","210","230","1","0","0","0","0","CorpusSideSlideTemplate","Drilling template for corpus side slide holes","cnc: pilot fi2.5mm za vodilice",
+"MEL-12","12","538","200","1","0","0","0","0","DrawerFrontTemplate","Drilling template for drawer front dowel holes","cnc: rupe fi6mm za tiple",
+"MEL-12","12","313.333","230","1","0","0","0","0","CorpusShelfTemplate","Drilling template for corpus shelf holes","cnc: rupe fi4mm za konfirmat",

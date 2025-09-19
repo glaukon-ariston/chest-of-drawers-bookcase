@@ -4,6 +4,7 @@
 #
 # e.g.
 # .\run-split-layers.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12
+# .\run-split-layers.ps1 -exportDir export\H2300xW600xD230_Mm18_Ms12
 
 param(
     [Parameter(Mandatory = $true)]

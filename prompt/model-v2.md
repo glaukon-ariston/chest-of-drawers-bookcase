@@ -114,6 +114,13 @@ The model is broken down into several distinct components, each with its own Ope
 
 -   The bookcase section is enclosed by two glass doors.
 
+### 3.9. Template Panels
+
+-   The model includes three template panels for drilling holes:
+    -   `CorpusSideSlideTemplate`: A template for drilling slide mounting pilot holes on the corpus sides.
+    -   `DrawerFrontTemplate`: A template for drilling wooden dowel mounting holes for the front panel.
+    -   `CorpusShelfTemplate`: A template for drilling shelf mounting holes.
+
 ## 4. Joinery
 
 -   **Corpus and Shelves:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model.

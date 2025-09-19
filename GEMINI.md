@@ -8,6 +8,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 * Do not delete items from the TODO.md file.
 * When writing Python code, separate functions with two empty lines.
 * Do not silently change code that I have manually changed.
+* This is important, I will repeat this again. Do not delete or modify code that I changed without consulting with me first.
 * Use `Write-Output` instead of `Write-Host` in PowerShell programming.
 * Avoid catching exceptions. Prefer propagating exceptions and making program fail as soon as possible.
 * Do not use `git add` and `git commit` without user's permision.
@@ -148,6 +149,20 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v15
+
+*   **Template Panels:**
+    *   Fixed hole generation for `CorpusSideSlideTemplate`, `DrawerFrontTemplate`, and `CorpusShelfTemplate`.
+    *   Corrected the 2D projection for `CorpusSideSlideTemplate` and `CorpusShelfTemplate` to ensure correct orientation.
+    *   Added hole metadata export for all template panels.
+*   **DXF Export:**
+    *   Increased the circle segment count (`$FN`) to 100 in `model.scad` to improve circle quality in DXF exports.
+    *   In `split_layers.py`, implemented a feature to detect and convert circle-like polylines into true `CIRCLE` entities, addressing an OpenSCAD export issue.
+    *   Small `ARC` entities are now correctly classified to the `DRILL` layer.
+    *   Changed the `DIMENSION` layer color to grey and the `ANNOTATION` layer color to black for better visibility.
+*   **Debugging:**
+    *   Added a statistics generation feature to `split_layers.py` to provide an overview of DXF entity types and sizes upon processing.
 
 ### v14
 

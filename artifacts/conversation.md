@@ -581,3 +581,49 @@ The user requested to change the 2D projection of the drawer side panels. I went
 ### Model:
 
 The user identified an error in the position of a confirmat screw hole. I corrected the `drawer_side_drill` and `drawer_side_hole_metadata` modules in `model.scad` to fix the hole position.
+
+---
+
+### User:
+
+> CorpusSideSlideTemplate panel does not show any holes.
+
+### Model:
+
+The user reported that the `CorpusSideSlideTemplate` panel was not showing any holes. I identified that the issue was due to the drill operations being performed at the surface boundary of the panel, which can cause rendering issues in OpenSCAD.
+
+To fix this, I modified the `corpus_side_slide_template_drill` module in `model.scad` to drill from the opposite face of the panel. This resolved the issue with the holes not appearing.
+
+The user then reported that the orientation of the panel was incorrect. I corrected the orientation by applying a rotation and translation to place the panel in the first quadrant of the 2D projection.
+
+I applied similar fixes to the `DrawerFrontTemplate` and `CorpusShelfTemplate` panels, which had similar issues with hole visibility and orientation.
+
+I also added the corresponding hole metadata for all three template panels.
+
+---
+
+### User:
+
+> Change the dimension layer color and annotation layer color to dark colors like black or grey in @split_layers.py
+
+### Model:
+
+The user requested to change the colors of the `DIMENSION` and `ANNOTATION` layers for better visibility. I updated the `split_layers.py` script to set the `DIMENSION` layer to grey and the `ANNOTATION` layer to black, and also updated the legend in the DXF file to reflect these changes.
+
+---
+
+### User:
+
+> It looks like the holes are being represented using LINE segments. Why is that so and how I can prevent that?
+
+### Model:
+
+The user observed that holes were being represented by line segments instead of circles in the DXF export. I explained that this is due to how OpenSCAD exports circles as polylines.
+
+To address this, I implemented a feature in `split_layers.py` to detect and convert these circle-like polylines back into true `CIRCLE` entities. This involves:
+1.  A new function `get_polyline_center_and_radius` to identify polylines that represent circles based on their geometry.
+2.  A post-processing step in the `split_layers` function to iterate through the entities and replace the circle-like polylines with `CIRCLE` entities on the `DRILL` layer.
+
+I also increased the `$FN` variable in `model.scad` to 100 to improve the resolution of the exported polylines, which helps in their detection as circles.
+
+Additionally, I added a feature to `split_layers.py` to generate and print statistics about the entity types and their sizes in the source DXF file.

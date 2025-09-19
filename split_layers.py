@@ -1,3 +1,27 @@
+"""
+This script processes DXF files to organize entities onto specific layers
+("CUT", "DRILL", "DIMENSION", "ANNOTATION") based on their type and characteristics.
+It also adds hole annotations from a corresponding CSV file, generates dimension lines,
+creates a legend, and adds a title to the DXF drawing.
+
+The script is designed to prepare DXF files for CNC machining, separating cutting
+paths from drilling operations and providing clear annotations and dimensions.
+
+Usage:
+    python split_layers.py <input_dxf_file> <output_dxf_file>
+
+Arguments:
+    input_dxf_file: Path to the input DXF file.
+    output_dxf_file: Path where the processed DXF file will be saved.
+
+Example:
+    python split_layers.py "export/H2300xW600xD230_Mm18_Ms12/dxf-raw/DrawerSideRight.dxf" "export/H2300xW600xD230_Mm18_Ms12/dxf/DrawerSideRight.dxf"
+
+The script expects an optional CSV file with the same base name as the input DXF
+(e.g., `panel_drawing.csv`) containing hole information. The CSV should have
+the following header:
+"panel_name,hole_name,x,y,z,diameter,depth"
+"""
 import ezdxf
 import sys
 import csv
@@ -184,6 +208,7 @@ def is_small_slot(poly):
     ys = [p[1] for p in points]
     width = max(xs) - min(xs)
     height = max(ys) - min(ys)
+    print(f"is_small_slot: width={width}, height={height}, max_size={SLOT_MAX_SIZE}")
     return width <= SLOT_MAX_SIZE and height <= SLOT_MAX_SIZE
 
 
@@ -539,8 +564,8 @@ def add_legend(msp):
         "Legend:",
         "- CUT layer (red): Panel outline",
         "- DRILL layer (blue): Holes to be drilled",
-        "- DIMENSION layer (green): Panel and hole dimensions",
-        "- ANNOTATION layer (magenta): Hole dimensions (d=diameter, h=depth).",
+        "- DIMENSION layer (grey): Panel and hole dimensions",
+        "- ANNOTATION layer (black): Hole dimensions (d=diameter, h=depth).",
         "- For side-drilled holes, Z-coordinate is included (e.g., d10 h20 z9.5).",
         "- Side-drilled holes are also marked with a blue cross on the DRILL layer."
     ]
@@ -607,10 +632,65 @@ def split_layers(input_file, output_file):
     else:
         msp = doc.modelspace()
         original_entities = list(msp)
-        # Clear existing entities
-        entities_to_delete = list(msp)
-        for entity in entities_to_delete:
-            msp.delete_entity(entity)
+
+    stats = {
+        "CIRCLE": {"count": 0, "radii": []},
+        "ARC": {"count": 0, "radii": []},
+        "LINE": {"count": 0, "lengths": []},
+        "LWPOLYLINE": {"count": 0, "widths": [], "heights": []},
+        "POLYLINE": {"count": 0, "widths": [], "heights": []},
+        "TEXT": {"count": 0, "heights": []},
+        "MTEXT": {"count": 0, "heights": []},
+    }
+
+    for e in original_entities:
+        dtype = e.dxftype()
+        if dtype in stats:
+            stats[dtype]["count"] += 1
+            if dtype == "CIRCLE":
+                stats[dtype]["radii"].append(e.dxf.radius)
+            elif dtype == "ARC":
+                stats[dtype]["radii"].append(e.dxf.radius)
+            elif dtype == "LINE":
+                p1 = e.dxf.start
+                p2 = e.dxf.end
+                length = math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
+                stats[dtype]["lengths"].append(length)
+            elif dtype in ["LWPOLYLINE", "POLYLINE"]:
+                points = list(e.get_points())
+                if points:
+                    xs = [p[0] for p in points]
+                    ys = [p[1] for p in points]
+                    width = max(xs) - min(xs)
+                    height = max(ys) - min(ys)
+                    stats[dtype]["widths"].append(width)
+                    stats[dtype]["heights"].append(height)
+            elif dtype == "TEXT":
+                stats[dtype]["heights"].append(e.dxf.height)
+            elif dtype == "MTEXT":
+                stats[dtype]["heights"].append(e.dxf.char_height)
+
+    print("\n--- DXF Entity Statistics ---")
+    for dtype, data in stats.items():
+        if data["count"] > 0:
+            print(f"{dtype}: {data['count']}")
+            if "radii" in data and data["radii"]:
+                print(f"  - Radii: min={min(data['radii']):.2f}, max={max(data['radii']):.2f}, avg={sum(data['radii'])/len(data['radii']):.2f}")
+            if "lengths" in data and data["lengths"]:
+                print(f"  - Lengths: min={min(data['lengths']):.2f}, max={max(data['lengths']):.2f}, avg={sum(data['lengths'])/len(data['lengths']):.2f}")
+            if "widths" in data and data["widths"]:
+                print(f"  - Widths: min={min(data['widths']):.2f}, max={max(data['widths']):.2f}, avg={sum(data['widths'])/len(data['widths']):.2f}")
+            if "heights" in data and "widths" in data and data["heights"]:
+                print(f"  - Heights: min={min(data['heights']):.2f}, max={max(data['heights']):.2f}, avg={sum(data['heights'])/len(data['heights']):.2f}")
+            elif "heights" in data and data["heights"]:
+                print(f"  - Heights: min={min(data['heights']):.2f}, max={max(data['heights']):.2f}, avg={sum(data['heights'])/len(data['heights']):.2f}")
+
+    print("---------------------------\n")
+        
+    # Clear existing entities
+    entities_to_delete = list(msp)
+    for entity in entities_to_delete:
+        msp.delete_entity(entity)
     
     # Set units to millimeters
     doc.header['$INSUNITS'] = ezdxf.units.MM
@@ -638,16 +718,16 @@ def split_layers(input_file, output_file):
 
     if "DIMENSION" not in layers:
         dimension_layer = layers.new("DIMENSION")
-        dimension_layer.dxf.color = 3  # Green
+        dimension_layer.dxf.color = 8  # Grey
         dimension_layer.dxf.linetype = "CONTINUOUS"
         dimension_layer.on = True
         dimension_layer.freeze = False
         dimension_layer.lock = False
 
-    # Create ANNOTATION layer (magenta, visible, continuous line)
+    # Create ANNOTATION layer (black, visible, continuous line)
     if "ANNOTATION" not in layers:
         annotation_layer = layers.new("ANNOTATION")
-        annotation_layer.dxf.color = 6  # Magenta
+        annotation_layer.dxf.color = 7  # Black
         annotation_layer.dxf.linetype = "CONTINUOUS"
         annotation_layer.on = True
         annotation_layer.freeze = False
@@ -676,15 +756,24 @@ def split_layers(input_file, output_file):
         # Determine target layer
         if dtype == "CIRCLE":
             target_layer = "DRILL"
+        elif dtype == "ARC":
+            if e.dxf.radius <= (SLOT_MAX_SIZE / 2):
+                target_layer = "DRILL"
+                print(f"Small slot detected: {dtype}")
+            else:
+                target_layer = "CUT"
         elif dtype in ["LWPOLYLINE", "POLYLINE"]:
             if is_small_slot(e):
                 target_layer = "DRILL"
+                print(f"Small slot detected: {dtype}")
             else:
                 target_layer = "CUT"
         elif dtype in ["TEXT", "MTEXT"]:
             target_layer = "ANNOTATION"
-        else:  # LINE or ARC
+        elif dtype in ["LINE"]:
             target_layer = "CUT"
+        else:
+            raise ValueError(f"Unknown entity type: {dtype}")
         
         # Extract entity data before deletion
         data = extract_entity_data(e)
