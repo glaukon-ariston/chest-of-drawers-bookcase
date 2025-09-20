@@ -1,8 +1,0 @@
-﻿PanelName,HoleName,X,Y,Z,Diameter,Depth
-DrawerBack,left_side_1,0,50,6,4,37
-DrawerBack,left_side_2,0,150,6,4,37
-DrawerBack,right_side_1,514,50,6,4,37
-DrawerBack,right_side_2,514,150,6,4,37
-DrawerBack,bottom_panel_1,50,6,0,4,12
-DrawerBack,bottom_panel_2,257,6,0,4,12
-DrawerBack,bottom_panel_3,464,6,0,4,12

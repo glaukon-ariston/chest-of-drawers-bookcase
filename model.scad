@@ -3,7 +3,7 @@
 // The y-direction increases into the corpus body.
 // This means that drawer fronts and glass doors will have y-origin in the negative direction.
 
-FN = 100;
+FN = 16;
 
 // Trace string to console
 show_trace = false;
@@ -19,7 +19,7 @@ generate_panel_names_list = false;
 export_panel_name = "CorpusShelfTemplate";
 export_type = "dxf";  // "dxf"|"stl"|"svg"
 
-panel_names = ["CorpusSideLeft", "CorpusSideRight", "CorpusTopBottom", "CorpusMiddle", "DrawerSideLeft", "DrawerSideRight", "DrawerBack", "DrawerBottom", "DrawerFrontFirst", "DrawerFrontStandard", "DrawerFrontTop", "Shelf", "PedestalFrontBack", "PedestalSide", "HDFBackPanel", "CorpusSideSlideTemplate", "DrawerFrontTemplate", "CorpusShelfTemplate"];
+panel_names = ["CorpusSideLeft", "CorpusSideRight", "CorpusTopBottom", "CorpusMiddle", "DrawerSideLeft", "DrawerSideRight", "DrawerBack", "DrawerBottom", "DrawerFrontFirst", "DrawerFrontStandard", "DrawerFrontTop", "Shelf", "PedestalFrontBack", "PedestalSide", "HDFBackPanel", "CorpusSideSlideTemplate", "DrawerFrontTemplate", "CorpusShelfTemplate", "PedestalSideTemplate", "DrawerBackTemplate", "DrawerSideTemplate"];
 
 // Transparency
 part_alpha = 0.4;
@@ -428,6 +428,50 @@ module corpus_shelf_template_hole_metadata() {
     echo(str("Hole,", export_panel_name, ",shelf_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
 }
 
+module pedestal_side_template_hole_metadata() {
+    p1 = get_pedestal_side_hole_2d_coords(melanine_thickness_main/2, melanine_thickness_main/2, pedestal_height/2);
+    echo(str("Hole,", export_panel_name, ",front_panel,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    p2 = get_pedestal_side_hole_2d_coords(melanine_thickness_main/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2);
+    echo(str("Hole,", export_panel_name, ",back_panel,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+}
+
+module drawer_back_template_hole_metadata() {
+    p1 = get_drawer_back_hole_2d_coords(0, melanine_thickness_secondary/2, confirmat_hole_edge_distance);
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    p2 = get_drawer_back_hole_2d_coords(0, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance);
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    p3 = get_drawer_back_hole_2d_coords(drawer_body_width, melanine_thickness_secondary/2, confirmat_hole_edge_distance);
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    p4 = get_drawer_back_hole_2d_coords(drawer_body_width, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance);
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    p5 = get_drawer_back_hole_2d_coords(confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    p6 = get_drawer_back_hole_2d_coords(drawer_body_width/2, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    p7 = get_drawer_back_hole_2d_coords(drawer_body_width - confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+}
+
+module drawer_side_template_hole_metadata() {
+    p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",back_panel_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    p2 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    p3 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2, false);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    p4 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2, false);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    p5 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, dowel_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",dowel_front_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+    p6 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, drawer_height - dowel_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",dowel_front_2,", p6[0], ",", p6[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+    z_pos = slide_z_offset + slide_height/2;
+    for (offset = drawer_slide_pilot_hole_offsets) {
+        p7 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary, offset, z_pos, false);
+        echo(str("Hole,", export_panel_name, ",slide_pilot_", offset, ",", p7[0], ",", p7[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth));
+    }
+}
+
 module echo_hole_metadata() {
     if (export_panel_name == "CorpusSideLeft") {
         corpus_side_hole_metadata(is_left = true);
@@ -459,6 +503,12 @@ module echo_hole_metadata() {
         drawer_front_template_hole_metadata();
     } else if (export_panel_name == "CorpusShelfTemplate") {
         corpus_shelf_template_hole_metadata();
+    } else if (export_panel_name == "PedestalSideTemplate") {
+        pedestal_side_template_hole_metadata();
+    } else if (export_panel_name == "DrawerBackTemplate") {
+        drawer_back_template_hole_metadata();
+    } else if (export_panel_name == "DrawerSideTemplate") {
+        drawer_side_template_hole_metadata();
     }
 }
 
@@ -870,6 +920,91 @@ module CorpusShelfTemplate() {
     }
 }
 
+module PedestalSideTemplate_cut() {
+    cube([melanine_thickness_secondary, corpus_depth, pedestal_height]);
+}
+
+module PedestalSideTemplate_drill() {
+    // Hole for front panel
+    translate([melanine_thickness_secondary/2, melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
+    
+    // Hole for back panel
+    translate([melanine_thickness_secondary/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
+}
+
+module PedestalSideTemplate() {
+    difference() {
+        union() {
+            color(color_annotation, part_alpha)
+            dxf_layer(CUT) PedestalSideTemplate_cut();
+        }
+        dxf_layer(DRILL) PedestalSideTemplate_drill();
+    }
+}
+
+module DrawerBackTemplate_cut() {
+    cube([drawer_body_width, melanine_thickness_secondary, drawer_height]);
+}
+
+module DrawerBackTemplate_drill() {
+    // Holes for left side (2 holes)
+    translate([0, melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole_threaded();
+    translate([0, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole_threaded();
+
+    // Holes for right side (2 holes)
+    translate([drawer_body_width, melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate(ROT_Y_NEG_90) drawer_confirmat_hole_threaded();
+    translate([drawer_body_width, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate(ROT_Y_NEG_90) drawer_confirmat_hole_threaded();
+
+    // Holes for bottom panel (3 holes)
+    translate([confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2]) rotate(ROT_X_90) drawer_confirmat_hole();
+    translate([drawer_body_width/2, melanine_thickness_secondary/2, melanine_thickness_secondary/2]) rotate(ROT_X_90) drawer_confirmat_hole();
+    translate([drawer_body_width - confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2]) rotate(ROT_X_90) drawer_confirmat_hole();
+}
+
+module DrawerBackTemplate() {
+    difference() {
+        union() {
+            color(color_annotation, part_alpha)
+            dxf_layer(CUT) DrawerBackTemplate_cut();
+        }
+        dxf_layer(DRILL) DrawerBackTemplate_drill();
+    }
+}
+
+module DrawerSideTemplate_cut() {
+    cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
+}
+
+module DrawerSideTemplate_drill() {
+    // Holes for back panel (2 holes)
+    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole();
+    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole();
+
+    // Holes for bottom panel (2 holes)
+    translate([melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
+    translate([melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
+
+    // Dowel holes for front panel
+    translate([melanine_thickness_secondary/2, 0, dowel_hole_edge_distance]) rotate(ROT_X_90) dowel_hole(dowel_length - dowel_hole_depth_in_front);
+    translate([melanine_thickness_secondary/2, 0, drawer_height - dowel_hole_edge_distance]) rotate(ROT_X_90) dowel_hole(dowel_length - dowel_hole_depth_in_front);
+    
+    // Pilot holes for slides
+    z_pos = slide_z_offset + slide_height/2;
+    for (offset = drawer_slide_pilot_hole_offsets) {
+        translate([melanine_thickness_secondary, offset, z_pos]) rotate(ROT_Y_NEG_90) slide_pilot_hole();
+    }
+}
+
+module DrawerSideTemplate() {
+    difference() {
+        union() {
+            color(color_annotation, part_alpha)
+            dxf_layer(CUT) DrawerSideTemplate_cut();
+        }
+        dxf_layer(DRILL) DrawerSideTemplate_drill();
+    }
+}
+
 module pedestal() {
     color(color_pedestal, part_alpha) {
         // Front
@@ -1012,6 +1147,9 @@ module generate_cut_list() {
     echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_vertical_space, ",", corpus_depth, ",1,0,0,0,0,CorpusSideSlideTemplate,Drilling template for corpus side slide holes,cnc: pilot fi2.5mm za vodilice,"));
     echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_width, ",", drawer_height, ",1,0,0,0,0,DrawerFrontTemplate,Drilling template for drawer front dowel holes,cnc: rupe fi6mm za tiple,"));
     echo(str("MEL-12,", melanine_thickness_secondary, ",", bookcase_shelf_gap, ",", corpus_depth, ",1,0,0,0,0,CorpusShelfTemplate,Drilling template for corpus shelf holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", corpus_depth, ",", pedestal_height, ",1,0,0,0,0,PedestalSideTemplate,Drilling template for pedestal side holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",1,0,0,0,0,DrawerBackTemplate,Drilling template for drawer back holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",1,0,0,0,0,DrawerSideTemplate,Drilling template for drawer side holes,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
 }
 
 
@@ -1102,6 +1240,21 @@ module export_panel(panel_name) {
             rotate(ROT_Z_90) 
             rotate(ROT_Y_90) 
             CorpusShelfTemplate();
+        }
+    } else if (panel_name == "PedestalSideTemplate") {
+        flat_projection() {
+            rotate(ROT_Y_90) PedestalSideTemplate();
+        }
+    } else if (panel_name == "DrawerBackTemplate") {
+        flat_projection() {
+            rotate(ROT_X_NEG_90) DrawerBackTemplate();
+        }
+    } else if (panel_name == "DrawerSideTemplate") {
+        flat_projection() {
+            rotate(ROT_Z_NEG_90)
+            rotate(ROT_Y_NEG_90) 
+            translate([-melanine_thickness_secondary, 0, 0]) 
+            DrawerSideTemplate();
         }
     }
 }

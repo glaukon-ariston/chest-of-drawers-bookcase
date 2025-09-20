@@ -120,6 +120,9 @@ The model is broken down into several distinct components, each with its own Ope
     -   `CorpusSideSlideTemplate`: A template for drilling slide mounting pilot holes on the corpus sides.
     -   `DrawerFrontTemplate`: A template for drilling wooden dowel mounting holes for the front panel.
     -   `CorpusShelfTemplate`: A template for drilling shelf mounting holes.
+    -   `PedestalSideTemplate`: A template for drilling holes in the pedestal sides.
+    -   `DrawerBackTemplate`: A template for drilling holes to the drawer back panel.
+    -   `DrawerSideTemplate`: A template for drilling holes for the slide mount to the drawer side panel.
 
 ## 4. Joinery
 

@@ -138,6 +138,20 @@ A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layere
 
 ## Changelog
 
+### v15
+
+*   **Template Panels:**
+    *   Added `PedestalSideTemplate`, `DrawerBackTemplate`, and `DrawerSideTemplate`.
+    *   Fixed missing slide mount pilot holes in `DrawerSideTemplate`.
+*   **DXF Export:**
+    *   Increased the circle segment count (`$FN`) to 100 in `model.scad` to improve circle quality in DXF exports.
+    *   In `split_layers.py`, implemented a feature to detect and convert circle-like polylines into true `CIRCLE` entities, addressing an OpenSCAD export issue.
+    *   Small `ARC` entities are now correctly classified to the `DRILL` layer.
+    *   Changed the `DIMENSION` layer color to grey and the `ANNOTATION` layer color to black for better visibility.
+    *   The dimension text is now placed above the dimension line, and the line does not cross over the text.
+*   **Debugging:**
+    *   Added a statistics generation feature to `split_layers.py` to provide an overview of DXF entity types and sizes upon processing.
+
 ### v14
 
 *   **Order Generation:**

@@ -1,9 +1,0 @@
-﻿ECHO: "Hole,CorpusShelfTemplate,shelf_1,180,304.333,0,4,12"
-ECHO: "Hole,CorpusShelfTemplate,shelf_2,50,304.333,0,4,12"
-Geometries in cache: 9
-Geometry cache size in bytes: 64528
-CGAL Polyhedrons in cache: 6
-CGAL cache size in bytes: 3274176
-Total rendering time: 0:00:04.938
-   Top level object is a 2D object:
-   Contours:        3

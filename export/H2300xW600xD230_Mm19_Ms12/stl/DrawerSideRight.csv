@@ -1,9 +1,0 @@
-﻿PanelName,HoleName,X,Y,Z,Diameter,Depth
-DrawerSideRight,back_panel_1,150,219,0,4,12
-DrawerSideRight,back_panel_2,50,219,0,4,12
-DrawerSideRight,bottom_panel_1,194,50,0,4,12
-DrawerSideRight,bottom_panel_2,194,163,0,4,12
-DrawerSideRight,dowel_front_1,150,0,6,6,20
-DrawerSideRight,dowel_front_2,50,0,6,6,20
-DrawerSideRight,slide_pilot_35,127.5,35,0,2.5,2
-DrawerSideRight,slide_pilot_163,127.5,163,0,2.5,2

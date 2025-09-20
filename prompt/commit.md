@@ -1,30 +1,33 @@
-feat: Add template panels and improve DXF export
+feat: Add new template panels and improve DXF export
 
-This commit introduces several improvements to the DXF export process and adds new template panels for easier manufacturing.
+This commit introduces several new features and improvements to the project.
 
-**New Features:**
+- **New Template Panels:**
+    - Added `PedestalSideTemplate`, `DrawerBackTemplate`, and `DrawerSideTemplate` to the `model.scad` file. These templates will be used for drilling holes.
+    - The `panel_names` list, `echo_hole_metadata` module, `export_panel` module, and `generate_cut_list` module have been updated to include these new templates.
+- **DXF Export Improvements:**
+    - The line weight of the layers in the DXF files has been increased to make them more visible in the generated PDFs.
+    - The dimension text is now placed above the dimension line, and the line does not cross over the text.
+- **Bug Fixes:**
+    - Fixed missing slide mount pilot holes in `DrawerSideTemplate`.
 
-- **Template Panels:** Added three new template panels to the `model.scad` file:
-    - `CorpusSideSlideTemplate`: For drilling slide mounting pilot holes.
-    - `DrawerFrontTemplate`: For drilling dowel mounting holes for the front panel.
-    - `CorpusShelfTemplate`: For drilling shelf mounting holes.
-- **Hole Metadata:** Added hole metadata export for the new template panels.
-- **DXF Statistics:** The `split_layers.py` script now generates and prints statistics about the entity types and their sizes in the source DXF file.
-
-**Bug Fixes:**
-
-- **Hole Generation:** Fixed issues where holes were not appearing on the template panels due to being created at the surface boundary.
-- **Panel Orientation:** Corrected the 2D projection of `CorpusSideSlideTemplate` and `CorpusShelfTemplate` to ensure they are in the first quadrant with the lower-left corner at the origin.
-- **Circle Export:** Implemented a workaround in `split_layers.py` to convert circle-like polylines exported by OpenSCAD into true `CIRCLE` entities in the final DXF file. This addresses the issue of holes being represented as segmented lines.
-- **ARC to DRILL:** Small `ARC` entities are now correctly classified to the `DRILL` layer.
-
-**Refactoring:**
-
-- **`model.scad`:**
-    - Increased the `$FN` variable to 100 to improve the resolution of circles in the DXF export.
-- **`split_layers.py`:**
-    - Changed the `DIMENSION` layer color to grey and the `ANNOTATION` layer color to black for better visibility.
-
-**Documentation:**
-
-- Updated `README.md`, `GEMINI.md`, and `prompt/model-v2.md` to reflect the recent changes.
+---
+- `model.scad`:
+    - Added new template panels: `PedestalSideTemplate`, `DrawerBackTemplate`, and `DrawerSideTemplate`.
+    - Updated `panel_names` list to include the new template panels.
+    - Updated `echo_hole_metadata` module to include the new template panels.
+    - Updated `export_panel` module to include the new template panels.
+    - Updated `generate_cut_list` module to include the new template panels.
+    - Corrected the `DrawerSideTemplate_drill` and `drawer_side_template_hole_metadata` modules to include the pilot holes for the slides.
+- `split_layers.py`:
+    - Set the `lineweight` property for the `CUT`, `DRILL`, `DIMENSION`, and `ANNOTATION` layers to make the lines thicker in the generated PDFs.
+    - Changed the `dimtad` setting to `1` to place the dimension text above the dimension line.
+    - Changed the `dimtmove` setting to `2` to allow the dimension text to be moved freely.
+- `README.md`:
+    - Updated the changelog to v15.
+- `GEMINI.md`:
+    - Updated the changelog to v15.
+- `prompt/model-v2.md`:
+    - Updated the "Template Panels" section to include the new templates.
+- `artifacts/conversation.md`:
+    - Updated with the recent conversation.

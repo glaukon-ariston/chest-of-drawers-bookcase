@@ -212,6 +212,72 @@ def is_small_slot(poly):
     return width <= SLOT_MAX_SIZE and height <= SLOT_MAX_SIZE
 
 
+def get_polyline_center_and_radius(points, closed):
+    """Check if a polyline represents a circle."""
+    # Ignore the `closed` parameter because it does not represent the reality (to be investigated why)
+    # print(f"get_polyline_center_and_radius: points[{len(points)}]={points}, closed={closed}")
+        
+    # Calculate the geometric center (centroid) of the points
+    sum_x = sum(p[0] for p in points)
+    sum_y = sum(p[1] for p in points)
+    center_x = sum_x / len(points)
+    center_y = sum_y / len(points)
+    center = (center_x, center_y)
+
+    # Calculate the distance of the first point from the center to get a candidate radius
+    radius = math.sqrt((points[0][0] - center_x)**2 + (points[0][1] - center_y)**2)
+    if radius >= SLOT_MAX_SIZE:
+        return None, None
+
+    # Check if all other points are at a similar distance from the center
+    # Use a tolerance to account for floating-point inaccuracies
+    tolerance = 0.1  # Adjust as needed
+    for p in points:
+        dist = math.sqrt((p[0] - center_x)**2 + (p[1] - center_y)**2)
+        if not math.isclose(dist, radius, rel_tol=tolerance):
+            return None, None
+
+    return center, radius
+
+
+def group_lines_into_polylines(lines):
+    """Group connected LINE entities into polylines."""
+    from collections import defaultdict
+
+    def tuple_to_vec(t):
+        return ezdxf.math.Vec3(t)
+
+    # Create a graph where keys are points and values are lists of connected points
+    connections = defaultdict(list)
+    for line in lines:
+        start, end = tuple_to_vec(line['start']), tuple_to_vec(line['end'])
+        connections[start].append(end)
+        connections[end].append(start)
+
+    polylines = []
+    visited_points = set()
+
+    for start_point in connections:
+        if start_point not in visited_points:
+            polyline = []
+            q = [start_point]
+            visited_points.add(start_point)
+
+            while q:
+                current_point = q.pop(0)
+                polyline.append(current_point)
+
+                for neighbor in connections[current_point]:
+                    if neighbor not in visited_points:
+                        visited_points.add(neighbor)
+                        q.append(neighbor)
+            
+            if polyline:
+                polylines.append(polyline)
+
+    return polylines
+
+
 def extract_entity_data(entity):
     """Extract all necessary data from an entity before it's deleted."""
     dtype = entity.dxftype()
@@ -465,8 +531,8 @@ def add_dimensions(msp, holes, bounding_box, doc):
                 "dimtxt": 9,          # Text height
                 "dimasz": 5,          # Arrow size
                 "dimclrt": 7,           # Dimension line color
-                "dimtad": 0,            # Center text on dimension line (breaks the line)
-                "dimgap": 0.5,          # Small gap when text is centered
+                "dimtad": 1,            # Place text above the dimension line
+                "dimgap": 2,          # Gap between text and dimension line
                 "dimtfill": 1,          # Use background fill for text
                 "dimtfillclr": 0,       # White background fill
                 "dimexe": 1.25,         # Extension line extension beyond dimension line
@@ -475,7 +541,7 @@ def add_dimensions(msp, holes, bounding_box, doc):
                 "dimtoh": 1,            # Text outside extensions is horizontal
                 "dimtofl": 0,           # Don't force line inside extension lines
                 "dimatfit": 3,          # Fit options: move text, then arrows outside
-                "dimtmove": 0,          # Keep text on dimension line
+                "dimtmove": 2,          # Move text freely
                 "dimdle": 0,            # No dimension line extension past arrows
             },
         )
@@ -703,6 +769,7 @@ def split_layers(input_file, output_file):
         cut_layer = layers.new("CUT")
         cut_layer.dxf.color = 1  # Red
         cut_layer.dxf.linetype = "CONTINUOUS"
+        cut_layer.dxf.lineweight = 53
         cut_layer.on = True
         cut_layer.freeze = False
         cut_layer.lock = False
@@ -712,6 +779,7 @@ def split_layers(input_file, output_file):
         drill_layer = layers.new("DRILL")
         drill_layer.dxf.color = 5  # Blue
         drill_layer.dxf.linetype = "CONTINUOUS"
+        drill_layer.dxf.lineweight = 53
         drill_layer.on = True
         drill_layer.freeze = False
         drill_layer.lock = False
@@ -720,6 +788,7 @@ def split_layers(input_file, output_file):
         dimension_layer = layers.new("DIMENSION")
         dimension_layer.dxf.color = 8  # Grey
         dimension_layer.dxf.linetype = "CONTINUOUS"
+        dimension_layer.dxf.lineweight = 25
         dimension_layer.on = True
         dimension_layer.freeze = False
         dimension_layer.lock = False
@@ -729,6 +798,7 @@ def split_layers(input_file, output_file):
         annotation_layer = layers.new("ANNOTATION")
         annotation_layer.dxf.color = 7  # Black
         annotation_layer.dxf.linetype = "CONTINUOUS"
+        annotation_layer.dxf.lineweight = 25
         annotation_layer.on = True
         annotation_layer.freeze = False
         annotation_layer.lock = False
@@ -747,7 +817,6 @@ def split_layers(input_file, output_file):
     entity_specs = []
     for e in original_entities:
         dtype = e.dxftype()
-        # print(f" - Found entity: {dtype}")
         
         # FAIL EARLY: Don't skip unexpected entity types
         if dtype not in allowed:
@@ -783,14 +852,67 @@ def split_layers(input_file, output_file):
     
     # Step 3: Create new entities with correct layers
     entities_created = 0
+    created_entities = []
     for data, target_layer, dtype in entity_specs:
         try:
             new_entity = create_new_entity(msp, data, target_layer)
+            created_entities.append(new_entity)
             # print(f" - Created {dtype} on {target_layer} layer")
             entities_created += 1
         except Exception as ex:
             raise RuntimeError(f"Failed to create {dtype} entity on {target_layer} layer: {ex}")
     
+    # Post-processing step: Convert circle-like polylines to actual circles
+    polylines_to_delete = []
+    circles_to_add = []
+
+    for entity in created_entities:
+        if entity.dxftype() in ["LWPOLYLINE", "POLYLINE"]:
+            points = list(entity.get_points())
+            center, radius = get_polyline_center_and_radius([(p[0], p[1]) for p in points], entity.closed)
+            if center and radius:
+                polylines_to_delete.append(entity)
+                circles_to_add.append((center, radius))
+                print(f"Found hole at {center} with radius {radius}")
+    print(f"Found {len(polylines_to_delete)} polylines to delete")
+
+    # Post-processing step: Convert circle-like groups of LINEs to actual circles
+    line_entities = [e for e in created_entities if e.dxftype() == 'LINE']
+    if len(line_entities) > 8: # Heuristic: only run this complex check if there are enough lines
+        print(f"Processing {len(line_entities)} LINE entities")
+        line_specs = [extract_entity_data(e) for e in line_entities]
+        polylines_from_lines = group_lines_into_polylines(line_specs)
+        print(f"Found {len(polylines_from_lines)} polylines from lines")
+
+        for polyline in polylines_from_lines:
+            # Check if the polyline is closed by checking if the start and end points are close
+            closed = ezdxf.math.Vec3(polyline[0]).isclose(ezdxf.math.Vec3(polyline[-1]))
+            center, radius = get_polyline_center_and_radius(polyline, closed)
+
+            if center and radius:
+                # Find the original LINE entities that form this polyline and delete them
+                for point_index in range(len(polyline) - 1):
+                    p1 = ezdxf.math.Vec3(polyline[point_index])
+                    p2 = ezdxf.math.Vec3(polyline[point_index+1])
+                    for line_entity in line_entities:
+                        line_start = line_entity.dxf.start
+                        line_end = line_entity.dxf.end
+                        if (line_start.isclose(p1) and line_end.isclose(p2)) or \
+                           (line_start.isclose(p2) and line_end.isclose(p1)):
+                            if line_entity not in polylines_to_delete:
+                                polylines_to_delete.append(line_entity)
+                
+                circles_to_add.append((center, radius))
+        print(f"Found {len(polylines_to_delete)} LINE entities to delete")
+
+    # Delete the old polylines and lines and add the new circles
+    for entity_to_delete in polylines_to_delete:
+        msp.delete_entity(entity_to_delete)
+
+    for center, radius in circles_to_add:
+        msp.add_circle(center, radius, dxfattribs={'layer': 'DRILL'})
+        print(f"Converted polyline/lines to circle at {center} with radius {radius}")
+
     print(f"Created {entities_created} entities")
     
     # Add dimensions using the CUT and DRILL layer geometry bounding box only
