@@ -16,6 +16,7 @@ Example:
 python create_order.py --model-id "H2300xW600xD230_Mm19_Ms12" --service iverpan --template "order/template/iverpan_tablica_za_narudzbu.xlsx"
 python create_order.py --model-id "H2300xW600xD230_Mm19_Ms12" --service elgrad --template "order/template/elgrad_tablica_za_narudzbu.xlsx"
 python create_order.py --model-id "H2300xW600xD230_Mm18_Ms12" --service furnir --template "order/template/furnir_tablica_za_narudzbu.xlsx"
+python create_order.py --model-id "H2300xW600xD230_Mm18_Ms12" --service sizekupres --template "order/template/sizekupres_tablica_za_narudzbu.xlsx"
 """
 
 # Set up argument parser
@@ -75,15 +76,27 @@ MATERIAL = {
             'MEL-12': '1116012',
         },
     },
+    'sizekupres': {
+        'iveral': {
+            'MEL-19': '0135419  34140 RV/RV 18mm HRAST SANREMO CLASSIC',      # 0135419  34140 RV/RV 18mm HRAST SANREMO CLASSIC
+            'MEL-12': '0111103  1615 SF 12mm BIJELI',       # BIJELI 12 MM. 284/183 - 116 A BS
+            'HDF-3': 'HDF-3-Hrast',
+        },
+        'edge_banding': {
+            'MEL-19': 'ABS 34140 RV 23/2',      # ABS 34140 RV 23/0,8 ; ABS 34140 RV 23/2
+            'MEL-12': 'ABS 1615 SF 23/0,45',    # ABS 1615 SF 23/0,45 ; ABS 1615 SF 23/2 
+        },
+    },
 }
 
 CSV_HEADER = "material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc face holes,cnc side holes".split(',')
 
 
 def verify_header(header, expected_header):
-    if header != expected_header:
-        print("Error: header does not match expected header.")
-        print("Expected:", expected_header)
+    # Check if the header starts with the expected header
+    if not all(h_found == h_expected for h_found, h_expected in zip(header, expected_header)):
+        print("Warning: headers do not match; there might be some additional columns beyond the expected header.")
+        print("Expected prefix:", expected_header)
         print("Found:", header)
         exit(1)
     return True
@@ -307,21 +320,83 @@ def process_furnir_order(workbook_file, csv_file, service, model_id):
     print(f"Successfully created order file: {output_file}")
 
 
-#----------------------------------------------------------------------------------- Main
-# Construct file paths
-csv_file = os.path.join('export', args.model_id, 'cut_list.csv')
+def process_sizekupres_order(workbook_file, csv_file, service, model_id):
+    date_str = datetime.datetime.now().strftime("%Y%m%d")
+    output_file = os.path.join(ORDER_DIR, f"{service}_{model_id}_{date_str}.xlsx")
+    print(f"Creating order file: {output_file}")
+    workbook = openpyxl.load_workbook(workbook_file)
+    # Select the 'Narudžba' worksheet
+    sheet = workbook['Iverali']
 
-# Create the output directory if it does not exists
-if not os.path.exists(ORDER_DIR):
-    os.makedirs(ORDER_DIR)
+    # Verify header
+    header_row = sheet[2]
+    header_values = [cell.value for cell in header_row]
+    expected_header = ['Iverali, iverice, lesomali, medijapan, metakrilat', 'Dužina', 'Širina', 'Količina', 'Kant', 'Napomena', None]
+    verify_header(header_values, expected_header)
 
-if args.service == 'iverpan':
-    process_iverpan_order(args.template, csv_file, args.service, args.model_id)
-elif args.service == 'elgrad':
-    process_elgrad_order(args.template, csv_file, args.service, args.model_id)
-elif args.service == 'furnir':
-    process_furnir_order(args.template, csv_file, args.service, args.model_id)
-else:
-    print(f"Unknown service: {args.service}")
-    exit(1)
+    # Read data from CSV and populate the Excel sheet
+    with open(csv_file, 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        
+        # Read header row
+        header_row = next(reader)
+        verify_header(header_row, CSV_HEADER)
 
+        # Start writing from row 3
+        row_num = 3
+        for row in reader:
+            material_code = row[0]
+            thickness = row[1]
+            dim_A = float(row[2])
+            dim_B = float(row[3])
+            count = int(row[4])
+            edge_A1 = int(row[5])
+            edge_A2 = int(row[6])
+            edge_B1 = int(row[7])
+            edge_B2 = int(row[8])
+            panel_name = row[9]
+            panel_desc = row[10]
+            cnc_face_holes = row[11]
+            cnc_side_holes = row[12]
+
+            sheet.cell(row=row_num, column=1).value = MATERIAL[service]['iveral'][material_code]
+            sheet.cell(row=row_num, column=2).value = dim_A
+            sheet.cell(row=row_num, column=3).value = dim_B
+            sheet.cell(row=row_num, column=4).value = count
+
+            # Calculate banding (hack based on the thickness value; 19 -> 1 and 2, 12 -> 3 and 4)
+            banding = lambda x: (3 if x <= 12 else 1) if x != 0 else 0
+            banding_code = f"{banding(edge_A1)}{banding(edge_A2)}{banding(edge_B1)}{banding(edge_B2)}"
+            sheet.cell(row=row_num, column=5).value = banding_code            
+            sheet.cell(row=row_num, column=6).value = f"{panel_name}; {panel_desc}; {cnc_face_holes}; {cnc_side_holes}"
+
+            row_num += 1
+
+    # Save the new Excel file
+    workbook.save(output_file)
+    print(f"Successfully created order file: {output_file}")
+
+
+def main():
+    """Main function to orchestrate order creation."""
+    # Construct file paths
+    csv_file = os.path.join('export', args.model_id, 'cut_list.csv')
+
+    # Create the output directory if it does not exist
+    if not os.path.exists(ORDER_DIR):
+        os.makedirs(ORDER_DIR)
+
+    if args.service == 'iverpan':
+        process_iverpan_order(args.template, csv_file, args.service, args.model_id)
+    elif args.service == 'elgrad':
+        process_elgrad_order(args.template, csv_file, args.service, args.model_id)
+    elif args.service == 'furnir':
+        process_furnir_order(args.template, csv_file, args.service, args.model_id)
+    elif args.service == 'sizekupres':
+        process_sizekupres_order(args.template, csv_file, args.service, args.model_id)
+    else:
+        print(f"Unknown service: {args.service}")
+        exit(1)
+
+if __name__ == "__main__":
+    main()

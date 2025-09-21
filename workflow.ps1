@@ -30,10 +30,18 @@ if ($LASTEXITCODE -ne 0) {
 $modelIdentifier = Get-ModelIdentifier -openscadPath $openscadPath -modelFile $modelFile -logFile $consoleLogPath
 $exportDir = Join-Path $scriptDir "export/$modelIdentifier"
 
+# Generate the cut list
 .\generate-csv.ps1 -exportDir $exportDir
+
+# Generate cuting services order files
+& $pythonPath create_order.py --model-id "$modelIdentifier" --service iverpan --template "order/template/iverpan_tablica_za_narudzbu.xlsx" 2>&1
+& $pythonPath create_order.py --model-id "$modelIdentifier" --service elgrad --template "order/template/elgrad_tablica_za_narudzbu.xlsx" 2>&1
+& $pythonPath create_order.py --model-id "$modelIdentifier" --service sizekupres --template "order/template/sizekupres_tablica_za_narudzbu.xlsx" 2>&1
+# TODO manually run furnir order generator to avoid runtime error
+# & $pythonPath create_order.py --model-id "$modelIdentifier" --service furnir --template "order/template/furnir_tablica_za_narudzbu.xlsx" 2>&1
+
+# Generate DXF, DWG and PDF exports
 .\export-all.ps1 -exportDir $exportDir
 .\run-split-layers.ps1 -exportDir $exportDir
 .\convert-dxf-to-dwg.ps1 -exportDir $exportDir
 .\convert-dxf-to-pdf.ps1 -exportDir $exportDir
-& $pythonPath create_order.py --model-id "$modelIdentifier" --service iverpan --template "order/template/iverpan_tablica_za_narudzbu.xlsx" 2>&1
-& $pythonPath create_order.py --model-id "$modelIdentifier" --service elgrad --template "order/template/elgrad_tablica_za_narudzbu.xlsx" 2>&1

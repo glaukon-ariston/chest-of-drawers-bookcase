@@ -138,6 +138,15 @@ A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layere
 
 ## Changelog
 
+### v16
+
+*   **Order Generation:**
+    *   Added support for the 'Sizekupres' cutting service in `create_order.py`.
+*   **Workflow:**
+    *   The `workflow.ps1` script now automates the generation of order files for all supported cutting services.
+*   **DXF Processing:**
+    *   Fixed a bug in `split_layers.py` where `LINE` entities for holes were not being correctly identified due to a strict `isclose()` tolerance. A tolerance is now used to correctly match line segments.
+
 ### v15
 
 *   **Template Panels:**

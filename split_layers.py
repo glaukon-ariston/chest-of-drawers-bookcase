@@ -227,6 +227,7 @@ def get_polyline_center_and_radius(points, closed):
     # Calculate the distance of the first point from the center to get a candidate radius
     radius = math.sqrt((points[0][0] - center_x)**2 + (points[0][1] - center_y)**2)
     if radius >= SLOT_MAX_SIZE:
+        print(f"Polyline to big to consider as hole, radius={radius} > {SLOT_MAX_SIZE}")
         return None, None
 
     # Check if all other points are at a similar distance from the center
@@ -235,6 +236,7 @@ def get_polyline_center_and_radius(points, closed):
     for p in points:
         dist = math.sqrt((p[0] - center_x)**2 + (p[1] - center_y)**2)
         if not math.isclose(dist, radius, rel_tol=tolerance):
+            print(f"Polyline points not at the radius, dist={dist}, radius={radius}")
             return None, None
 
     return center, radius
@@ -243,14 +245,12 @@ def get_polyline_center_and_radius(points, closed):
 def group_lines_into_polylines(lines):
     """Group connected LINE entities into polylines."""
     from collections import defaultdict
-
-    def tuple_to_vec(t):
-        return ezdxf.math.Vec3(t)
+    from ezdxf.math import Vec3
 
     # Create a graph where keys are points and values are lists of connected points
     connections = defaultdict(list)
     for line in lines:
-        start, end = tuple_to_vec(line['start']), tuple_to_vec(line['end'])
+        start, end = Vec3(line['start']), Vec3(line['end'])
         connections[start].append(end)
         connections[end].append(start)
 
@@ -258,22 +258,23 @@ def group_lines_into_polylines(lines):
     visited_points = set()
 
     for start_point in connections:
-        if start_point not in visited_points:
-            polyline = []
-            q = [start_point]
-            visited_points.add(start_point)
+        if start_point in visited_points:
+            continue        
+        polyline = []
+        q = [start_point]
+        visited_points.add(start_point)
 
-            while q:
-                current_point = q.pop(0)
-                polyline.append(current_point)
+        while q:
+            current_point = q.pop(0)
+            polyline.append(current_point)
 
-                for neighbor in connections[current_point]:
-                    if neighbor not in visited_points:
-                        visited_points.add(neighbor)
-                        q.append(neighbor)
-            
-            if polyline:
-                polylines.append(polyline)
+            for neighbor in connections[current_point]:
+                if neighbor not in visited_points:
+                    visited_points.add(neighbor)
+                    q.append(neighbor)
+        
+        if polyline:
+            polylines.append(polyline)
 
     return polylines
 
@@ -676,6 +677,26 @@ def add_title(msp, panel_name, bounding_box):
     title_text.set_placement((title_x, title_y), align=TextEntityAlignment.MIDDLE_CENTER)
 
 
+def map_polyline_to_line_segments(polyline, line_entities):
+    from ezdxf.math import Vec3
+    # Find the original LINE entities that form this polyline and delete them
+    lines = []
+    tolerance = 0.2
+    are_points_matched = lambda start, end, p1, p2: \
+        (start.isclose(p1, rel_tol=tolerance) and end.isclose(p2, rel_tol=tolerance)) or \
+        (start.isclose(p2, rel_tol=tolerance) and end.isclose(p1, rel_tol=tolerance))
+    for point_index in range(len(polyline) - 1):
+        p1 = Vec3(polyline[point_index])
+        p2 = Vec3(polyline[point_index+1])
+        for line_entity in line_entities:
+            line_start = line_entity.dxf.start
+            line_end = line_entity.dxf.end
+            if are_points_matched(line_start, line_end, p1, p2):
+                if line_entity not in lines:
+                    lines.append(line_entity)
+    return lines
+
+
 def split_layers(input_file, output_file):
     doc = ezdxf.readfile(input_file)
     
@@ -802,6 +823,13 @@ def split_layers(input_file, output_file):
         annotation_layer.on = True
         annotation_layer.freeze = False
         annotation_layer.lock = False
+
+    # Create DELETED layer (hidden)
+    if "DELETED" not in layers:
+        deleted_layer = layers.new("DELETED")
+        deleted_layer.dxf.color = 30 # Orange
+        deleted_layer.dxf.lineweight = 53
+        deleted_layer.on = False # Make layer hidden by default
     
     # Ensure CONTINUOUS linetype exists
     if "CONTINUOUS" not in doc.linetypes:
@@ -890,27 +918,21 @@ def split_layers(input_file, output_file):
             center, radius = get_polyline_center_and_radius(polyline, closed)
 
             if center and radius:
-                # Find the original LINE entities that form this polyline and delete them
-                for point_index in range(len(polyline) - 1):
-                    p1 = ezdxf.math.Vec3(polyline[point_index])
-                    p2 = ezdxf.math.Vec3(polyline[point_index+1])
-                    for line_entity in line_entities:
-                        line_start = line_entity.dxf.start
-                        line_end = line_entity.dxf.end
-                        if (line_start.isclose(p1) and line_end.isclose(p2)) or \
-                           (line_start.isclose(p2) and line_end.isclose(p1)):
-                            if line_entity not in polylines_to_delete:
-                                polylines_to_delete.append(line_entity)
-                
+                print(f"polyline: points[{len(polyline)}], closed={closed}")
+                lines = map_polyline_to_line_segments(polyline, line_entities)
+                print(f"mapped to lines[{len(lines)}]")
+                polylines_to_delete.extend(lines)
+                print(f"Add circle at {center} with radius {radius}")
                 circles_to_add.append((center, radius))
         print(f"Found {len(polylines_to_delete)} LINE entities to delete")
 
-    # Delete the old polylines and lines and add the new circles
-    for entity_to_delete in polylines_to_delete:
-        msp.delete_entity(entity_to_delete)
+    # Move the old polylines and lines to the DELETED layer
+    print(f"Moving {len(polylines_to_delete)} entities to DELETED layer")
+    for entity_to_move in polylines_to_delete:
+        entity_to_move.dxf.layer = "DELETED"
 
     for center, radius in circles_to_add:
-        msp.add_circle(center, radius, dxfattribs={'layer': 'DRILL'})
+        msp.add_circle(center, round(radius, 1), dxfattribs={'layer': 'DRILL'})
         print(f"Converted polyline/lines to circle at {center} with radius {radius}")
 
     print(f"Created {entities_created} entities")

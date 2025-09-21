@@ -150,10 +150,16 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
-### v15
+### v16
 
-*   **Template Panels:**
-    *   Fixed hole generation for `CorpusSideSlideTemplate`, `DrawerFrontTemplate`, and `CorpusShelfTemplate`.
+*   **Order Generation:**
+    *   Added support for the 'Sizekupres' cutting service in `create_order.py`.
+*   **Workflow:**
+    *   The `workflow.ps1` script now automates the generation of order files for all supported cutting services.
+*   **DXF Processing:**
+    *   Fixed a bug in `split_layers.py` where `LINE` entities for holes were not being correctly identified due to a strict `isclose()` tolerance. A tolerance is now used to correctly match line segments.
+
+### v15
     *   Corrected the 2D projection for `CorpusSideSlideTemplate` and `CorpusShelfTemplate` to ensure correct orientation.
     *   Added hole metadata export for all template panels.
 *   **DXF Export:**
