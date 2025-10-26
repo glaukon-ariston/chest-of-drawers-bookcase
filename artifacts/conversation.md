@@ -667,3 +667,22 @@ The user requested to add three new template panels. I added the `PedestalSideTe
 ### Model:
 
 The user reported that the `DrawerSideTemplate` was missing the slide mount pilot holes. I corrected the `DrawerSideTemplate_drill` and `drawer_side_template_hole_metadata` modules in `model.scad` to include the pilot holes, matching the `DrawerSideRight` panel.
+
+---
+
+### User:
+
+> @prompt/update.md
+
+### Model:
+
+The user requested to update the project documentation based on the recent changes.
+
+To fulfill this request, I performed the following actions:
+
+1.  **Analyzed the git diff:** I used `git diff` to understand the recent changes, which included changes to `model.scad` and `create_order.py`.
+2.  **Updated `README.md`:** I updated the changelog to v17 and the main dimensions.
+3.  **Updated `prompt/model-v2.md`:** I updated the changelog to v17 and the main dimensions.
+4.  **Updated `GEMINI.md`:** I updated the changelog to v17 and the main dimensions.
+5.  **Updated `artifacts/conversation.md`:** I appended a summary of this interaction to the conversation log.
+6.  **Prepared a commit message:** I created a commit message that summarizes the documentation updates and saved it to `prompt/commit.md`.

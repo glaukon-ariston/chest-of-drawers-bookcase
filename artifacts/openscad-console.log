@@ -1,8 +1,8 @@
-﻿ECHO: "H2300xW600xD230_Mm18_Ms12"
+﻿ECHO: "H2300xW600xD230_Mm18_Ms10"
 Compiling design (CSG Products normalization)...
 Normalized CSG tree has 1 elements
 Geometries in cache: 0
 Geometry cache size in bytes: 0
 CGAL Polyhedrons in cache: 0
 CGAL cache size in bytes: 0
-Total rendering time: 0:00:00.085
+Total rendering time: 0:00:00.090

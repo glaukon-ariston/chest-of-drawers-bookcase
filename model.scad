@@ -49,7 +49,7 @@ corpus_depth = 230;
 
 // Melanine material thickness
 melanine_thickness_main = 18;
-melanine_thickness_secondary = 12;
+melanine_thickness_secondary = 10;
 
 model_identifier = str("H",corpus_height,"xW",corpus_width,"xD",corpus_depth,"_Mm",melanine_thickness_main,"_Ms",melanine_thickness_secondary);
 
@@ -1144,12 +1144,12 @@ module generate_cut_list() {
     echo(str("HDF-3,", hdf_thickness, ",", corpus_height, ",", corpus_width, ",1,0,0,0,0,HDFBackPanel,The back panel of the entire unit,,"));
 
     // Template Panels
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_vertical_space, ",", corpus_depth, ",1,0,0,0,0,CorpusSideSlideTemplate,Drilling template for corpus side slide holes,cnc: pilot fi2.5mm za vodilice,"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_width, ",", drawer_height, ",1,0,0,0,0,DrawerFrontTemplate,Drilling template for drawer front dowel holes,cnc: rupe fi6mm za tiple,"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", bookcase_shelf_gap, ",", corpus_depth, ",1,0,0,0,0,CorpusShelfTemplate,Drilling template for corpus shelf holes,cnc: rupe fi4mm za konfirmat,"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", corpus_depth, ",", pedestal_height, ",1,0,0,0,0,PedestalSideTemplate,Drilling template for pedestal side holes,cnc: rupe fi4mm za konfirmat,"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",1,0,0,0,0,DrawerBackTemplate,Drilling template for drawer back holes,cnc: rupe fi4mm za konfirmat,"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",1,0,0,0,0,DrawerSideTemplate,Drilling template for drawer side holes,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_vertical_space, ",", corpus_depth, ",1,0,0,0,0,CorpusSideSlideTemplate,Drilling template for corpus side slide holes,cnc: pilot fi2.5mm za vodilice,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_width, ",", drawer_height, ",1,0,0,0,0,DrawerFrontTemplate,Drilling template for drawer front dowel holes,cnc: rupe fi6mm za tiple,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", bookcase_shelf_gap, ",", corpus_depth, ",1,0,0,0,0,CorpusShelfTemplate,Drilling template for corpus shelf holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",1,0,0,0,0,PedestalSideTemplate,Drilling template for pedestal side holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_body_width, ",", drawer_height, ",1,0,0,0,0,DrawerBackTemplate,Drilling template for drawer back holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_depth, ",", drawer_height, ",1,0,0,0,0,DrawerSideTemplate,Drilling template for drawer side holes,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
 }
 
 

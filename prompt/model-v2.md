@@ -17,8 +17,8 @@ The model is driven by a set of global parameters defined at the beginning of th
     *   corpus_width = 600
     *   corpus_depth = 230
 *   **Melanine material thickness:**
-    *   melanine_thickness_main = 19
-    *   melanine_thickness_secondary = 12
+    *   melanine_thickness_main = 18
+    *   melanine_thickness_secondary = 10
 *   **HDF Back Panel:**
     *   hdf_thickness = 3
 *   **Pedestal:**
@@ -237,6 +237,17 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 - `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v17
+
+*   **Model Parameterization:**
+    *   Changed `melanine_thickness_main` from 19 to 18.
+    *   Changed `melanine_thickness_secondary` from 12 to 10.
+*   **Order Generation:**
+    *   Updated `create_order.py` to correctly handle banding for the 'Sizekupres' service.
+    *   Updated material codes for the 'Elgrad' service.
+*   **Template Panels:**
+    *   Changed the material for template panels from 12mm to 18mm melanine.
 
 ### v16
 

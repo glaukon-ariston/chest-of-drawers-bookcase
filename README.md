@@ -49,8 +49,8 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   corpus_width = 600
     *   corpus_depth = 230
 *   **Melanine material thickness:**
-    *   melanine_thickness_main = 19
-    *   melanine_thickness_secondary = 12
+    *   melanine_thickness_main = 18
+    *   melanine_thickness_secondary = 10
 *   **HDF Back Panel:**
     *   hdf_thickness = 3
 *   **Pedestal:**
@@ -137,6 +137,17 @@ The `split-layers-dxf.ps1` script also handles the conversion of the layered DXF
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD.
 
 ## Changelog
+
+### v17
+
+*   **Model Parameterization:**
+    *   Changed `melanine_thickness_main` from 19 to 18.
+    *   Changed `melanine_thickness_secondary` from 12 to 10.
+*   **Order Generation:**
+    *   Updated `create_order.py` to correctly handle banding for the 'Sizekupres' service.
+    *   Updated material codes for the 'Elgrad' service.
+*   **Template Panels:**
+    *   Changed the material for template panels from 12mm to 18mm melanine.
 
 ### v16
 

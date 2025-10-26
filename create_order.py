@@ -49,17 +49,15 @@ MATERIAL = {
     },
     'elgrad': {
         # Elgrad material
-        # 58	HRAST PRIRODNI (nova struktura)	37307AN						19				08/22      						2/28       			203837307AN
-        # 58	HRAST PRIRODNI (nova struktura)	37307AN						19				081937307AN						202537307AN			203837307AN
+        # H1145 Hrast Bardolino natur
+        # W960 Klasična bijela 
         'iveral': {
             'MEL-19': 'H1145',      # Hrast Bardolino natur
-            'MEL-12': 'W960',       # Klasična bijela 
+            'MEL-12': 'H1145',      # Klasična bijela 
             'HDF-3': 'HDF-3-Hrast',
         },
 
         # Elgrad banding
-        # 											                    05/22		    1/22		    2/22	    08/28	1/28	2/28	    08/42	1/42	2/42
-        # 1	BIJELI FH FUNDER	1615FH		10				19	25		B05191615FH		B10191615FH		B20191615FH	B08251615FH		B20251615FH	B08381615FH		B20381615FH
         'edge_banding': {
             'MEL-19': '2',
             'MEL-12': '2',
@@ -346,7 +344,7 @@ def process_sizekupres_order(workbook_file, csv_file, service, model_id):
         row_num = 3
         for row in reader:
             material_code = row[0]
-            thickness = row[1]
+            thickness = int(row[1])
             dim_A = float(row[2])
             dim_B = float(row[3])
             count = int(row[4])
@@ -364,8 +362,10 @@ def process_sizekupres_order(workbook_file, csv_file, service, model_id):
             sheet.cell(row=row_num, column=3).value = dim_B
             sheet.cell(row=row_num, column=4).value = count
 
+            # 'MEL-19': ABS 34140 RV 23/0,8 ; ABS 34140 RV 23/2
+            # 'MEL-12': ABS 1615 SF 23/0,45 ; ABS 1615 SF 23/2 
             # Calculate banding (hack based on the thickness value; 19 -> 1 and 2, 12 -> 3 and 4)
-            banding = lambda x: (3 if x <= 12 else 1) if x != 0 else 0
+            banding = lambda x: (3 if thickness <= 12 else 2) if x != 0 else 0
             banding_code = f"{banding(edge_A1)}{banding(edge_A2)}{banding(edge_B1)}{banding(edge_B2)}"
             sheet.cell(row=row_num, column=5).value = banding_code            
             sheet.cell(row=row_num, column=6).value = f"{panel_name}; {panel_desc}; {cnc_face_holes}; {cnc_side_holes}"

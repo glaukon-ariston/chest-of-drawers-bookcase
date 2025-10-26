@@ -54,8 +54,8 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   corpus_width = 600
     *   corpus_depth = 230
 *   **Melanine material thickness:**
-    *   melanine_thickness_main = 19
-    *   melanine_thickness_secondary = 12
+    *   melanine_thickness_main = 18
+    *   melanine_thickness_secondary = 10
 *   **HDF Back Panel:**
     *   hdf_thickness = 3
 *   **Pedestal:**
@@ -149,6 +149,17 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v17
+
+*   **Model Parameterization:**
+    *   Changed `melanine_thickness_main` from 19 to 18.
+    *   Changed `melanine_thickness_secondary` from 12 to 10.
+*   **Order Generation:**
+    *   Updated `create_order.py` to correctly handle banding for the 'Sizekupres' service.
+    *   Updated material codes for the 'Elgrad' service.
+*   **Template Panels:**
+    *   Changed the material for template panels from 12mm to 18mm melanine.
 
 ### v16
 
