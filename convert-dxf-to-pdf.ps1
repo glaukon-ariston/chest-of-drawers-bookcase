@@ -6,11 +6,18 @@
 # https://docs.librecad.org/en/latest/guides/console-tool.html#dxf2pdf-tool
 #
 # e.g.
-# .\convert-dxf-to-pdf.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12
+# .\convert-dxf-to-pdf.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12 -dxfDir dxf -pdfDir pdf
+
 
 param(
     [Parameter(Mandatory = $true)]
-    [string]$exportDir = "export/default"
+    [string]$exportDir = "export/default",
+
+    [Parameter(Mandatory = $true)]
+    [string]$dxfDir = "dxf",
+
+    [Parameter(Mandatory = $true)]
+    [string]$pdfDir = "pdf"
 )
 
 # Exit immediately if a command exits with a non-zero status.
@@ -26,8 +33,8 @@ Test-ExportDirectory -ExportDir $exportDir
 # DXF to PDF Conversion
 # $librecadPath = "D:\Program Files\LibreCAD\librecad.exe"
 $librecadPath = "librecad"
-$dxfInputDir = Join-Path $exportDir "dxf"
-$pdfOutputDir = Join-Path $exportDir "pdf"
+$dxfInputDir = Join-Path $exportDir $dxfDir
+$pdfOutputDir = Join-Path $exportDir $pdfDir
 
 # --- Batch Convert Layered DXF to PDF using LibreCAD ---
 Assert-DirectoryExists -Path $pdfOutputDir

@@ -29,14 +29,17 @@ $pythonPath = "python"
 
 $inputDir = Join-Path $exportDir "dxf-raw"
 $outputDir = Join-Path $exportDir "dxf"
+$outputDirTemplate = Join-Path $exportDir "dxf-template"
 $splitLayersScript = Join-Path $scriptDir "split_layers.py"
 
 Write-Host "Input directory: $inputDir"
 Write-Host "Output directory: $outputDir"
+Write-Host "Output Template directory: $outputDirTemplate"
 Write-Host "Python script: $splitLayersScript"
 
 # Create output directory if it doesn't exist
 Assert-DirectoryExists -Path $outputDir
+Assert-DirectoryExists -Path $outputDirTemplate
 
 # Get all DXF files from the input directory
 $dxfFiles = Get-ChildItem -Path $inputDir -Filter *.dxf -Recurse
@@ -57,6 +60,17 @@ foreach ($file in $dxfFiles) {
     # Execute the python script
     # Write-Output "$pythonPath $splitLayersScript $inputFile $outputFile 2>&1"
     & $pythonPath $splitLayersScript $inputFile $outputFile 2>&1
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Failed to process '$($file.Name)'. Please check the split_layers.py script."
+        exit 1
+    }
+
+    # Create the template DXF file (no dimension, title, legend and no hole schedule)
+    $outputFile = Join-Path $outputDirTemplate $file.Name
+    # Execute the python script
+    # Write-Output "$pythonPath $splitLayersScript $inputFile $outputFile 2>&1"
+    & $pythonPath $splitLayersScript $inputFile $outputFile --template 2>&1
 
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to process '$($file.Name)'. Please check the split_layers.py script."

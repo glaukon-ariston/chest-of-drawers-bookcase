@@ -686,3 +686,37 @@ To fulfill this request, I performed the following actions:
 4.  **Updated `GEMINI.md`:** I updated the changelog to v17 and the main dimensions.
 5.  **Updated `artifacts/conversation.md`:** I appended a summary of this interaction to the conversation log.
 6.  **Prepared a commit message:** I created a commit message that summarizes the documentation updates and saved it to `prompt/commit.md`.
+
+---
+
+### User:
+
+> In split_layers.py add additional layer that contains crosshair mark for the all drill holes.
+
+### Model:
+
+I have updated `split_layers.py` to add a new `DRILL_MARKS` layer with crosshairs for all drill holes.
+
+### User:
+
+> Leave these crosshair marks for the side hole intact. Focus on the planar holes.
+
+### Model:
+
+I have updated `split_layers.py` to add crosshairs for planar holes on the `DRILL_MARKS` layer, while leaving the crosshairs for side holes on the `DRILL` layer.
+
+### User:
+
+> Make the crosshair black.
+
+### Model:
+
+I have updated `split_layers.py` to make the crosshairs for planar holes black.
+
+### User:
+
+> Add a flag to split_layers.py for excluding dimension lines, title, legend and hole schedule from the drawing. The idea is to also produce a drawing that can be printed out as a drilling template.
+
+### Model:
+
+I have added a `--template` flag to `split_layers.py` to exclude dimension lines, title, legend, and the hole schedule from the DXF output.

@@ -190,6 +190,10 @@ The `split-layers-dxf.ps1` script has been enhanced to automatically convert the
 
 A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layered DXF files to PDF format using LibreCAD. Due to a known issue where LibreCAD's `dxf2pdf` tool returns an incorrect exit code on success, the script verifies the conversion by checking for the creation of the output PDF file rather than relying on the exit code.
 
+### 9.5. Template Generation
+
+The `split_layers.py` script includes a `--template` flag that generates a clean DXF file without dimension lines, title, legend, or hole schedule. This clean DXF file is then used by the `convert-dxf-to-pdf.ps1` script to create a corresponding PDF file. This provides a clean, to-scale drawing that can be printed and used as a physical template for drilling and cutting.
+
 ## 10. DXF Analysis
 
 To verify that the DXF files have been correctly layered, the `analyze_dxf.py` script is provided. This script takes a directory as input and analyzes all the DXF files in that directory, printing a summary of the layers and the number of entities on each layer.
@@ -237,6 +241,12 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 - `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v18
+
+*   **DXF Export:**
+    *   Added a new `DRILL_MARKS` layer to display black crosshair markers for planar drill holes, distinguishing them from side-drilled holes.
+    *   Added a `--template` flag to `split_layers.py` to generate a clean DXF output without dimension lines, title, legend, or hole schedule, suitable for use as a drilling template.
 
 ### v17
 

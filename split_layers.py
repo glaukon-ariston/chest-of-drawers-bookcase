@@ -165,6 +165,27 @@ def add_hole_annotations_from_csv(msp, input_file):
                         }
                     )
                     print(f"  - Added side hole indicator: d{diameter} h{depth} z{z} at ({x}, {y})")
+                else:
+                    # Draw a small cross at the hole's (x,y) location on the DRILL_MARKS layer
+                    indicator_size = 3.0 # Length of each arm of the cross
+                    
+                    # Horizontal line
+                    msp.add_line(
+                        start=(x - indicator_size / 2, y),
+                        end=(x + indicator_size / 2, y),
+                        dxfattribs={
+                            'layer': 'DRILL_MARKS'
+                        }
+                    )
+                    # Vertical line
+                    msp.add_line(
+                        start=(x, y - indicator_size / 2),
+                        end=(x, y + indicator_size / 2),
+                        dxfattribs={
+                            'layer': 'DRILL_MARKS'
+                        }
+                    )
+
 
                 # Create annotation text
                 hole_name_text = hole_name
@@ -631,10 +652,12 @@ def add_legend(msp):
         "Legend:",
         "- CUT layer (red): Panel outline",
         "- DRILL layer (blue): Holes to be drilled",
+        "- DRILL_MARKS layer (black): Crosshair marks for planar holes.",
         "- DIMENSION layer (grey): Panel and hole dimensions",
         "- ANNOTATION layer (black): Hole dimensions (d=diameter, h=depth).",
         "- For side-drilled holes, Z-coordinate is included (e.g., d10 h20 z9.5).",
-        "- Side-drilled holes are also marked with a blue cross on the DRILL layer."
+        "- Side-drilled holes are marked with a blue cross on the DRILL layer.",
+        "- Planar holes are marked with a black cross on the DRILL_MARKS layer."
     ]
 
     for i, text in enumerate(legend_text):
@@ -697,7 +720,7 @@ def map_polyline_to_line_segments(polyline, line_entities):
     return lines
 
 
-def split_layers(input_file, output_file):
+def split_layers(input_file, output_file, template_mode=False):
     doc = ezdxf.readfile(input_file)
     
     # Check DXF version and create a new R2000 document if needed
@@ -824,6 +847,16 @@ def split_layers(input_file, output_file):
         annotation_layer.freeze = False
         annotation_layer.lock = False
 
+    # Create DRILL_MARKS layer (yellow, visible, continuous line)
+    if "DRILL_MARKS" not in layers:
+        drill_marks_layer = layers.new("DRILL_MARKS")
+        drill_marks_layer.dxf.color = 7  # Black
+        drill_marks_layer.dxf.linetype = "CONTINUOUS"
+        drill_marks_layer.dxf.lineweight = 25
+        drill_marks_layer.on = True
+        drill_marks_layer.freeze = False
+        drill_marks_layer.lock = False
+
     # Create DELETED layer (hidden)
     if "DELETED" not in layers:
         deleted_layer = layers.new("DELETED")
@@ -937,26 +970,27 @@ def split_layers(input_file, output_file):
 
     print(f"Created {entities_created} entities")
     
-    # Add dimensions using the CUT and DRILL layer geometry bounding box only
-    geometry_bbox = calculate_bounding_box(msp, layer_filter=['CUT'])
-    add_dimensions(msp, holes, geometry_bbox, doc)
+    if not template_mode:
+        # Add dimensions using the CUT and DRILL layer geometry bounding box only
+        geometry_bbox = calculate_bounding_box(msp, layer_filter=['CUT'])
+        add_dimensions(msp, holes, geometry_bbox, doc)
 
-    # Add legend
-    add_legend(msp)
-    
-    # Add hole table - calculate bounding box from CUT and DRILL layers only
-    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
-    table_pos = (max_x + 20, max_y)
-    table_entities_added = add_hole_table(msp, holes, table_pos)
-    
-    # Create a text style for the title
-    if "Title" not in doc.styles:
-        doc.styles.new("Title", dxfattribs={"font": "ISOCPEUR.ttf"})
+        # Add legend
+        add_legend(msp)
+        
+        # Add hole table - calculate bounding box from CUT and DRILL layers only
+        min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
+        table_pos = (max_x + 20, max_y)
+        table_entities_added = add_hole_table(msp, holes, table_pos)
+        
+        # Create a text style for the title
+        if "Title" not in doc.styles:
+            doc.styles.new("Title", dxfattribs={"font": "ISOCPEUR.ttf"})
 
-    # Add title
-    panel_name = os.path.basename(os.path.splitext(input_file)[0])
-    final_bbox_before_title = calculate_bounding_box(msp)
-    add_title(msp, panel_name, final_bbox_before_title)
+        # Add title
+        panel_name = os.path.basename(os.path.splitext(input_file)[0])
+        final_bbox_before_title = calculate_bounding_box(msp)
+        add_title(msp, panel_name, final_bbox_before_title)
 
     # Verify entities were created
     cut_count = sum(1 for e in msp if hasattr(e.dxf, 'layer') and e.dxf.layer == "CUT")
@@ -1061,15 +1095,16 @@ def split_layers(input_file, output_file):
 
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python split_layers.py input.dxf output.dxf")
+    if len(sys.argv) < 3:
+        print("Usage: python split_layers.py input.dxf output.dxf [--template]")
         sys.exit(1)
     
     input_file = sys.argv[1]
     output_file = sys.argv[2]
+    template_mode = "--template" in sys.argv
     
     # Let all exceptions propagate - fail early and clearly
-    split_layers(input_file, output_file)
+    split_layers(input_file, output_file, template_mode=template_mode)
 
 if __name__ == "__main__":
     main()

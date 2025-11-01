@@ -138,6 +138,12 @@ A PowerShell script, `convert-dxf-to-pdf.ps1`, is provided to convert the layere
 
 ## Changelog
 
+### v18
+
+*   **DXF Export:**
+    *   Added a new `DRILL_MARKS` layer to display black crosshair markers for planar drill holes, distinguishing them from side-drilled holes.
+    *   Added a `--template` flag to `split_layers.py` to generate a clean DXF output without dimension lines, title, legend, or hole schedule, suitable for use as a drilling template.
+
 ### v17
 
 *   **Model Parameterization:**

@@ -44,4 +44,5 @@ $exportDir = Join-Path $scriptDir "export/$modelIdentifier"
 .\export-all.ps1 -exportDir $exportDir
 .\run-split-layers.ps1 -exportDir $exportDir
 .\convert-dxf-to-dwg.ps1 -exportDir $exportDir
-.\convert-dxf-to-pdf.ps1 -exportDir $exportDir
+.\convert-dxf-to-pdf.ps1 -exportDir $exportDir -dxfDir dxf-template -pdfDir pdf-template
+.\convert-dxf-to-pdf.ps1 -exportDir $exportDir -dxfDir dxf -pdfDir pdf
