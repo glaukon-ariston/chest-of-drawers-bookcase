@@ -7,6 +7,39 @@
 #
 # e.g.
 # .\convert-dxf-to-pdf.ps1 -exportDir export\H2300xW600xD230_Mm19_Ms12 -dxfDir dxf -pdfDir pdf
+<#
+
+https://docs.librecad.org/en/2.2.0_a/guides/completion.html#print-preview-window
+
+## Use LibreCAD's built-in print tiling
+
+LibreCAD doesn't have an explicit 'poster print' option, but you can emulate it by setting up a custom layout.
+
+Steps
+- Set up your paper size
+  - Go to File → Print Preview.
+  - Click the Options toolbar icon (looks like a gear ⚙️).
+  - Under Paper, choose:
+    - A4
+    - Orientation: Portrait or Landscape depending on your drawing.
+    - Set Margins to small values (e.g., 3-5 mm). LibreCAD doesn’t restrict to printer margins here.
+
+- Set scale
+  - In Print Preview, check Fixed and set Scale = 1.0 (for 1:1).
+
+- Move the drawing into position
+  - Use the Move/Drag tool in Print Preview to shift the viewport.
+  - Position the first A4 sheet over the area you want to print.
+
+- Print to PDF
+  - Click Print → choose 'Microsoft Print to PDF' (or another PDF printer).
+  - Name it e.g. part_01.pdf.
+
+- Repeat for other tiles
+  - Shift the viewport by exactly one A4 page width or height each time.
+  - Print again (part_02.pdf, part_03.pdf, etc.).
+  - You can overlap slightly if needed to ensure continuity (LibreCAD will respect exact millimeter distances).
+#>
 
 
 param(

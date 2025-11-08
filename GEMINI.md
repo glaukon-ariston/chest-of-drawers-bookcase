@@ -150,6 +150,12 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
+### v19
+
+*   **DXF Export:**
+    *   Moved the legend below the "Hole Schedule" table and matched the font size for better readability.
+    *   The legend title font size is now the same as the "Hole Schedule" title.
+
 ### v18
 
 *   **DXF Export:**

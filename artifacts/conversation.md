@@ -720,3 +720,11 @@ I have updated `split_layers.py` to make the crosshairs for planar holes black.
 ### Model:
 
 I have added a `--template` flag to `split_layers.py` to exclude dimension lines, title, legend, and the hole schedule from the DXF output.
+
+### User:
+
+> Move legend in split_layers.py below Hole Schedule table using the same font size as in Hole Schedule table.
+
+### Model:
+
+I have updated the `split_layers.py` script to move the legend below the "Hole Schedule" table and to use the same font size.

@@ -36,7 +36,7 @@ SLOT_MAX_SIZE = 10.0
 def add_hole_table(msp, holes, position):
     """Adds a table of hole information to the DXF."""
     if not holes:
-        return 0
+        return position[1]
 
     # Table properties
     text_height = 2.5
@@ -51,7 +51,6 @@ def add_hole_table(msp, holes, position):
     }
     header = ["Hole Name", "X", "Y", "Z", "Dia", "Depth"]
     keys = ["name", "x", "y", "z", "diameter", "depth"]
-    entities_added = 0
 
     # Starting position
     x_start, y_start = position
@@ -65,7 +64,6 @@ def add_hole_table(msp, holes, position):
             'insert': (x_start, y_start)
         }
     )
-    entities_added += 1
     y_start -= line_height * 2
 
     # Draw header
@@ -80,12 +78,10 @@ def add_hole_table(msp, holes, position):
             }
         )
         current_x += col_widths[keys[i]]
-    entities_added += len(header)
 
     # Draw header underline
     y = y_start - text_height / 2
     msp.add_line((x_start, y), (current_x, y), dxfattribs={'layer': 'ANNOTATION'})
-    entities_added += 1
 
     # Draw rows
     y_start -= line_height * 1.5  # Additional space to account for header underline
@@ -102,9 +98,8 @@ def add_hole_table(msp, holes, position):
             )
             current_x += col_widths[key]
         y_start -= line_height
-    entities_added += len(holes) * len(keys)
     
-    return entities_added
+    return y_start
 
 
 def add_hole_annotations_from_csv(msp, input_file):
@@ -639,17 +634,12 @@ def add_dimensions(msp, holes, bounding_box, doc):
         dim_offset += 8  # Increased spacing between dimension lines
 
 
-def add_legend(msp):
+def add_legend(msp, position):
     """Add a legend to the DXF file."""
-    # Calculate the bounding box of the existing entities
-    min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
-    
-    # Place legend below the drawing
-    legend_x = min_x
-    legend_y = min_y - 20  # Place legend 20 units below the drawing
+    legend_x, legend_y = position
 
-    legend_text = [
-        "Legend:",
+    legend_title = "Legend:"
+    legend_items = [
         "- CUT layer (red): Panel outline",
         "- DRILL layer (blue): Holes to be drilled",
         "- DRILL_MARKS layer (black): Crosshair marks for planar holes.",
@@ -660,13 +650,28 @@ def add_legend(msp):
         "- Planar holes are marked with a black cross on the DRILL_MARKS layer."
     ]
 
-    for i, text in enumerate(legend_text):
+    text_height = 2.5
+    line_height = text_height * 1.5
+
+    # Add legend title
+    msp.add_text(
+        legend_title,
+        dxfattribs={
+            'layer': 'ANNOTATION',
+            'height': text_height * 1.5,
+            'insert': (legend_x, legend_y)
+        }
+    )
+    legend_y -= line_height * 2
+
+    # Add legend items
+    for i, text in enumerate(legend_items):
         msp.add_text(
             text,
             dxfattribs={
                 'layer': 'ANNOTATION',
-                'height': 5,
-                'insert': (legend_x, legend_y - i * 10)
+                'height': text_height,
+                'insert': (legend_x, legend_y - i * line_height)
             }
         )
 
@@ -975,13 +980,14 @@ def split_layers(input_file, output_file, template_mode=False):
         geometry_bbox = calculate_bounding_box(msp, layer_filter=['CUT'])
         add_dimensions(msp, holes, geometry_bbox, doc)
 
-        # Add legend
-        add_legend(msp)
-        
         # Add hole table - calculate bounding box from CUT and DRILL layers only
         min_x, min_y, max_x, max_y = calculate_bounding_box(msp)
         table_pos = (max_x + 20, max_y)
-        table_entities_added = add_hole_table(msp, holes, table_pos)
+        table_bottom_y = add_hole_table(msp, holes, table_pos)
+        
+        # Add legend
+        legend_pos = (table_pos[0], table_bottom_y - 20)
+        add_legend(msp, legend_pos)
         
         # Create a text style for the title
         if "Title" not in doc.styles:
