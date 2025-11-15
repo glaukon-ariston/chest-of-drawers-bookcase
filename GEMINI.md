@@ -150,6 +150,13 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
+### v20
+
+*   **DXF Export:**
+    *   Added unit vector components (nx, ny, nz) to the hole metadata CSV export, indicating the normal vector of the panel surface at the hole location.
+*   **Documentation:**
+    *   Added instructions for printing drilling template PDFs to `README.md`.
+
 ### v19
 
 *   **DXF Export:**

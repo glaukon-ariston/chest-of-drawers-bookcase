@@ -1,1 +1,1 @@
-In split_layers.py add additional layer that contains crosshair mark for the all drill holes.
+When exporting hole drill information, add a unit vector to each hole (nx,ny,nz) in the CSV export. This unit vector will then be used to assign side of the panel to the hole. The unit vector should be associated with the panel's surface and point orthogonally away from the surface.

@@ -200,7 +200,7 @@ To verify that the DXF files have been correctly layered, the `analyze_dxf.py` s
 
 ## 11. Hole Metadata Export
 
-To facilitate the creation of manufacturing documentation, the model can now export detailed metadata for all holes on a given panel. This metadata includes the hole's name, its 2D projected coordinates (x, y), its Z coordinate (relative to the panel's thickness), its diameter, and its depth.
+To facilitate the creation of manufacturing documentation, the model can now export detailed metadata for all holes on a given panel. This metadata includes the hole's name, its 2D projected coordinates (x, y), its Z coordinate (relative to the panel's thickness), its diameter, its depth, and a unit vector (nx, ny, nz) representing the normal of the panel surface at the hole location.
 
 This is achieved through a series of new functions and modules:
 
@@ -241,6 +241,13 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 - `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v20
+
+*   **DXF Export:**
+    *   Added unit vector components (nx, ny, nz) to the hole metadata CSV export, indicating the normal vector of the panel surface at the hole location.
+*   **Documentation:**
+    *   Added instructions for printing drilling template PDFs to `README.md`.
 
 ### v19
 

@@ -164,7 +164,40 @@ The generated PDF templates can be printed to scale and used as physical templat
     *   Print again (e.g. `part_02.pdf`, `part_03.pdf`, etc.).
     *   You can overlap slightly if needed to ensure continuity.
 
+#### Printing Drilling Templates
+
+The generated PDF templates can be printed to scale and used as physical templates for drilling. Here's how to do it using LibreCAD's built-in print tiling feature. For more details, see the [LibreCAD documentation](https://docs.librecad.org/en/2.2.0_a/guides/completion.html#print-preview-window).
+
+1.  **Set up your paper size:**
+    *   Go to `File` → `Print Preview`.
+    *   Click the `Options` toolbar icon (looks like a gear ⚙️).
+    *   Under `Paper`, choose:
+        *   `A4`
+        *   `Orientation`: `Portrait` or `Landscape` depending on your drawing.
+        *   Set `Margins` to small values (e.g., 3-5 mm).
+
+2.  **Set scale:**
+    *   In `Print Preview`, check `Fixed` and set `Scale = 1.0` (for 1:1).
+
+3.  **Move the drawing into position:**
+    *   Use the `Move/Drag` tool in `Print Preview` to shift the viewport.
+    *   Position the first A4 sheet over the area you want to print.
+
+4.  **Print to PDF:**
+    *   Click `Print` → choose 'Microsoft Print to PDF' (or another PDF printer).
+    *   Name it e.g. `part_01.pdf`.
+
+5.  **Repeat for other tiles:**
+    *   Shift the viewport by exactly one A4 page width or height each time.
+    *   Print again (e.g. `part_02.pdf`, `part_03.pdf`, etc.).
+    *   You can overlap slightly if needed to ensure continuity.
+
 ## Changelog
+
+### v20
+
+*   **DXF Export:**
+    *   Added unit vector components (nx, ny, nz) to the hole metadata CSV export, indicating the normal vector of the panel surface at the hole location.
 
 ### v19
 

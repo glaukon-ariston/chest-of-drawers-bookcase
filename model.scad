@@ -238,23 +238,23 @@ function get_pedestal_side_hole_2d_coords(x, y, z) = [z, y];
 
 module corpus_side_hole_metadata(is_left) {
     p1 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, confirmat_hole_edge_distance, melanine_thickness_main / 2, is_left);
-    echo(str("Hole,", export_panel_name, ",confirmat_bottom_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",confirmat_bottom_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p2 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2, is_left);
-    echo(str("Hole,", export_panel_name, ",confirmat_bottom_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",confirmat_bottom_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p3 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, confirmat_hole_edge_distance, corpus_height - melanine_thickness_main / 2, is_left);
-    echo(str("Hole,", export_panel_name, ",confirmat_top_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",confirmat_top_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p4 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, corpus_height - melanine_thickness_main / 2, is_left);
-    echo(str("Hole,", export_panel_name, ",confirmat_top_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",confirmat_top_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p5 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, confirmat_hole_edge_distance, middle_plate_z + melanine_thickness_main / 2, is_left);
-    echo(str("Hole,", export_panel_name, ",confirmat_middle_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",confirmat_middle_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p6 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, middle_plate_z + melanine_thickness_main / 2, is_left);
-    echo(str("Hole,", export_panel_name, ",confirmat_middle_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",confirmat_middle_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     for (i = [0:1]) {
         z = middle_plate_z + (i + 1) * (melanine_thickness_main + bookcase_shelf_gap) + melanine_thickness_main / 2;
         p7 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, confirmat_hole_edge_distance, z, is_left);
-        echo(str("Hole,", export_panel_name, ",confirmat_shelf_", i, "_1,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+        echo(str("Hole,", export_panel_name, ",confirmat_shelf_", i, "_1,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
         p8 = get_corpus_side_hole_2d_coords(melanine_thickness_main / 2, corpus_depth - confirmat_hole_edge_distance, z, is_left);
-        echo(str("Hole,", export_panel_name, ",confirmat_shelf_", i, "_2,", p8[0], ",", p8[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+        echo(str("Hole,", export_panel_name, ",confirmat_shelf_", i, "_2,", p8[0], ",", p8[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     }
     for (i = [0:number_of_drawers-1]) {
         z_slide = drawer_origin_z + i * drawer_vertical_space + slide_z_offset + slide_height / 2;
@@ -262,126 +262,126 @@ module corpus_side_hole_metadata(is_left) {
             offset = corpus_slide_pilot_hole_offsets[j];
             x_slide = is_left ? melanine_thickness_main : 0;
             p9 = get_corpus_side_hole_2d_coords(x_slide, offset, z_slide, is_left);
-            echo(str("Hole,", export_panel_name, ",slide_pilot_", i, "_", j, ",", p9[0], ",", p9[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth));
+            echo(str("Hole,", export_panel_name, ",slide_pilot_", i, "_", j, ",", p9[0], ",", p9[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth, ",0,0,1"));
         }
     }
 }
 
 module drawer_side_hole_metadata(is_left) {
     p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance, is_left);
-    echo(str("Hole,", export_panel_name, ",back_panel_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",back_panel_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p2 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance, is_left);
-    echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p3 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2, is_left);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p4 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2, is_left);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p5 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, dowel_hole_edge_distance, is_left);
-    echo(str("Hole,", export_panel_name, ",dowel_front_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",dowel_front_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
     p6 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, drawer_height - dowel_hole_edge_distance, is_left);
-    echo(str("Hole,", export_panel_name, ",dowel_front_2,", p6[0], ",", p6[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",dowel_front_2,", p6[0], ",", p6[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
     z_pos = slide_z_offset + slide_height/2;
     for (offset = drawer_slide_pilot_hole_offsets) {
         x_pos = is_left ? 0 : melanine_thickness_secondary;
         p7 = get_drawer_side_hole_2d_coords(x_pos, offset, z_pos, is_left);
-        echo(str("Hole,", export_panel_name, ",slide_pilot_", offset, ",", p7[0], ",", p7[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth));
+        echo(str("Hole,", export_panel_name, ",slide_pilot_", offset, ",", p7[0], ",", p7[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth, ",0,0,1"));
     }
 }
 
 module drawer_back_hole_metadata() {
     p1 = get_drawer_back_hole_2d_coords(0, melanine_thickness_secondary/2, confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p2 = get_drawer_back_hole_2d_coords(0, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p3 = get_drawer_back_hole_2d_coords(drawer_body_width, melanine_thickness_secondary/2, confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p4 = get_drawer_back_hole_2d_coords(drawer_body_width, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p5 = get_drawer_back_hole_2d_coords(confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p6 = get_drawer_back_hole_2d_coords(drawer_body_width/2, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p7 = get_drawer_back_hole_2d_coords(drawer_body_width - confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
 }
 
 module drawer_bottom_hole_metadata() {
     p1 = get_drawer_bottom_hole_2d_coords(0, confirmat_hole_edge_distance, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p2 = get_drawer_bottom_hole_2d_coords(0, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p3 = get_drawer_bottom_hole_2d_coords(drawer_body_width, confirmat_hole_edge_distance, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p4 = get_drawer_bottom_hole_2d_coords(drawer_body_width, drawer_depth - melanine_thickness_secondary - confirmat_hole_edge_distance, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p5 = get_drawer_bottom_hole_2d_coords(confirmat_hole_edge_distance, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",back_panel_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",back_panel_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p6 = get_drawer_bottom_hole_2d_coords(drawer_body_width/2, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",back_panel_2,", p6[0], ",", p6[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",back_panel_2,", p6[0], ",", p6[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p7 = get_drawer_bottom_hole_2d_coords(drawer_body_width - confirmat_hole_edge_distance, drawer_depth - melanine_thickness_secondary, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",back_panel_3,", p7[0], ",", p7[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",back_panel_3,", p7[0], ",", p7[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p8 = get_drawer_bottom_hole_2d_coords(dowel_hole_edge_distance, 0, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",dowel_front_1,", p8[0], ",", p8[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",dowel_front_1,", p8[0], ",", p8[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
     p9 = get_drawer_bottom_hole_2d_coords(drawer_body_width - dowel_hole_edge_distance, 0, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",dowel_front_2,", p9[0], ",", p9[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",dowel_front_2,", p9[0], ",", p9[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
     if (drawer_body_width > panel_length_for_four_dowels) {
         x_offset = (drawer_body_width - 2 * dowel_hole_edge_distance) / 3;
         p10 = get_drawer_bottom_hole_2d_coords(dowel_hole_edge_distance + x_offset, 0, melanine_thickness_secondary/2);
-        echo(str("Hole,", export_panel_name, ",dowel_front_3,", p10[0], ",", p10[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+        echo(str("Hole,", export_panel_name, ",dowel_front_3,", p10[0], ",", p10[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
         p11 = get_drawer_bottom_hole_2d_coords(dowel_hole_edge_distance + 2 * x_offset, 0, melanine_thickness_secondary/2);
-        echo(str("Hole,", export_panel_name, ",dowel_front_4,", p11[0], ",", p11[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front));
+        echo(str("Hole,", export_panel_name, ",dowel_front_4,", p11[0], ",", p11[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
     }
 }
 
 module drawer_front_hole_metadata(height, handle_z) {
     p1 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2, melanine_thickness_main, dowel_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     p2 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2, melanine_thickness_main, height - dowel_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     p3 = get_drawer_front_hole_2d_coords(front_width - (front_width - drawer_body_width)/2, melanine_thickness_main, dowel_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     p4 = get_drawer_front_hole_2d_coords(front_width - (front_width - drawer_body_width)/2, melanine_thickness_main, height - dowel_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     p5 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 + dowel_hole_edge_distance, melanine_thickness_main, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     p6 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 + drawer_body_width - dowel_hole_edge_distance, melanine_thickness_main, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     if(drawer_body_width > panel_length_for_four_dowels) {
          x_offset = (drawer_body_width - 2 * dowel_hole_edge_distance) / 3;
          p7 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 + dowel_hole_edge_distance + x_offset, melanine_thickness_main, melanine_thickness_secondary/2);
-         echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+         echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
          p8 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 + dowel_hole_edge_distance + 2 * x_offset, melanine_thickness_main, melanine_thickness_secondary/2);
-         echo(str("Hole,", export_panel_name, ",bottom_panel_4,", p8[0], ",", p8[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front));
+         echo(str("Hole,", export_panel_name, ",bottom_panel_4,", p8[0], ",", p8[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     }
     p9 = get_drawer_front_hole_2d_coords(front_width/2 - handle_hole_spacing/2, melanine_thickness_main/2, handle_z);
-    echo(str("Hole,", export_panel_name, ",handle_1,", p9[0], ",", p9[1], ",0,", handle_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",handle_1,", p9[0], ",", p9[1], ",0,", handle_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p10 = get_drawer_front_hole_2d_coords(front_width/2 + handle_hole_spacing/2, melanine_thickness_main/2, handle_z);
-    echo(str("Hole,", export_panel_name, ",handle_2,", p10[0], ",", p10[1], ",0,", handle_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",handle_2,", p10[0], ",", p10[1], ",0,", handle_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
 }
 
 module shelf_hole_metadata() {
     p1 = get_shelf_hole_2d_coords(0, confirmat_hole_edge_distance, melanine_thickness_main / 2);
-    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main, ",0,0,1"));
     p2 = get_shelf_hole_2d_coords(0, shelf_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2);
-    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main, ",0,0,1"));
     p3 = get_shelf_hole_2d_coords(shelf_width, confirmat_hole_edge_distance, melanine_thickness_main / 2);
-    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main, ",0,0,1"));
     p4 = get_shelf_hole_2d_coords(shelf_width, shelf_depth - confirmat_hole_edge_distance, melanine_thickness_main / 2);
-    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_main / 2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main, ",0,0,1"));
 }
 
 module pedestal_front_back_hole_metadata() {
     p1 = get_pedestal_front_back_hole_2d_coords(0, melanine_thickness_main/2, pedestal_height/2);
-    echo(str("Hole,", export_panel_name, ",left_side,", p1[0], ",", p1[1], ",", melanine_thickness_main/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",left_side,", p1[0], ",", p1[1], ",", melanine_thickness_main/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main, ",0,0,1"));
     p2 = get_pedestal_front_back_hole_2d_coords(shelf_width, melanine_thickness_main/2, pedestal_height/2);
-    echo(str("Hole,", export_panel_name, ",right_side,", p2[0], ",", p2[1], ",", melanine_thickness_main/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",right_side,", p2[0], ",", p2[1], ",", melanine_thickness_main/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_main, ",0,0,1"));
 }
 
 module pedestal_side_hole_metadata() {
     p1 = get_pedestal_side_hole_2d_coords(melanine_thickness_main/2, melanine_thickness_main/2, pedestal_height/2);
-    echo(str("Hole,", export_panel_name, ",front_panel,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",front_panel,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     p2 = get_pedestal_side_hole_2d_coords(melanine_thickness_main/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2);
-    echo(str("Hole,", export_panel_name, ",back_panel,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    echo(str("Hole,", export_panel_name, ",back_panel,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
 }
 
 module corpus_side_slide_template_hole_metadata() {
@@ -389,67 +389,72 @@ module corpus_side_slide_template_hole_metadata() {
     for (j = [0:len(corpus_slide_pilot_hole_offsets)-1]) {
         offset = corpus_slide_pilot_hole_offsets[j];
         p = [-offset + corpus_depth, z];
-        echo(str("Hole,", export_panel_name, ",slide_pilot_", j, ",", p[0], ",", p[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth));
+        echo(str("Hole,", export_panel_name, ",slide_pilot_", j, ",", p[0], ",", p[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth, ",0,0,1"));
     }
 }
 
 module drawer_front_template_hole_metadata() {
     // Holes for left drawer side panel
     p1 = [melanine_thickness_secondary/2, dowel_hole_edge_distance];
-    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p2 = [melanine_thickness_secondary/2, drawer_height - dowel_hole_edge_distance];
-    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
 
     // Holes for right drawer side panel
     p3 = [drawer_width - melanine_thickness_secondary/2, dowel_hole_edge_distance];
-    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p4 = [drawer_width - melanine_thickness_secondary/2, drawer_height - dowel_hole_edge_distance];
-    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
 
     // Holes for drawer bottom panel
     p5 = [melanine_thickness_secondary + dowel_hole_edge_distance, melanine_thickness_secondary/2];
-    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p6 = [drawer_width - melanine_thickness_secondary - dowel_hole_edge_distance, melanine_thickness_secondary/2];
-    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     if(drawer_body_width > panel_length_for_four_dowels) {
          x_offset = (drawer_body_width - 2 * dowel_hole_edge_distance) / 3;
          p7 = [melanine_thickness_secondary + dowel_hole_edge_distance + x_offset, melanine_thickness_secondary/2];
-         echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+         echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
          p8 = [melanine_thickness_secondary + dowel_hole_edge_distance + 2 * x_offset, melanine_thickness_secondary/2];
-         echo(str("Hole,", export_panel_name, ",bottom_panel_4,", p8[0], ",", p8[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary));
+         echo(str("Hole,", export_panel_name, ",bottom_panel_4,", p8[0], ",", p8[1], ",0,", dowel_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     }
 }
 
 module corpus_shelf_template_hole_metadata() {
     z = bookcase_shelf_gap - melanine_thickness_main / 2;
     p1 = [-confirmat_hole_edge_distance + corpus_depth, z];
-    echo(str("Hole,", export_panel_name, ",shelf_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",shelf_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p2 = [confirmat_hole_edge_distance, z];
-    echo(str("Hole,", export_panel_name, ",shelf_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",shelf_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
 }
 
 module pedestal_side_template_hole_metadata() {
-    p1 = get_pedestal_side_hole_2d_coords(melanine_thickness_main/2, melanine_thickness_main/2, pedestal_height/2);
-    echo(str("Hole,", export_panel_name, ",front_panel,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
-    p2 = get_pedestal_side_hole_2d_coords(melanine_thickness_main/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2);
-    echo(str("Hole,", export_panel_name, ",back_panel,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main));
+    // Hole for front panel
+    translate([melanine_thickness_secondary/2, melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
+    p1 = get_pedestal_side_hole_2d_coords(melanine_thickness_secondary/2, melanine_thickness_main/2, pedestal_height/2);
+    echo(str("Hole,", export_panel_name, ",front_panel,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
+    
+    // Hole for back panel
+    translate([melanine_thickness_secondary/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
+    p2 = get_pedestal_side_hole_2d_coords(melanine_thickness_secondary/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2);
+    echo(str("Hole,", export_panel_name, ",back_panel,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
 }
 
 module drawer_back_template_hole_metadata() {
     p1 = get_drawer_back_hole_2d_coords(0, melanine_thickness_secondary/2, confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p2 = get_drawer_back_hole_2d_coords(0, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p3 = get_drawer_back_hole_2d_coords(drawer_body_width, melanine_thickness_secondary/2, confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p4 = get_drawer_back_hole_2d_coords(drawer_body_width, melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance);
-    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",", melanine_thickness_secondary/2, ",", confirmat_hole_diameter, ",", confirmat_screw_length - melanine_thickness_secondary, ",0,0,1"));
     p5 = get_drawer_back_hole_2d_coords(confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p6 = get_drawer_back_hole_2d_coords(drawer_body_width/2, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p6[0], ",", p6[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p7 = get_drawer_back_hole_2d_coords(drawer_body_width - confirmat_hole_edge_distance, melanine_thickness_secondary/2, melanine_thickness_secondary/2);
-    echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
+    echo(str("Hole,", export_panel_name, ",bottom_panel_3,", p7[0], ",", p7[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
 }
 
 module drawer_side_template_hole_metadata() {
@@ -975,23 +980,23 @@ module DrawerSideTemplate_cut() {
     cube([melanine_thickness_secondary, drawer_depth, drawer_height]);
 }
 
-module DrawerSideTemplate_drill() {
-    // Holes for back panel (2 holes)
-    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole();
-    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole();
-
-    // Holes for bottom panel (2 holes)
-    translate([melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
-    translate([melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2]) rotate(ROT_Y_90) drawer_confirmat_hole();
-
-    // Dowel holes for front panel
-    translate([melanine_thickness_secondary/2, 0, dowel_hole_edge_distance]) rotate(ROT_X_90) dowel_hole(dowel_length - dowel_hole_depth_in_front);
-    translate([melanine_thickness_secondary/2, 0, drawer_height - dowel_hole_edge_distance]) rotate(ROT_X_90) dowel_hole(dowel_length - dowel_hole_depth_in_front);
-    
-    // Pilot holes for slides
+module drawer_side_template_hole_metadata() {
+    p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",back_panel_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
+    p2 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
+    p3 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, confirmat_hole_edge_distance, melanine_thickness_secondary/2, false);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p3[0], ",", p3[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
+    p4 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - confirmat_hole_edge_distance, melanine_thickness_secondary/2, false);
+    echo(str("Hole,", export_panel_name, ",bottom_panel_2,", p4[0], ",", p4[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
+    p5 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, dowel_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",dowel_front_1,", p5[0], ",", p5[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
+    p6 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, 0, drawer_height - dowel_hole_edge_distance, false);
+    echo(str("Hole,", export_panel_name, ",dowel_front_2,", p6[0], ",", p6[1], ",", melanine_thickness_secondary/2, ",", dowel_diameter, ",", dowel_length - dowel_hole_depth_in_front, ",0,0,1"));
     z_pos = slide_z_offset + slide_height/2;
     for (offset = drawer_slide_pilot_hole_offsets) {
-        translate([melanine_thickness_secondary, offset, z_pos]) rotate(ROT_Y_NEG_90) slide_pilot_hole();
+        p7 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary, offset, z_pos, false);
+        echo(str("Hole,", export_panel_name, ",slide_pilot_", offset, ",", p7[0], ",", p7[1], ",0,", slide_pilot_hole_diameter, ",", slide_pilot_hole_depth, ",0,0,1"));
     }
 }
 

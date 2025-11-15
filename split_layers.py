@@ -119,7 +119,7 @@ def add_hole_annotations_from_csv(msp, input_file):
         for row in reader:
             try:
                 # Unpack row data
-                panel_name, hole_name, x, y, z, diameter, depth = row
+                panel_name, hole_name, x, y, z, diameter, depth, nx, ny, nz = row
                 
                 # Convert numeric values
                 x = float(x)
@@ -127,6 +127,9 @@ def add_hole_annotations_from_csv(msp, input_file):
                 z = float(z)
                 diameter = float(diameter)
                 depth = float(depth)
+                nx = float(nx)
+                ny = float(ny)
+                nz = float(nz)
 
                 holes.append({
                     "name": hole_name,
@@ -134,7 +137,10 @@ def add_hole_annotations_from_csv(msp, input_file):
                     "y": round(y, 2),
                     "z": round(z, 2),
                     "diameter": diameter,
-                    "depth": depth
+                    "depth": depth,
+                    "nx": round(nx, 2),
+                    "ny": round(ny, 2),
+                    "nz": round(nz, 2)
                 })
                 
                 if z != 0:
