@@ -29,7 +29,7 @@ $ErrorActionPreference = "Stop"
 
 # Import common functions
 $scriptDir = $PSScriptRoot
-Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1") -Force
 
 # Validate parameters
 Test-ExportDirectory -ExportDir $exportDir
@@ -78,6 +78,8 @@ foreach ($panelName in $panelNames) {
     Write-Output "Exporting '$panelName' to '$relativeOutputFile' ... "
     
     # Execute OpenSCAD and capture any output (including errors from stderr)
+    # The export will generate two files: DXF|STL|SVG file (whatever was selected) and a CSV file containing hole metadata.
+    #
     # "openscad" -o "artifacts\export\dummy-cmd.dxf" -D "export_panel_name=\"CorpusSideRight\"" model.scad
     # "openscad" -o "artifacts\export\dummy-ps.dxf" -D "export_panel_name=`"CorpusSideRight`"" model.scad
     # This parameter passing scheme took whole day to figure out. PowerShell quoting behaviour sucks!

@@ -95,7 +95,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   panel_length_for_four_dowels = 500
     *   slide_pilot_hole_depth = 2
     *   slide_pilot_hole_diameter = 2.5
-    *   drawer_slide_pilot_hole_offsets = [35, 163]
+    *   drawer_slide_pilot_hole_offsets = [37, 165]
     *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
 
 ### Structure
@@ -164,35 +164,26 @@ The generated PDF templates can be printed to scale and used as physical templat
     *   Print again (e.g. `part_02.pdf`, `part_03.pdf`, etc.).
     *   You can overlap slightly if needed to ensure continuity.
 
-#### Printing Drilling Templates
-
-The generated PDF templates can be printed to scale and used as physical templates for drilling. Here's how to do it using LibreCAD's built-in print tiling feature. For more details, see the [LibreCAD documentation](https://docs.librecad.org/en/2.2.0_a/guides/completion.html#print-preview-window).
-
-1.  **Set up your paper size:**
-    *   Go to `File` → `Print Preview`.
-    *   Click the `Options` toolbar icon (looks like a gear ⚙️).
-    *   Under `Paper`, choose:
-        *   `A4`
-        *   `Orientation`: `Portrait` or `Landscape` depending on your drawing.
-        *   Set `Margins` to small values (e.g., 3-5 mm).
-
-2.  **Set scale:**
-    *   In `Print Preview`, check `Fixed` and set `Scale = 1.0` (for 1:1).
-
-3.  **Move the drawing into position:**
-    *   Use the `Move/Drag` tool in `Print Preview` to shift the viewport.
-    *   Position the first A4 sheet over the area you want to print.
-
-4.  **Print to PDF:**
-    *   Click `Print` → choose 'Microsoft Print to PDF' (or another PDF printer).
-    *   Name it e.g. `part_01.pdf`.
-
-5.  **Repeat for other tiles:**
-    *   Shift the viewport by exactly one A4 page width or height each time.
-    *   Print again (e.g. `part_02.pdf`, `part_03.pdf`, etc.).
-    *   You can overlap slightly if needed to ensure continuity.
-
 ## Changelog
+
+### v21
+
+*   **Model Parameterization:**
+    *   Updated `drawer_slide_pilot_hole_offsets` from `[35, 163]` to `[37, 165]`.
+*   **OpenSCAD Output:**
+    *   Added `model_info` object to console output for structured parameter access.
+    *   Prefixed cut list entries with `CSV:` for easier parsing.
+    *   Prefixed panel names with `panel=` and model identifier with `model_identifier=` in console output.
+*   **PowerShell Scripts:**
+    *   All PowerShell scripts now use `Import-Module -Force` to ensure the latest module changes are always loaded.
+*   **DXF Export:**
+    *   Removed 3D object generation from `pedestal_side_template_hole_metadata` to fix DXF export issues.
+    *   Updated `split_layers.py` to expect `nx,ny,nz` in hole metadata CSV.
+*   **PowerShell Modules:**
+    *   Improved parsing logic in `Get-ModelIdentifier` and `Get-PanelNames` in `CommonFunctions.psm1` for robustness against OpenSCAD output variations.
+*   **Test Scripts:**
+    *   Added `test/get-export-folder.ps1`, `test/export-panel.ps1`, and `test/get-panel-names.ps1`.
+    *   Normalized export folder path in `test/get-export-folder.ps1`.
 
 ### v20
 

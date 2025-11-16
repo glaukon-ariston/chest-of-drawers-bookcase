@@ -63,7 +63,7 @@ The model is driven by a set of global parameters defined at the beginning of th
     *   panel_length_for_four_dowels = 500
     *   slide_pilot_hole_depth = 2
     *   slide_pilot_hole_diameter = 2.5
-    *   drawer_slide_pilot_hole_offsets = [35, 163]
+    *   drawer_slide_pilot_hole_offsets = [37, 165]
     *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
@@ -160,13 +160,15 @@ The visibility of each of these component groups is controlled by a set of boole
 
 To assist with verifying the parametric design, key calculated dimensions are printed to the OpenSCAD console using the `echo()` function. This includes values like the position of the middle plate, the spacing of the shelves, and the dimensions of the drawers and doors. This allows for quick verification of the model's dimensions without needing to manually measure the 3D view.
 
+Additionally, a comprehensive `model_info` object is now echoed to the console, containing all critical model parameters and derived dimensions in a structured format. This provides a single, easily parsable source of truth for the model's current configuration, which can be used by external scripts for validation or further processing.
+
 ## 7. Exploded View
 
 The model includes an exploded view feature to help visualize how the components are assembled. This feature can be enabled by setting the `exploded_view` variable to `true`. The `explosion_factor` variable controls the distance between the exploded parts. The exploded view is now more sophisticated, with individual explosion for different component groups.
 
 ## 8. Cut List Generation
 
-The `model.scad` file includes a feature to generate a CSV (Comma-Separated Values) cut list for all the panels required to build the furniture. This cut list includes panel dimensions, materials, quantities, edge banding requirements, and CNC comments.
+The `model.scad` file includes a feature to generate a CSV (Comma-Separated Values) cut list for all the panels required to build the furniture. This cut list includes panel dimensions, materials, quantities, edge banding requirements, and CNC comments. Each line of the cut list is now prefixed with "CSV: " in the OpenSCAD console output to facilitate easier parsing by external scripts.
 
 To generate the cut list, set the `generate_cut_list_csv` variable to `true` at the top of the `model.scad` file. When the model is rendered, the cut list data will be printed to the OpenSCAD console. This data can then be saved to a CSV file.
 
@@ -175,6 +177,8 @@ For a more automated process, the `generate-csv.ps1` PowerShell script is provid
 ## 9. CNC Export Workflow
 
 The project includes a workflow for exporting the 2D panel drawings in DXF format, suitable for CNC cutting services.
+
+To improve reliability and ensure that the latest changes to shared PowerShell modules are always picked up, all PowerShell scripts involved in the CNC export workflow now use `Import-Module -Force`. This prevents issues caused by module caching in active PowerShell sessions.
 
 The workflow consists of two main steps:
 1.  **Exporting Panels from OpenSCAD:** The `export-panels.ps1` PowerShell script automates the export of all panels to the `artifacts/export` directory. The script gets the list of panels from the `model.scad` file and then calls OpenSCAD for each panel to generate a DXF file. All exported panels are positioned at the origin (0,0) to ensure consistency.
@@ -241,6 +245,25 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 - `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v21
+
+*   **Model Parameterization:**
+    *   Updated `drawer_slide_pilot_hole_offsets` from `[35, 163]` to `[37, 165]`.
+*   **OpenSCAD Output:**
+    *   Added `model_info` object to console output for structured parameter access.
+    *   Prefixed cut list entries with `CSV:` for easier parsing.
+    *   Prefixed panel names with `panel=` and model identifier with `model_identifier=` in console output.
+*   **PowerShell Scripts:**
+    *   All PowerShell scripts now use `Import-Module -Force` to ensure the latest module changes are always loaded.
+*   **DXF Export:**
+    *   Removed 3D object generation from `pedestal_side_template_hole_metadata` to fix DXF export issues.
+    *   Updated `split_layers.py` to expect `nx,ny,nz` in hole metadata CSV.
+*   **PowerShell Modules:**
+    *   Improved parsing logic in `Get-ModelIdentifier` and `Get-PanelNames` in `CommonFunctions.psm1` for robustness against OpenSCAD output variations.
+*   **Test Scripts:**
+    *   Added `test/get-export-folder.ps1`, `test/export-panel.ps1`, and `test/get-panel-names.ps1`.
+    *   Normalized export folder path in `test/get-export-folder.ps1`.
 
 ### v20
 

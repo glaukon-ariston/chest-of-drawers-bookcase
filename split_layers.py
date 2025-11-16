@@ -20,7 +20,7 @@ Example:
 The script expects an optional CSV file with the same base name as the input DXF
 (e.g., `panel_drawing.csv`) containing hole information. The CSV should have
 the following header:
-"panel_name,hole_name,x,y,z,diameter,depth"
+"panel_name,hole_name,x,y,z,diameter,depth,nx,ny,nz"
 """
 import ezdxf
 import sys

@@ -100,7 +100,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   panel_length_for_four_dowels = 500
     *   slide_pilot_hole_depth = 2
     *   slide_pilot_hole_diameter = 2.5
-    *   drawer_slide_pilot_hole_offsets = [35, 163]
+    *   drawer_slide_pilot_hole_offsets = [37, 165]
     *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
 
 ### Structure
@@ -115,7 +115,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 
 ### Cut List Generation
 
-The model can generate a CSV cut list for all panels. This is controlled by the `generate_cut_list_csv` variable in `model.scad`. A PowerShell script, `generate-csv.ps1`, is provided to automate the process of generating the `artifacts/cut_list.csv` file.
+The model can generate a CSV cut list for all panels. This is controlled by the `generate_cut_list_csv` variable in `model.scad`. Each line of the cut list is now prefixed with "CSV: " in the OpenSCAD console output to facilitate easier parsing by external scripts. A PowerShell script, `generate-csv.ps1`, is provided to automate the process of generating the `artifacts/cut_list.csv` file.
 
 ### CNC Export
 
@@ -149,6 +149,25 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v21
+
+*   **Model Parameterization:**
+    *   Updated `drawer_slide_pilot_hole_offsets` from `[35, 163]` to `[37, 165]`.
+*   **OpenSCAD Output:**
+    *   Added `model_info` object to console output for structured parameter access.
+    *   Prefixed cut list entries with `CSV:` for easier parsing.
+    *   Prefixed panel names with `panel=` and model identifier with `model_identifier=` in console output.
+*   **PowerShell Scripts:**
+    *   All PowerShell scripts now use `Import-Module -Force` to ensure the latest module changes are always loaded.
+*   **DXF Export:**
+    *   Removed 3D object generation from `pedestal_side_template_hole_metadata` to fix DXF export issues.
+    *   Updated `split_layers.py` to expect `nx,ny,nz` in hole metadata CSV.
+*   **PowerShell Modules:**
+    *   Improved parsing logic in `Get-ModelIdentifier` and `Get-PanelNames` in `CommonFunctions.psm1` for robustness against OpenSCAD output variations.
+*   **Test Scripts:**
+    *   Added `test/get-export-folder.ps1`, `test/export-panel.ps1`, and `test/get-panel-names.ps1`.
+    *   Normalized export folder path in `test/get-export-folder.ps1`.
 
 ### v20
 

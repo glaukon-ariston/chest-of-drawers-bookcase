@@ -20,7 +20,7 @@ $ErrorActionPreference = "Stop"
 
 # Import common functions
 $scriptDir = $PSScriptRoot
-Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1") -Force
 
 # Project paths
 $modelFile = Join-Path $scriptDir "model.scad"
@@ -63,8 +63,9 @@ try {
     
     # Read the temp file and process it
     $allLines = Get-Content $logFile
-    $csvData = $allLines | Where-Object { $_ -match '^ECHO: "' } | ForEach-Object { 
-        $_ -replace '^ECHO: "', '' -replace '"$', '' 
+    $tag = "ECHO: ""CSV: "
+    $csvData = $allLines | Where-Object { $_ -match "^$tag" } | ForEach-Object { 
+        $_ -replace "^$tag", '' -replace '"$', '' 
     }
     
     if ($csvData.Count -gt 0) {

@@ -1,1 +1,6 @@
-When exporting hole drill information, add a unit vector to each hole (nx,ny,nz) in the CSV export. This unit vector will then be used to assign side of the panel to the hole. The unit vector should be associated with the panel's surface and point orthogonally away from the surface.
+Why is this not working?
+Get-ModelIdentifier is not returning jsut H2300xW600xD230_Mm18_Ms10.
+
+PS C:\Users\Tata\dev\chest-of-drawers-bookcase> .\test\get-export-folder.ps1
+Export directory: C:\Users\Tata\dev\chest-of-drawers-bookcase\test\..\export\DEFINITIONS: generate_model_identifier=true, generate_panel_names_list=false, generate_cut_list_csv=false, export_panel_name=CorpusShelfTemplate, export_type=dxf MODEL-IDENTIFIER=H2300xW600xD230_Mm18_Ms10
+PS C:\Users\Tata\dev\chest-of-drawers-bookcase> 

@@ -96,7 +96,7 @@ slide_z_offset = 50;
 slide_pilot_hole_depth = 2;
 slide_pilot_hole_diameter = 2.5;
 slide_pilot_hole_radius = slide_pilot_hole_diameter / 2;
-drawer_slide_pilot_hole_offsets = [35, 163];
+drawer_slide_pilot_hole_offsets = [37, 165];
 corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115];
 
 // Drawers
@@ -430,12 +430,10 @@ module corpus_shelf_template_hole_metadata() {
 
 module pedestal_side_template_hole_metadata() {
     // Hole for front panel
-    translate([melanine_thickness_secondary/2, melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
     p1 = get_pedestal_side_hole_2d_coords(melanine_thickness_secondary/2, melanine_thickness_main/2, pedestal_height/2);
     echo(str("Hole,", export_panel_name, ",front_panel,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
     
     // Hole for back panel
-    translate([melanine_thickness_secondary/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2]) rotate(ROT_Y_90) confirmat_hole_side();
     p2 = get_pedestal_side_hole_2d_coords(melanine_thickness_secondary/2, corpus_depth - melanine_thickness_main/2, pedestal_height/2);
     echo(str("Hole,", export_panel_name, ",back_panel,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_main, ",0,0,1"));
 }
@@ -1119,42 +1117,42 @@ module draw_hdf_back_panel() {
 
 
 module generate_cut_list() {
-    echo("material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc face holes,cnc side holes");
+    echo("CSV: material code,material thickness,dimension A (along wood grain),dimension B,count,edge banding A-1,edge banding A-2,edge banding B-1,edge banding B-2,panel name,panel description,cnc face holes,cnc side holes");
 
     // Corpus
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideLeft,Vertical side panel of the main body,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideRight,Vertical side panel of the main body,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,CorpusTopBottom,Horizontal top and bottom panels,,cnc: rubne rupe fi4mm za konfirmat"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",1,1,0,0,0,CorpusMiddle,Horizontal shelf separating drawers and bookcase,,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideLeft,Vertical side panel of the main body,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", corpus_height, ",", corpus_depth, ",1,1,0,1,1,CorpusSideRight,Vertical side panel of the main body,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,CorpusTopBottom,Horizontal top and bottom panels,,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",1,1,0,0,0,CorpusMiddle,Horizontal shelf separating drawers and bookcase,,cnc: rubne rupe fi4mm za konfirmat"));
 
     // Drawers
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",6,1,1,1,1,DrawerSideLeft,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",6,1,1,1,1,DrawerSideRight,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",6,1,1,0,0,DrawerBack,Vertical back panel of a drawer,cnc: rupe fi4mm za konfirmat,cnc: rubne rupe fi4mm za konfirmat"));
-    echo(str("MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_depth - melanine_thickness_secondary, ",6,0,0,0,0,DrawerBottom,Bottom panel of a drawer,,cnc: rubne rupe fi4mm za konfirmat + fi6mm za tiple"));
+    echo(str("CSV: MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",6,1,1,1,1,DrawerSideLeft,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
+    echo(str("CSV: MEL-12,", melanine_thickness_secondary, ",", drawer_depth, ",", drawer_height, ",6,1,1,1,1,DrawerSideRight,Vertical side panel of a drawer,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,cnc: rubne rupe fi6mm za tiple"));
+    echo(str("CSV: MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_height, ",6,1,1,0,0,DrawerBack,Vertical back panel of a drawer,cnc: rupe fi4mm za konfirmat,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("CSV: MEL-12,", melanine_thickness_secondary, ",", drawer_body_width, ",", drawer_depth - melanine_thickness_secondary, ",6,0,0,0,0,DrawerBottom,Bottom panel of a drawer,,cnc: rubne rupe fi4mm za konfirmat + fi6mm za tiple"));
 
     // Drawer Fronts
-    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_first, ",1,1,1,1,1,DrawerFrontFirst,Front panel for the bottom drawer,cnc: rupe fi6mm D10mm tiple,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_standard, ",4,1,1,1,1,DrawerFrontStandard,Front panel for the middle 4 drawers,cnc: rupe fi6mm D10mm tiple,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_top, ",1,1,1,1,1,DrawerFrontTop,Front panel for the top drawer,cnc: rupe fi6mm D10mm tiple,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_first, ",1,1,1,1,1,DrawerFrontFirst,Front panel for the bottom drawer,cnc: rupe fi6mm D10mm tiple,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_standard, ",4,1,1,1,1,DrawerFrontStandard,Front panel for the middle 4 drawers,cnc: rupe fi6mm D10mm tiple,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", front_width, ",", front_height_top, ",1,1,1,1,1,DrawerFrontTop,Front panel for the top drawer,cnc: rupe fi6mm D10mm tiple,"));
 
     // Bookcase
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,Shelf,Shelf in the bookcase section,,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", shelf_width, ",", shelf_depth, ",2,1,0,0,0,Shelf,Shelf in the bookcase section,,cnc: rubne rupe fi4mm za konfirmat"));
 
     // Pedestal
-    echo(str("MEL-19,", melanine_thickness_main, ",", shelf_width, ",", pedestal_height, ",2,1,0,0,0,PedestalFrontBack,Front and back panels of the pedestal,,cnc: rubne rupe fi4mm za konfirmat"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",2,1,0,1,1,PedestalSide,Side panels of the pedestal,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", shelf_width, ",", pedestal_height, ",2,1,0,0,0,PedestalFrontBack,Front and back panels of the pedestal,,cnc: rubne rupe fi4mm za konfirmat"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",2,1,0,1,1,PedestalSide,Side panels of the pedestal,cnc: rupe fi4mm za konfirmat,"));
 
     // Back Panel
-    echo(str("HDF-3,", hdf_thickness, ",", corpus_height, ",", corpus_width, ",1,0,0,0,0,HDFBackPanel,The back panel of the entire unit,,"));
+    echo(str("CSV: HDF-3,", hdf_thickness, ",", corpus_height, ",", corpus_width, ",1,0,0,0,0,HDFBackPanel,The back panel of the entire unit,,"));
 
     // Template Panels
-    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_vertical_space, ",", corpus_depth, ",1,0,0,0,0,CorpusSideSlideTemplate,Drilling template for corpus side slide holes,cnc: pilot fi2.5mm za vodilice,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_width, ",", drawer_height, ",1,0,0,0,0,DrawerFrontTemplate,Drilling template for drawer front dowel holes,cnc: rupe fi6mm za tiple,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", bookcase_shelf_gap, ",", corpus_depth, ",1,0,0,0,0,CorpusShelfTemplate,Drilling template for corpus shelf holes,cnc: rupe fi4mm za konfirmat,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",1,0,0,0,0,PedestalSideTemplate,Drilling template for pedestal side holes,cnc: rupe fi4mm za konfirmat,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_body_width, ",", drawer_height, ",1,0,0,0,0,DrawerBackTemplate,Drilling template for drawer back holes,cnc: rupe fi4mm za konfirmat,"));
-    echo(str("MEL-19,", melanine_thickness_main, ",", drawer_depth, ",", drawer_height, ",1,0,0,0,0,DrawerSideTemplate,Drilling template for drawer side holes,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", drawer_vertical_space, ",", corpus_depth, ",1,0,0,0,0,CorpusSideSlideTemplate,Drilling template for corpus side slide holes,cnc: pilot fi2.5mm za vodilice,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", drawer_width, ",", drawer_height, ",1,0,0,0,0,DrawerFrontTemplate,Drilling template for drawer front dowel holes,cnc: rupe fi6mm za tiple,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", bookcase_shelf_gap, ",", corpus_depth, ",1,0,0,0,0,CorpusShelfTemplate,Drilling template for corpus shelf holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", corpus_depth, ",", pedestal_height, ",1,0,0,0,0,PedestalSideTemplate,Drilling template for pedestal side holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", drawer_body_width, ",", drawer_height, ",1,0,0,0,0,DrawerBackTemplate,Drilling template for drawer back holes,cnc: rupe fi4mm za konfirmat,"));
+    echo(str("CSV: MEL-19,", melanine_thickness_main, ",", drawer_depth, ",", drawer_height, ",1,0,0,0,0,DrawerSideTemplate,Drilling template for drawer side holes,cnc: rupe fi4mm za konfirmat + pilot fi2.5mm za vodilice,"));
 }
 
 
@@ -1266,11 +1264,52 @@ module export_panel(panel_name) {
 
 // ----------------------------------------- main
 
+echo(str(
+    "DEFINITIONS: generate_model_identifier=", generate_model_identifier,
+    ", generate_panel_names_list=", generate_panel_names_list, 
+    ", generate_cut_list_csv=", generate_cut_list_csv,
+    ", export_panel_name=", export_panel_name,
+    ", export_type=", export_type
+));
+
+echo(str(
+    "model_info={",
+    "corpus_height:", corpus_height,
+    ", corpus_depth:", corpus_depth,
+    ", corpus_width:", corpus_width,
+    ", hdf_thickness:", hdf_thickness,
+    ", melanine_thickness_main:", melanine_thickness_main,
+    ", melanine_thickness_secondary:", melanine_thickness_secondary,
+    ", number_of_drawers:", number_of_drawers,
+    ", shelf_width:", shelf_width,
+    ", shelf_depth:", shelf_depth,
+    ", drawer_width:", drawer_width,
+    ", drawer_height:", drawer_height,
+    ", drawer_depth:", drawer_depth,
+    ", drawer_body_width:", drawer_body_width,
+    ", drawer_vertical_space:", drawer_vertical_space,
+    ", drawer_origin_z:", drawer_origin_z,
+    ", slide_depth:", slide_depth,
+    ", slide_z_offset:", slide_z_offset,
+    ", slide_height:", slide_height,
+    ", drawer_slide_pilot_hole_offsets:", drawer_slide_pilot_hole_offsets,
+    ", corpus_slide_pilot_hole_offsets:", corpus_slide_pilot_hole_offsets,
+    ", front_width:", front_width,
+    ", front_height_first:", front_height_first,
+    ", front_height_standard:", front_height_standard,
+    ", front_height_top:", front_height_top,
+    ", front_overhang:", front_overhang,
+    ", front_gap:", front_gap,
+    ", front_margin:", front_margin,
+    ", front_depth:", front_depth,
+    "}"
+));
+
 if (generate_model_identifier) {
-    echo(model_identifier);
+    echo(str("model_identifier=", model_identifier));
 } else if (generate_panel_names_list) {
     for (p = panel_names) {
-        echo(p);
+        echo(str("panel=",p));
     }
 } else if (generate_cut_list_csv) {
     generate_cut_list();

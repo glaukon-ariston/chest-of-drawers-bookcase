@@ -95,7 +95,10 @@ function Get-PanelNames {
 
     # Read the console log file and process it
     $output = Get-Content $logFile
-    $panelNames = $output | Where-Object { $_.StartsWith("ECHO:") } | ForEach-Object { $_.Substring(6).Trim().Trim('"') }
+    $tag = "ECHO: ""panel"
+    $panelNames = $output | Where-Object { $_.Contains("$tag=") } | ForEach-Object {
+        ($_ -split "$tag=")[-1].Trim().Trim('"')
+    }
 
     if ($panelNames.Count -eq 0) {
         Write-Error "Error: Could not get panel names from '$modelFile'."
@@ -113,15 +116,22 @@ function Get-ModelIdentifier {
         [string]$logFile
     )
 
+    # Get model identifier from model.scad
+    # openscad  -o "artifacts/dummy.png" --imgsize="1,1" -D "generate_model_identifier=true" "model.scad"
     & $openscadPath -o "artifacts/dummy.png" --imgsize="1,1" -D "generate_model_identifier=true" "$modelFile" 2>&1 | Out-File -FilePath $logFile -Encoding utf8
 
-    # Read the console log file and process it
+    # Read the console log file and extract the model identifier.
     $output = Get-Content $logFile
-    $modelIdentifier = $output | Where-Object { $_.StartsWith("ECHO:") } | ForEach-Object { $_.Substring(6).Trim().Trim('"') }
-
+    $tag = "ECHO: ""model_identifier"
+    $modelIdentifier = $output | Where-Object { $_.Contains("$tag=") } | ForEach-Object {
+        ($_ -split "$tag=")[-1].Trim().Trim('"')
+    } | Select-Object -First 1
+    
     if ($modelIdentifier.Count -eq 0) {
         Write-Error "Error: Could not get model identifier from '$modelFile'."
         Write-Error "Please check the 'generate_model_identifier' functionality in the OpenSCAD script."
+        Write-Output "The content of the openscad output file is:"
+        $output | ForEach-Object { Write-Output $_ }
         exit 1
     }
     Write-Information "Model identifier: $modelIdentifier"

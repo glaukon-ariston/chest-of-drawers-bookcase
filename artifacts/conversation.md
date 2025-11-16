@@ -37,3 +37,19 @@ To address this, I performed the following actions:
 3.  **Modified `split_layers.py`:** Updated the `add_hole_annotations_from_csv` function to read the new `nx, ny, nz` fields from the CSV and store them in the `holes` dictionary.
 4.  **Modified `README.md`:** Added instructions for printing drilling template PDFs to the "DXF to PDF Conversion" section, including a link to the LibreCAD documentation.
 5.  **Updated Documentation:** Updated `prompt/model-v2.md`, `GEMINI.md`, and `README.md` with a new changelog entry for v20, detailing the addition of unit vector components to the hole metadata CSV export and the new documentation for printing drilling templates.
+
+### User:
+> Make the following actions:
+> - Use `git status` and `git diff` to get a comprehensive overview of all local changes and better understand their scope.
+> - Update the @prompt/model-v2.md file with the recent changes and design decisions.
+> - Update the @GEMINI.md file with the recent changes and design decisions.
+> - Update the @README.md file with the recent changes and design decisions.
+> - Update the @artifacts/conversation.md with our recent conversation. Do not delete content from @artifacts/conversation.md, just add to it. 
+> - Clear the content of the @prompt/commit.md file.
+> - Prepare the commit message for the recent changes in a raw format, without line numbers and extra indentation. Include detailed findings from `git status` and `git diff` to annotate the commit message for every changed source file. Write it to the @prompt/commit.md file.
+
+### Model:
+I have performed the requested actions.
+I have reviewed the `git status` and `git diff` output and updated the `prompt/model-v2.md`, `GEMINI.md`, and `README.md` files with the recent changes and design decisions.
+I have also cleared the content of the `prompt/commit.md` file and prepared a new commit message in `prompt/commit.md`.
+I have appended our recent conversation to `artifacts/conversation.md`.

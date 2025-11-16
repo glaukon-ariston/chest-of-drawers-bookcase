@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 
 # Import common functions
 $scriptDir = $PSScriptRoot
-Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1")
+Import-Module (Join-Path $scriptDir "ps-modules/CommonFunctions.psm1") -Force
 
 # Project paths
 $modelFile = Join-Path $scriptDir "model.scad"
