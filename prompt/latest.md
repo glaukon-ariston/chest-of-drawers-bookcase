@@ -1,6 +1,5 @@
-Why is this not working?
-Get-ModelIdentifier is not returning jsut H2300xW600xD230_Mm18_Ms10.
-
-PS C:\Users\Tata\dev\chest-of-drawers-bookcase> .\test\get-export-folder.ps1
-Export directory: C:\Users\Tata\dev\chest-of-drawers-bookcase\test\..\export\DEFINITIONS: generate_model_identifier=true, generate_panel_names_list=false, generate_cut_list_csv=false, export_panel_name=CorpusShelfTemplate, export_type=dxf MODEL-IDENTIFIER=H2300xW600xD230_Mm18_Ms10
-PS C:\Users\Tata\dev\chest-of-drawers-bookcase> 
+Move the bottom hole in the drawer's side panels from being 50 mm from
+the edge to being 35 mm from the edge in order not to interfere with  
+the slide mechanism. The bottom hole is for connecting the drawer's   
+side panel to the drawer's back panel. There also other connecting    
+holes in the side pane and these do not need to be modified.   

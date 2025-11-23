@@ -63,7 +63,7 @@ The model is driven by a set of global parameters defined at the beginning of th
     *   panel_length_for_four_dowels = 500
     *   slide_pilot_hole_depth = 2
     *   slide_pilot_hole_diameter = 2.5
-    *   drawer_slide_pilot_hole_offsets = [37, 165]
+    *   drawer_slide_pilot_hole_offsets = [37, 163]
     *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
 
 All other dimensions for components like shelves, drawer parts, and front panels are derived from these base parameters.
@@ -130,7 +130,7 @@ The model is broken down into several distinct components, each with its own Ope
 -   **Drawers:** The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. 4mm pilot holes for confirmat screws to join the drawer components have been added.
 -   **Wooden Dowels:** Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge.
 -   **Slide Pilot Holes:** Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter.
-    -   **In Drawer Sides:** Two holes per slide, located 35mm and 163mm from the front edge.
+    -   **In Drawer Sides:** Two holes per slide, located 37mm and 163mm from the front edge.
     -   **In Corpus Sides:** Six holes per slide, located 6.5mm, 35mm, 51mm, 76, 99mm, and 115mm from the front edge.
 
 ## 5. Code Structure & Modularity
@@ -245,6 +245,13 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 - `--template`: The path to the Excel template file.
 
 ## 15. Changelog
+
+### v22
+
+*   **Bug Fixes:**
+    *   Fixed a bug where the bottom hole for connecting the drawer side to the back panel was incorrectly positioned at 50mm from the edge, causing interference with the slide mechanism. The hole is now correctly positioned at 35mm from the edge.
+*   **Model Parameterization:**
+    *   Updated `drawer_slide_pilot_hole_offsets` from `[37, 165]` to `[37, 163]`.
 
 ### v21
 

@@ -96,7 +96,7 @@ slide_z_offset = 50;
 slide_pilot_hole_depth = 2;
 slide_pilot_hole_diameter = 2.5;
 slide_pilot_hole_radius = slide_pilot_hole_diameter / 2;
-drawer_slide_pilot_hole_offsets = [37, 165];
+drawer_slide_pilot_hole_offsets = [37, 163];
 corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115];
 
 // Drawers
@@ -268,7 +268,7 @@ module corpus_side_hole_metadata(is_left) {
 }
 
 module drawer_side_hole_metadata(is_left) {
-    p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance, is_left);
+    p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, 35, is_left);
     echo(str("Hole,", export_panel_name, ",back_panel_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
     p2 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance, is_left);
     echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary, ",0,0,1"));
@@ -456,7 +456,7 @@ module drawer_back_template_hole_metadata() {
 }
 
 module drawer_side_template_hole_metadata() {
-    p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance, false);
+    p1 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, 35, false);
     echo(str("Hole,", export_panel_name, ",back_panel_1,", p1[0], ",", p1[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
     p2 = get_drawer_side_hole_2d_coords(melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance, false);
     echo(str("Hole,", export_panel_name, ",back_panel_2,", p2[0], ",", p2[1], ",0,", confirmat_hole_diameter, ",", melanine_thickness_secondary));
@@ -592,7 +592,7 @@ module drawer_side_cut() {
 
 module drawer_side_drill(is_left = true) {
     // Holes for back panel (2 holes)
-    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole();
+    translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, 35]) rotate(ROT_Y_90) drawer_confirmat_hole();
     translate([melanine_thickness_secondary/2, drawer_depth - melanine_thickness_secondary/2, drawer_height - confirmat_hole_edge_distance]) rotate(ROT_Y_90) drawer_confirmat_hole();
 
     // Holes for bottom panel (2 holes)

@@ -53,3 +53,9 @@ I have performed the requested actions.
 I have reviewed the `git status` and `git diff` output and updated the `prompt/model-v2.md`, `GEMINI.md`, and `README.md` files with the recent changes and design decisions.
 I have also cleared the content of the `prompt/commit.md` file and prepared a new commit message in `prompt/commit.md`.
 I have appended our recent conversation to `artifacts/conversation.md`.
+
+### User:
+> Move the bottom hole in the drawer's side panels from being 50 mm from the edge to being 35 mm from the edge in order not to interfere with the slide mechanism. The bottom hole is for connecting the drawer's side panel to the drawer's back panel. There also other connecting holes in the side pane and these do not need to be modified.
+
+### Model:
+I have modified the `model.scad` file to change the position of the bottom hole in the drawer's side panels from 50 mm to 35 mm from the edge. This change was made in the `drawer_side_drill`, `drawer_side_hole_metadata` and `drawer_side_template_hole_metadata` modules.

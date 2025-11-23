@@ -100,7 +100,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
     *   panel_length_for_four_dowels = 500
     *   slide_pilot_hole_depth = 2
     *   slide_pilot_hole_diameter = 2.5
-    *   drawer_slide_pilot_hole_offsets = [37, 165]
+    *   drawer_slide_pilot_hole_offsets = [37, 163]
     *   corpus_slide_pilot_hole_offsets = [6.5, 35, 51, 76, 99, 115]
 
 ### Structure
@@ -111,7 +111,7 @@ The 3D model is a chest of drawers with an integrated bookcase. The design is pa
 *   **HDF Back Panel:** A 3mm HDF back panel is attached to the back of the corpus.
 *   **Pedestal:** A 30mm high pedestal is placed under the corpus.
 *   **Glass Doors:** The bookcase section is enclosed by two glass doors.
-*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter. In drawer sides, there are two holes per slide, located 35mm and 163mm from the front edge. ... In corpus sides, there are six holes per slide, located 6.5mm, 35mm, 51mm, 76, 99mm, and 115mm from the front edge.
+*   **Joinery:** Confirmat screws (4.8mm x 49mm) are used to join the corpus panels and shelves. 4mm pilot holes for these screws are included in the model. The drawer components are also joined with these screws, with the number of screws depending on the panel length (2 for <50cm, 3 for >=50cm) and placed 5cm from the edge. Wooden dowels (phi 6 mm x 30 mm) are used to join the front panels to the drawer boxes. The front's blind hole is 1cm deep. There are two dowels per panel per side if the panel length is less than 50cm, and four dowels if longer, with even spacing. The hole locations are 5cm from the edge. Pilot holes for mounting the drawer slides are included in both the drawer sides and the corpus sides. These holes are 2mm deep and 2.5mm in diameter. In drawer sides, there are two holes per slide, located 37mm and 163mm from the front edge. ... In corpus sides, there are six holes per slide, located 6.5mm, 35mm, 51mm, 76, 99mm, and 115mm from the front edge.
 
 ### Cut List Generation
 
@@ -149,6 +149,13 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v22
+
+*   **Bug Fixes:**
+    *   Fixed a bug where the bottom hole for connecting the drawer side to the back panel was incorrectly positioned at 50mm from the edge, causing interference with the slide mechanism. The hole is now correctly positioned at 35mm from the edge.
+*   **Model Parameterization:**
+    *   Updated `drawer_slide_pilot_hole_offsets` from `[37, 165]` to `[37, 163]`.
 
 ### v21
 
