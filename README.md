@@ -166,6 +166,13 @@ The generated PDF templates can be printed to scale and used as physical templat
 
 ## Changelog
 
+### v23
+
+*   **Template Panels:**
+    *   Added handle holes to the `DrawerFrontTemplate` panel.
+*   **Test Scripts:**
+    *   Added `test/test-drawer-front-template.ps1` to test the export of the `DrawerFrontTemplate` panel.
+
 ### v22
 
 *   **Bug Fixes:**

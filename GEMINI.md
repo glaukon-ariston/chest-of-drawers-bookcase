@@ -150,6 +150,13 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
+### v23
+
+*   **Template Panels:**
+    *   Added handle holes to the `DrawerFrontTemplate` panel.
+*   **Test Scripts:**
+    *   Added `test/test-drawer-front-template.ps1` to test the export of the `DrawerFrontTemplate` panel.
+
 ### v22
 
 *   **Bug Fixes:**

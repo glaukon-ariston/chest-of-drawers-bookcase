@@ -246,6 +246,11 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 
 ## 15. Changelog
 
+### v23
+
+*   **Template Panels:**
+    *   Added handle holes to the `DrawerFrontTemplate` panel.
+
 ### v22
 
 *   **Bug Fixes:**

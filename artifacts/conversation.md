@@ -59,3 +59,12 @@ I have appended our recent conversation to `artifacts/conversation.md`.
 
 ### Model:
 I have modified the `model.scad` file to change the position of the bottom hole in the drawer's side panels from 50 mm to 35 mm from the edge. This change was made in the `drawer_side_drill`, `drawer_side_hole_metadata` and `drawer_side_template_hole_metadata` modules.
+
+### User:
+> Add the 4mm holes for the handle to the DrawerFrontTemplate panel. These are the same holes that are in DrawerFrontStandard panel.
+
+### Model:
+I have added the 4mm holes for the handle to the `DrawerFrontTemplate` panel in `model.scad`.
+This was done by adding the handle holes to the `drawer_front_template_hole_metadata` and `drawer_front_template_drill` modules.
+I have also added a new test script `test/test-drawer-front-template.ps1` to test the export of the `DrawerFrontTemplate` panel.
+I have also updated the changelogs in `README.md`, `GEMINI.md`, and `prompt/model-v2.md`.
