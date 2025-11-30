@@ -1,16 +1,11 @@
-feat(template): Add DrawerFrontOutsideTemplate panel and improve drill markers
+feat(template): Improve CorpusShelfTemplate for sequential drilling
 
-Adds a new `DrawerFrontOutsideTemplate` panel to the model. This template has the same dimensions as the `DrawerFrontStandard` panel and includes all the holes. The `DrawerFrontTemplate` has been renamed to `DrawerFrontInsideTemplate`.
-
-Drill markers in the DXF export have been improved. Crosshair markers for drilling holes are now enclosed in a 3mm circle to make them easier to aim and position.
+Increases the longest side of the `CorpusShelfTemplate` by `melanine_thickness_main` to facilitate sequential placement for drilling shelf holes in the corpus side, for each successive shelf. The dimension that is currently `bookcase_shelf_gap` is increased by `melanine_thickness_main`. The locations for the holes for the shelf have been adjusted to remain `melanine_thickness_main/2` from the edge.
 
 The following changes were made:
 - **`model.scad`**:
-  - Added `DrawerFrontOutsideTemplate` module and related drill and metadata modules.
-  - Renamed `DrawerFrontTemplate` to `DrawerFrontInsideTemplate`.
-  - Updated `panel_names` list, `echo_hole_metadata`, `generate_cut_list`, and `export_panel` modules.
-- **`split_layers.py`**:
-  - Modified `add_hole_annotations_from_csv` to draw a 3mm circle around the crosshair markers for both side-drilled and planar holes.
-  - Moved the crosshair for side-drilled holes to the `DRILL_MARKS` layer.
+  - Modified `corpus_shelf_template_cut` to increase its height by `melanine_thickness_main`.
+  - Updated the corresponding `generate_cut_list` entry to reflect the new dimensions.
+  - Adjusted the z-coordinate of the holes in `corpus_shelf_template_drill` and `corpus_shelf_template_hole_metadata` to maintain their correct distance from the edge.
 - **Documentation**:
   - Updated changelogs in `README.md`, `GEMINI.md`, and `prompt/model-v2.md` to reflect the changes.

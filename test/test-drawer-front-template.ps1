@@ -1,5 +1,5 @@
 # test-drawer-front-template.ps1
-# This script tests the DrawerFrontTemplate panel export and verifies its hole metadata.
+# This script tests the DrawerFrontInsideTemplate panel export and verifies its hole metadata.
 
 $ErrorActionPreference = "Stop"
 
@@ -13,7 +13,7 @@ $modelIdentifier = Get-ModelIdentifier -openscadPath $openscadPath -modelFile $m
 $exportDir = Join-Path $rootDir "export/$modelIdentifier"
 $exportTypeDir = Join-Path $exportDir "dxf-raw"
 
-$panelName = "DrawerFrontTemplate"
+$panelName = "DrawerFrontInsideTemplate"
 $exportType = "dxf"
 
 $safePanelName = $panelName -replace '[\\/:"*?<>|]', '_'

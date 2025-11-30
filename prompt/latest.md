@@ -1,1 +1,1 @@
-Add code for the DrawerFrontOutsideTemplate panel. The DrawerFrontOutsideTemplate panel should have the same dimensions as the DrawerFrontStandard panel and should include all the holes.
+Increase the longest side of the CorpusShelfTemplate by melanine_thickness_main so I can use this template for drilling shelf holes in the corpus side by sequentally placing the template next to the previous location, for each successive shelf. Therefore, the dimension that is currently bookcase_shelf_gap should be increased by melanine_thickness_main.

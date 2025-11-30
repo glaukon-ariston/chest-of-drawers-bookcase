@@ -246,6 +246,11 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 
 ## 15. Changelog
 
+### v25
+
+*   **Template Panels:**
+    *   Increased the height of `CorpusShelfTemplate` by `melanine_thickness_main` to facilitate sequential placement for drilling shelf holes in the corpus side.
+
 ### v24
 
 *   **Template Panels:**

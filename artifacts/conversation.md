@@ -92,3 +92,15 @@ You're welcome!
 
 ### Model:
 I have modified the `split_layers.py` script to draw a 3mm circle around the crosshair markers for drilling holes.
+
+### User:
+> Increase the longest side of the CorpusShelfTemplate by melanine_thickness_main so I can use this template for drilling shelf holes in the corpus side by sequentally placing the template next to the previous location, for each successive shelf. Therefore, the dimension that is currently bookcase_shelf_gap should be increased by melanine_thickness_main.
+
+### Model:
+I have increased the height of the `CorpusShelfTemplate` by `melanine_thickness_main` in `model.scad` and updated its cut list entry.
+
+### User:
+> The locations for the holes for the shelf now need to be adjusted as they are now moved away from the edge. They should remain melanine_thickness_main/2 from the edge.
+
+### Model:
+I have adjusted the hole locations in `corpus_shelf_template_drill` and `corpus_shelf_template_hole_metadata` to keep the holes at the correct distance from the edge.

@@ -150,6 +150,11 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 
 ## Changelog
 
+### v25
+
+*   **Template Panels:**
+    *   Increased the height of `CorpusShelfTemplate` by `melanine_thickness_main` to facilitate sequential placement for drilling shelf holes in the corpus side.
+
 ### v24
 
 *   **Template Panels:**

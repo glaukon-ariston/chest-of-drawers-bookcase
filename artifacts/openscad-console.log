@@ -1,10 +1,10 @@
 ﻿ECHO: "DEFINITIONS: generate_model_identifier=true, generate_panel_names_list=false, generate_cut_list_csv=false, export_panel_name=CorpusShelfTemplate, export_type=dxf"
-ECHO: "model_info={corpus_height:2300, corpus_depth:230, corpus_width:600, hdf_thickness:3, melanine_thickness_main:18, melanine_thickness_secondary:10, number_of_drawers:6, shelf_width:564, shelf_depth:230, drawer_width:538, drawer_height:200, drawer_depth:225, drawer_body_width:518, drawer_vertical_space:210, drawer_origin_z:28, slide_depth:13, slide_z_offset:50, slide_height:45, drawer_slide_pilot_hole_offsets:[37, 163], corpus_slide_pilot_hole_offsets:[6.5, 35, 51, 76, 99, 115], front_width:597, front_height_first:232, front_height_standard:207, front_height_top:216, front_overhang:3, front_gap:3, front_margin:1.5, front_depth:18}"
-ECHO: "model_identifier=H2300xW600xD230_Mm18_Ms10"
+ECHO: "model_info={corpus_height:2300, corpus_depth:230, corpus_width:800, hdf_thickness:3, melanine_thickness_main:18, melanine_thickness_secondary:10, number_of_drawers:6, shelf_width:764, shelf_depth:230, drawer_width:738, drawer_height:200, drawer_depth:225, drawer_body_width:718, drawer_vertical_space:210, drawer_origin_z:28, slide_depth:13, slide_z_offset:50, slide_height:45, drawer_slide_pilot_hole_offsets:[37, 163], corpus_slide_pilot_hole_offsets:[6.5, 35, 51, 76, 99, 115], front_width:797, front_height_first:232, front_height_standard:207, front_height_top:216, front_overhang:3, front_gap:3, front_margin:1.5, front_depth:18}"
+ECHO: "model_identifier=H2300xW800xD230_Mm18_Ms10"
 Compiling design (CSG Products normalization)...
 Normalized CSG tree has 1 elements
 Geometries in cache: 0
 Geometry cache size in bytes: 0
 CGAL Polyhedrons in cache: 0
 CGAL cache size in bytes: 0
-Total rendering time: 0:00:00.095
+Total rendering time: 0:00:00.080
