@@ -246,10 +246,16 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 
 ## 15. Changelog
 
+### v24
+
+*   **Template Panels:**
+    *   Added `DrawerFrontOutsideTemplate` panel.
+    *   Renamed `DrawerFrontTemplate` to `DrawerFrontInsideTemplate`.
+
 ### v23
 
 *   **Template Panels:**
-    *   Added handle holes to the `DrawerFrontTemplate` panel.
+    *   Added handle holes to the `DrawerFrontInsideTemplate` panel.
 
 ### v22
 

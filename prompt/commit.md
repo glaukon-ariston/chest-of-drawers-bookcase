@@ -1,12 +1,16 @@
-feat(template): Add handle holes to DrawerFrontTemplate
+feat(template): Add DrawerFrontOutsideTemplate panel and improve drill markers
 
-Adds 4mm handle holes to the `DrawerFrontTemplate` panel. These holes are identical to the ones on the `DrawerFrontStandard` panel.
+Adds a new `DrawerFrontOutsideTemplate` panel to the model. This template has the same dimensions as the `DrawerFrontStandard` panel and includes all the holes. The `DrawerFrontTemplate` has been renamed to `DrawerFrontInsideTemplate`.
+
+Drill markers in the DXF export have been improved. Crosshair markers for drilling holes are now enclosed in a 3mm circle to make them easier to aim and position.
 
 The following changes were made:
 - **`model.scad`**:
-  - Added handle holes to the `drawer_front_template_hole_metadata` and `drawer_front_template_drill` modules.
-  - Reverted an unintended change to `drawer_side_template_hole_metadata` where `confirmat_hole_edge_distance` was replaced with a hardcoded value.
-- **`test/test-drawer-front-template.ps1`**:
-  - Added a new test script to verify the export of the `DrawerFrontTemplate` panel.
+  - Added `DrawerFrontOutsideTemplate` module and related drill and metadata modules.
+  - Renamed `DrawerFrontTemplate` to `DrawerFrontInsideTemplate`.
+  - Updated `panel_names` list, `echo_hole_metadata`, `generate_cut_list`, and `export_panel` modules.
+- **`split_layers.py`**:
+  - Modified `add_hole_annotations_from_csv` to draw a 3mm circle around the crosshair markers for both side-drilled and planar holes.
+  - Moved the crosshair for side-drilled holes to the `DRILL_MARKS` layer.
 - **Documentation**:
   - Updated changelogs in `README.md`, `GEMINI.md`, and `prompt/model-v2.md` to reflect the changes.

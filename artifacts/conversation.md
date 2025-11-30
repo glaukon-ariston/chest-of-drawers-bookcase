@@ -68,3 +68,27 @@ I have added the 4mm holes for the handle to the `DrawerFrontTemplate` panel in 
 This was done by adding the handle holes to the `drawer_front_template_hole_metadata` and `drawer_front_template_drill` modules.
 I have also added a new test script `test/test-drawer-front-template.ps1` to test the export of the `DrawerFrontTemplate` panel.
 I have also updated the changelogs in `README.md`, `GEMINI.md`, and `prompt/model-v2.md`.
+
+### User:
+> Add code for the DrawerFrontOutsideTemplate panel. The DrawerFrontOutsideTemplate panel should have the same dimensions as the DrawerFrontStandard panel and should include all the holes.
+
+### Model:
+I have added the `DrawerFrontOutsideTemplate` panel to `model.scad`. I also renamed `DrawerFrontTemplate` to `DrawerFrontInsideTemplate` and updated the documentation.
+
+### User:
+> The dowel holes are not visible in the DrawerFrontOutsideTemplate panel. It is probably because the holes are on the opposite side with the depth not reaching the currently displayed side.
+
+### Model:
+I have fixed the visibility of the dowel holes in the `DrawerFrontOutsideTemplate` panel by modifying the `export_panel` module in `model.scad`.
+
+### User:
+> Holes are now visible. Thank you.
+
+### Model:
+You're welcome!
+
+### User:
+> When drawing a crosshair marker for the drilling holes, put the crosshair inside a 3 mm circle. That way it will be easier to aim and position the drill.
+
+### Model:
+I have modified the `split_layers.py` script to draw a 3mm circle around the crosshair markers for drilling holes.

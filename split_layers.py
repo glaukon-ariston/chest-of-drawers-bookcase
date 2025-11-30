@@ -152,7 +152,7 @@ def add_hole_annotations_from_csv(msp, input_file):
                         start=(x - indicator_size / 2, y),
                         end=(x + indicator_size / 2, y),
                         dxfattribs={
-                            'layer': 'DRILL',
+                            'layer': 'DRILL_MARKS',
                             'color': 5 # Blue color for drill layer
                         }
                     )
@@ -161,7 +161,17 @@ def add_hole_annotations_from_csv(msp, input_file):
                         start=(x, y - indicator_size / 2),
                         end=(x, y + indicator_size / 2),
                         dxfattribs={
-                            'layer': 'DRILL',
+                            'layer': 'DRILL_MARKS',
+                            'color': 5 # Blue color for drill layer
+                        }
+                    )
+                    # Add a 3mm diameter circle
+                    circle_radius = 1.5
+                    msp.add_circle(
+                        center=(x, y),
+                        radius=circle_radius,
+                        dxfattribs={
+                            'layer': 'DRILL_MARKS',
                             'color': 5 # Blue color for drill layer
                         }
                     )
@@ -186,7 +196,15 @@ def add_hole_annotations_from_csv(msp, input_file):
                             'layer': 'DRILL_MARKS'
                         }
                     )
-
+                    # Add a 3mm diameter circle
+                    circle_radius = 1.5
+                    msp.add_circle(
+                        center=(x, y),
+                        radius=circle_radius,
+                        dxfattribs={
+                            'layer': 'DRILL_MARKS'
+                        }
+                    )
 
                 # Create annotation text
                 hole_name_text = hole_name

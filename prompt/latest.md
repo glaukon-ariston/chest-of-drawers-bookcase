@@ -1,1 +1,1 @@
-Add the 4mm holes for the handle to the DrawerFrontTemplate panel. These are the same holes that are in DrawerFrontStandard panel.
+Add code for the DrawerFrontOutsideTemplate panel. The DrawerFrontOutsideTemplate panel should have the same dimensions as the DrawerFrontStandard panel and should include all the holes.
