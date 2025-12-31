@@ -54,7 +54,7 @@ MATERIAL = {
         'iveral': {
             'MEL-19': 'H1145',      # Hrast Bardolino natur
             'MEL-12': 'H1145',      # Klasična bijela 
-            'HDF-3': 'HDF-3-Hrast',
+            'HDF-3': 'HDF-3-Bijela',
         },
 
         # Elgrad banding

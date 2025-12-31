@@ -246,6 +246,15 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 
 ## 15. Changelog
 
+### v26
+
+*   **Bug Fixes:**
+    *   Fixed the vertical offset of dowel holes in drawer front panels (`DrawerFrontBottom`, `DrawerFrontStandard`, `DrawerFrontTop`) and related templates (`DrawerFrontOutsideTemplate`). The holes are now correctly shifted by the `front_overhang` (3mm) plus any drawer offset, ensuring they align perfectly with the corresponding holes in the drawer side panels.
+*   **Order Generation:**
+    *   Updated `create_order.py` to use `HDF-3-Bijela` (White HDF) instead of `HDF-3-Hrast` for the Iverpan cutting service.
+*   **Documentation:**
+    *   Added a changelog entry for v26.
+
 ### v25
 
 *   **Template Panels:**

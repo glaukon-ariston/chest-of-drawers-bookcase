@@ -166,6 +166,15 @@ The generated PDF templates can be printed to scale and used as physical templat
 
 ## Changelog
 
+### v26
+
+*   **Bug Fixes:**
+    *   Fixed the vertical offset of dowel holes in drawer front panels (`DrawerFrontBottom`, `DrawerFrontStandard`, `DrawerFrontTop`) and related templates (`DrawerFrontOutsideTemplate`). The holes are now correctly shifted by the `front_overhang` (3mm) plus any drawer offset, ensuring they align perfectly with the corresponding holes in the drawer side panels.
+*   **Order Generation:**
+    *   Updated `create_order.py` to use `HDF-3-Bijela` (White HDF) instead of `HDF-3-Hrast` for the Iverpan cutting service.
+*   **Test Scripts:**
+    *   Added `test/test-front-overhang.ps1` to verify the drawer front hole offsets.
+
 ### v25
 
 *   **Template Panels:**

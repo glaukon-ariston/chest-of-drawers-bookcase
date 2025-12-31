@@ -21,7 +21,7 @@ This project contains the OpenSCAD code for a chest of drawers with an integrate
 - [LibreCAD](https://github.com/LibreCAD/LibreCAD/releases)
 - [OpenSCAD](https://openscad.org/downloads.html#snapshots)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
-- VS Code Extrension
+- VS Code Extensions
     - Gemini Code Assist
     - Gemini CLI Companion
     - OpenSCAD
@@ -149,6 +149,15 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 *   The bounding box calculation for text entities in `split_layers.py` is not accurate. It only considers the insertion point, which may result in incorrect placement of dimensions and legends in some cases.
 
 ## Changelog
+
+### v26
+
+*   **Bug Fixes:**
+    *   Fixed the vertical offset of dowel holes in drawer front panels (`DrawerFrontBottom`, `DrawerFrontStandard`, `DrawerFrontTop`) and related templates (`DrawerFrontOutsideTemplate`). The holes are now correctly shifted by the `front_overhang` (3mm) plus any drawer offset, ensuring they align perfectly with the corresponding holes in the drawer side panels.
+*   **Order Generation:**
+    *   Updated `create_order.py` to use `HDF-3-Bijela` (White HDF) instead of `HDF-3-Hrast` for the Iverpan cutting service.
+*   **Test Scripts:**
+    *   Added `test/test-front-overhang.ps1` to verify the drawer front hole offsets.
 
 ### v25
 

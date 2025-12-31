@@ -104,3 +104,31 @@ I have increased the height of the `CorpusShelfTemplate` by `melanine_thickness_
 
 ### Model:
 I have adjusted the hole locations in `corpus_shelf_template_drill` and `corpus_shelf_template_hole_metadata` to keep the holes at the correct distance from the edge.
+### User:
+> Verify that you completed the instructions given in @prompt/latest.md by running a panel export and verifying the hole coordinates.
+
+### Model:
+I have verified that the changes described in `prompt/latest.md` have been implemented and are correct. I performed manual checks by exporting relevant panels (`DrawerFrontStandard`, `DrawerFrontBottom`, `DrawerFrontTop`, `DrawerSideLeft`, `DrawerFrontInsideTemplate`, `DrawerFrontOutsideTemplate`) and inspecting their hole metadata CSV files. The hole positions for dowels and handles on drawer fronts now correctly account for `front_overhang` and drawer offsets, ensuring proper alignment with the drawer box.
+
+### User:
+> Now implement @test/test-front-overhang.ps1 with the test you just did so this test can easyly be done again.
+
+### Model:
+I have created the `test/test-front-overhang.ps1` script to automate the verification of drawer front hole offsets. This script exports the relevant panels, reads their hole metadata, and asserts the correctness of the hole coordinates based on the design specifications. The test script passed successfully.
+
+### User:
+> Make the following actions:
+> - Use `git status` and `git diff` to get a comprehensive overview of all local changes and better understand their scope.
+> - Update the @prompt/model-v2.md file with the recent changes and design decisions.
+> - Update the @GEMINI.md file with the recent changes and design decisions.
+> - Update the @README.md file with the recent changes and design decisions.
+> - Update the @artifacts/conversation.md with our recent conversation. Do not delete content from @artifacts/conversation.md, just add to it.
+> - Clear the content of the @prompt/commit.md file.
+> - Prepare the commit message for the recent changes in a raw format, without line numbers and extra indentation. Include detailed findings from `git status` and `git diff` to annotate the commit message for every changed source file. Write it to the @prompt/commit.md file.
+
+### Model:
+I have reviewed the `git status` and `git diff` output.
+I have updated `prompt/model-v2.md`, `GEMINI.md`, and `README.md` with a new changelog entry (v26) detailing the drawer front hole fix, the `create_order.py` update, and the addition of the new test script.
+I have updated `create_order.py` with the material change.
+I have appended our recent conversation to `artifacts/conversation.md`.
+I will now clear the content of `prompt/commit.md` and prepare a new commit message there.
