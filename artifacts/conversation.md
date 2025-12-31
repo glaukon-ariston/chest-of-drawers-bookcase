@@ -132,3 +132,18 @@ I have updated `prompt/model-v2.md`, `GEMINI.md`, and `README.md` with a new cha
 I have updated `create_order.py` with the material change.
 I have appended our recent conversation to `artifacts/conversation.md`.
 I will now clear the content of `prompt/commit.md` and prepare a new commit message there.
+### User:
+> The drawer_front_drill() has a bug. The x coordinate needs to be offset inward by melanine_thickness_secondary/2 in order for the holes to align with the drawer box holes. For example, the left side holes' x coordinate needs to be (front_width - drawer_body_width)/2+melanine_thickness_secondary/2.
+
+### Model:
+I have fixed the bug in `model.scad` where the dowel holes in the drawer front panels were not correctly aligned with the center of the drawer side panels.
+
+### Changes:
+- **`drawer_front_drill` module:** Adjusted the X-coordinates for the left and right side dowel holes. The left side holes are now offset by `-melanine_thickness_secondary / 2` and the right side holes by `+melanine_thickness_secondary / 2` relative to their previous inner-face positions.
+- **`drawer_front_hole_metadata` module:** Updated the hole metadata export logic to match the 3D model changes, ensuring that CSV exports and DXF annotations correctly reflect the centered hole positions.
+- **Verification:**
+    - Ran the existing `test/test-front-overhang.ps1` to ensure vertical offsets (Y-axis) remain correct.
+    - Created a new test script `test/test-drawer-front-alignment.ps1` to verify the horizontal alignment (X-axis) with the drawer box assembly. Both tests passed.
+    - Verified the exported CSV metadata for `DrawerFrontStandard` and `DrawerFrontOutsideTemplate` panels.
+
+The holes now align perfectly with the centers of the 10mm secondary melamine side panels.

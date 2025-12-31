@@ -166,6 +166,13 @@ The generated PDF templates can be printed to scale and used as physical templat
 
 ## Changelog
 
+### v27
+
+*   **Bug Fixes:**
+    *   Fixed a bug in `drawer_front_drill` and `drawer_front_hole_metadata` where the X-coordinates for drawer side dowel holes were aligned with the inner faces rather than the center of the panel thickness. The holes are now correctly centered.
+*   **Test Scripts:**
+    *   Added `test/test-drawer-front-alignment.ps1` to verify the X-axis alignment of drawer front holes with the drawer box assembly.
+
 ### v26
 
 *   **Bug Fixes:**

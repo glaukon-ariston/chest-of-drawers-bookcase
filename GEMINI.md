@@ -153,11 +153,9 @@ The `workflow.ps1` script automates the entire export and conversion process. It
 ### v26
 
 *   **Bug Fixes:**
-    *   Fixed the vertical offset of dowel holes in drawer front panels (`DrawerFrontBottom`, `DrawerFrontStandard`, `DrawerFrontTop`) and related templates (`DrawerFrontOutsideTemplate`). The holes are now correctly shifted by the `front_overhang` (3mm) plus any drawer offset, ensuring they align perfectly with the corresponding holes in the drawer side panels.
-*   **Order Generation:**
-    *   Updated `create_order.py` to use `HDF-3-Bijela` (White HDF) instead of `HDF-3-Hrast` for the Iverpan cutting service.
+    *   Fixed a bug in `drawer_front_drill` and `drawer_front_hole_metadata` where the X-coordinates for drawer side dowel holes were aligned with the inner faces rather than the center of the panel thickness. The holes are now correctly centered.
 *   **Test Scripts:**
-    *   Added `test/test-front-overhang.ps1` to verify the drawer front hole offsets.
+    *   Added `test/test-drawer-front-alignment.ps1` to verify the X-axis alignment of drawer front holes with the drawer box assembly.
 
 ### v25
 

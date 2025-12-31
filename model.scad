@@ -44,7 +44,7 @@ explosion_factor = 2; // Scale factor for explosion distance
 
 // Corpus
 corpus_height = 2300;
-corpus_width = 800;
+corpus_width = 600;
 corpus_depth = 230;
 
 // Melanine material thickness
@@ -334,13 +334,13 @@ module drawer_bottom_hole_metadata() {
 }
 
 module drawer_front_hole_metadata(height, handle_z, box_bottom_offset) {
-    p1 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset);
+    p1 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 - melanine_thickness_secondary/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset);
     echo(str("Hole,", export_panel_name, ",left_side_1,", p1[0], ",", p1[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
-    p2 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset);
+    p2 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 - melanine_thickness_secondary/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset);
     echo(str("Hole,", export_panel_name, ",left_side_2,", p2[0], ",", p2[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
-    p3 = get_drawer_front_hole_2d_coords(front_width - (front_width - drawer_body_width)/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset);
+    p3 = get_drawer_front_hole_2d_coords(front_width - (front_width - drawer_body_width)/2 + melanine_thickness_secondary/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset);
     echo(str("Hole,", export_panel_name, ",right_side_1,", p3[0], ",", p3[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
-    p4 = get_drawer_front_hole_2d_coords(front_width - (front_width - drawer_body_width)/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset);
+    p4 = get_drawer_front_hole_2d_coords(front_width - (front_width - drawer_body_width)/2 + melanine_thickness_secondary/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset);
     echo(str("Hole,", export_panel_name, ",right_side_2,", p4[0], ",", p4[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
     p5 = get_drawer_front_hole_2d_coords((front_width - drawer_body_width)/2 + dowel_hole_edge_distance, melanine_thickness_main, melanine_thickness_secondary/2 + box_bottom_offset);
     echo(str("Hole,", export_panel_name, ",bottom_panel_1,", p5[0], ",", p5[1], ",0,", dowel_diameter, ",", dowel_hole_depth_in_front, ",0,0,1"));
@@ -730,12 +730,12 @@ module drawer_front_cut(height) {
 
 module drawer_front_drill(height, handle_z, box_bottom_offset) {
     // Dowel holes for left drawer side panel
-    translate([(front_width - drawer_body_width)/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
-    translate([(front_width - drawer_body_width)/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
+    translate([(front_width - drawer_body_width)/2 - melanine_thickness_secondary/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
+    translate([(front_width - drawer_body_width)/2 - melanine_thickness_secondary/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
 
     // Holes for right drawer side panel
-    translate([front_width - (front_width - drawer_body_width)/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
-    translate([front_width - (front_width - drawer_body_width)/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
+    translate([front_width - (front_width - drawer_body_width)/2 + melanine_thickness_secondary/2, melanine_thickness_main, dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
+    translate([front_width - (front_width - drawer_body_width)/2 + melanine_thickness_secondary/2, melanine_thickness_main, drawer_height - dowel_hole_edge_distance + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);
 
     // Dowel holes for drawer bottom panel
     translate([(front_width - drawer_body_width)/2 + dowel_hole_edge_distance, melanine_thickness_main, melanine_thickness_secondary/2 + box_bottom_offset]) rotate(ROT_X_NEG_90) dowel_hole(dowel_hole_depth_in_front);

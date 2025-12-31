@@ -1,26 +1,11 @@
-feat: Implement drawer front hole offset and update order materials
+feat(model): Center drawer front dowel holes
 
-This commit introduces a fix for the vertical offset of dowel and handle holes in drawer front panels, ensuring correct alignment with drawer box components. It also updates the material code for HDF panels in the Iverpan order generation. A new PowerShell test script is added to verify these changes.
+This commit fixes a bug in the model where the dowel holes on the drawer fronts were not correctly aligned with the center of the drawer side panels. They were previously aligned to the inner face of the side panels.
 
-- **model.scad**:
-    - Refactored `drawer_front_hole_metadata`, `drawer_front_drill`, and `drawer_front` modules to include a `box_bottom_offset` parameter.
-    - Updated calls to these modules (`echo_hole_metadata`, `drawer_front_outside_template_drill`, `draw_fronts`, `export_panel`) to correctly pass `box_bottom_offset` based on the specific drawer front (standard, top, or bottom) and its vertical positioning relative to the drawer box. This addresses the issue where dowel and handle holes were incorrectly aligned due to not accounting for `front_overhang` and other vertical offsets.
-
-- **create_order.py**:
-    - Modified material definition for the 'iveral' service to change `HDF-3` from `HDF-3-Hrast` to `HDF-3-Bijela`.
-
-- **test/test-front-overhang.ps1**:
-    - Added a new PowerShell script to systematically verify the correct vertical positioning of holes in drawer front panels and their templates.
-    - Tests cover `DrawerFrontStandard`, `DrawerFrontBottom`, `DrawerFrontTop`, `DrawerSideLeft`, `DrawerFrontInsideTemplate`, and `DrawerFrontOutsideTemplate`.
-
-- **prompt/latest.md**:
-    - Updated with the prompt detailing the drawer front hole offset issue.
-
-- **GEMINI.md, README.md, prompt/model-v2.md**:
-    - Updated changelogs to include a new entry (v26) summarizing the bug fixes and new test script.
-
-- **artifacts/openscad-console.log**:
-    - Updated due to re-running OpenSCAD for testing.
-
-- **artifacts/model.png**:
-    - Updated due to changes in `model.scad` and subsequent re-rendering.
+Key changes:
+- **`model.scad`**:
+    - In `drawer_front_drill` and `drawer_front_hole_metadata`, the X-coordinate calculation for the side panel dowel holes has been adjusted. It now correctly offsets the holes from the inner face position by half of `melanine_thickness_secondary` to perfectly center them.
+- **`test/test-drawer-front-alignment.ps1`**:
+    - A new test script has been added to programmatically verify the X-axis alignment of the drawer front holes. This test exports the `DrawerFrontStandard` panel, parses the hole metadata, and asserts that the X-coordinates match the calculated center positions.
+- **Documentation**:
+    - The `README.md`, `GEMINI.md`, and `prompt/model-v2.md` files have been updated with a new changelog entry (v27) to reflect this fix and the addition of the new test script.

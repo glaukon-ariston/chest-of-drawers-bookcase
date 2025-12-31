@@ -244,7 +244,14 @@ python create_order.py --model-id <model_identifier> --service <service_name> --
 - `--service`: The cutting service provider (e.g., `iverpan`, `elgrad`, `furnir`, `sizekupres`).
 - `--template`: The path to the Excel template file.
 
-## 15. Changelog
+## 16. Changelog
+
+### v27
+
+*   **Bug Fixes:**
+    *   Fixed a bug in `drawer_front_drill` and `drawer_front_hole_metadata` where the X-coordinates for drawer side dowel holes were aligned with the inner faces rather than the center of the panel thickness. The holes are now correctly centered.
+*   **Test Scripts:**
+    *   Added `test/test-drawer-front-alignment.ps1` to verify the X-axis alignment of drawer front holes with the drawer box assembly.
 
 ### v26
 
